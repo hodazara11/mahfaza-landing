@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Maaly — منصة إدارة فلوسك الشخصية. ادفع مرة واحدة، استخدم للأبد. مبنية على قواعد مالية عالمية.">
-<meta property="og:title" content="Maaly — إدارة فلوسك بذكاء">
-<meta property="og:description" content="اعرف فلوسك بتروح فين، وازاي تخليها تكبر. 199 جنيه مرة واحدة، للأبد.">
-<title>Maaly — إدارة فلوسك الشخصية بذكاء</title>
+<meta name="description" content="محفظة — منصة إدارة الأموال الشخصية مبنية على القواعد المالية العالمية. ادفع مرة واحدة، استخدم مدى الحياة.">
+<meta property="og:title" content="Mahfaza | محفظة — منصة إدارة الأموال الشخصية">
+<meta property="og:description" content="تتبع دخلك ومصروفاتك، طبّق منهجيات الادخار العالمية، واتخذ قرارات أذكى — بدفعة واحدة فقط.">
+<title>Mahfaza | محفظة — منصة إدارة الأموال الشخصية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+  /* ========== TOKENS ========== */
   :root {
-    --bg-base: #0A0A0F;
-    --bg-surface-1: #13131A;
-    --bg-surface-2: #1C1C26;
-    --bg-surface-3: #252531;
-    --border-subtle: rgba(255,255,255,0.06);
-    --border-default: rgba(255,255,255,0.1);
-    --border-strong: rgba(255,255,255,0.18);
+    --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-2xl: 32px;
+    --font-en: 'Plus Jakarta Sans', sans-serif;
+    --font-ar: 'Cairo', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --transition: 0.3s ease;
     --brand: #00D97E;
     --brand-hover: #00C570;
     --brand-muted: rgba(0,217,126,0.12);
@@ -29,20 +28,46 @@
     --purple: #A78BFA;
     --pink: #FF6B9D;
     --amber: #FFB020;
+    --danger: #FF4D5E;
+    --warning: #FFB020;
+  }
+
+  [data-theme="dark"] {
+    --bg-base: #0A0A0F;
+    --bg-surface-1: #13131A;
+    --bg-surface-2: #1C1C26;
+    --bg-surface-3: #252531;
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-default: rgba(255,255,255,0.1);
+    --border-strong: rgba(255,255,255,0.18);
     --text-1: #F5F5F7;
     --text-2: #A1A1AA;
     --text-3: #6B6B73;
-    --danger: #FF4D5E;
-    --warning: #FFB020;
     --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
     --shadow-lg: 0 16px 48px rgba(0,0,0,0.6);
-    --shadow-xl: 0 24px 80px rgba(0,0,0,0.7);
     --shadow-glow: 0 0 60px rgba(0,217,126,0.3);
-    --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-2xl: 32px;
-    --font-en: 'Plus Jakarta Sans', sans-serif;
-    --font-ar: 'Cairo', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --hero-gradient-from: #FFFFFF;
+    --hero-gradient-to: #A1A1AA;
   }
+
+  [data-theme="light"] {
+    --bg-base: #FAFAFA;
+    --bg-surface-1: #FFFFFF;
+    --bg-surface-2: #F4F4F5;
+    --bg-surface-3: #E4E4E7;
+    --border-subtle: rgba(0,0,0,0.06);
+    --border-default: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.2);
+    --text-1: #18181B;
+    --text-2: #52525B;
+    --text-3: #71717A;
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+    --shadow-glow: 0 0 60px rgba(0,217,126,0.2);
+    --hero-gradient-from: #18181B;
+    --hero-gradient-to: #71717A;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -53,261 +78,201 @@
     line-height: 1.7;
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background var(--transition), color var(--transition);
   }
+  [lang="en"] body { font-family: var(--font-en); }
   body::before {
     content: '';
     position: fixed; inset: 0;
     background-image:
       radial-gradient(circle at 15% 15%, rgba(0,217,126,0.08) 0%, transparent 35%),
-      radial-gradient(circle at 85% 25%, rgba(20,184,166,0.05) 0%, transparent 40%),
-      radial-gradient(circle at 50% 100%, rgba(167,139,250,0.04) 0%, transparent 50%);
+      radial-gradient(circle at 85% 25%, rgba(20,184,166,0.05) 0%, transparent 40%);
     pointer-events: none;
     z-index: 0;
+    transition: opacity var(--transition);
   }
+  [data-theme="light"] body::before { opacity: 0.4; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  /* ===== NAV ===== */
+  /* ========== NAV ========== */
   .nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,15,0.8);
+    background: color-mix(in srgb, var(--bg-base) 85%, transparent);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-subtle);
     padding: 16px 0;
   }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   .logo { display: flex; align-items: center; gap: 6px; font-family: var(--font-en); font-weight: 800; font-size: 22px; letter-spacing: -1px; text-decoration: none; color: var(--text-1); }
   .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 16px var(--brand-glow); align-self: flex-end; margin-bottom: 6px; }
-  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
   .nav-links a { color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--brand); }
-  .nav-cta { display: flex; gap: 12px; align-items: center; }
+  .nav-cta { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: var(--r-sm);
+    background: var(--bg-surface-2); border: 1px solid var(--border-default);
+    color: var(--text-1); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-size: 16px; font-family: var(--font-en); font-weight: 700;
+  }
+  .icon-btn:hover { background: var(--bg-surface-3); border-color: var(--border-strong); }
 
-  /* ===== BUTTONS ===== */
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: var(--r-sm); font-family: var(--font-ar); font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
+  /* ========== BUTTONS ========== */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: var(--r-sm); font-family: inherit; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
   .btn-primary { background: var(--brand); color: #0A0A0F; box-shadow: 0 8px 24px rgba(0,217,126,0.25); }
   .btn-primary:hover { background: var(--brand-hover); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,217,126,0.4); }
   .btn-secondary { background: var(--bg-surface-2); color: var(--text-1); border: 1px solid var(--border-default); }
   .btn-secondary:hover { background: var(--bg-surface-3); border-color: var(--border-strong); }
-  .btn-ghost { background: transparent; color: var(--text-2); }
-  .btn-ghost:hover { color: var(--text-1); }
   .btn-lg { padding: 18px 36px; font-size: 16px; border-radius: var(--r-md); }
 
-  /* ===== HERO ===== */
-  .hero { padding: 80px 0 100px; text-align: center; position: relative; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px; border-radius: 9999px;
-    background: var(--brand-muted); color: var(--brand);
-    font-size: 12px; font-weight: 600;
-    margin-bottom: 24px; border: 1px solid rgba(0,217,126,0.2);
-  }
+  /* ========== HERO ========== */
+  .hero { padding: 80px 0 100px; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 9999px; background: var(--brand-muted); color: var(--brand); font-size: 12px; font-weight: 600; margin-bottom: 24px; border: 1px solid rgba(0,217,126,0.2); }
   .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 8px var(--brand-glow); }
   .hero h1 {
-    font-family: var(--font-ar); font-weight: 800;
-    font-size: clamp(36px, 6vw, 72px);
+    font-family: inherit; font-weight: 800;
+    font-size: clamp(36px, 6vw, 68px);
     line-height: 1.15; letter-spacing: -2px;
     margin-bottom: 24px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #A1A1AA 100%);
+    background: linear-gradient(135deg, var(--hero-gradient-from) 0%, var(--hero-gradient-to) 100%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .hero h1 .accent {
-    background: linear-gradient(135deg, var(--brand) 0%, var(--teal) 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero-sub {
-    font-size: clamp(16px, 2vw, 19px);
-    color: var(--text-2);
-    max-width: 680px; margin: 0 auto 36px;
-    line-height: 1.7;
-  }
-  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
-  .hero-trust { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; color: var(--text-3); font-size: 13px; }
+  .hero h1 .accent { background: linear-gradient(135deg, var(--brand) 0%, var(--teal) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-size: clamp(16px, 2vw, 19px); color: var(--text-2); max-width: 720px; margin: 0 auto 36px; line-height: 1.8; }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+  .hero-trust { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; color: var(--text-3); font-size: 13px; margin-bottom: 60px; }
   .hero-trust span { display: flex; align-items: center; gap: 6px; }
   .hero-trust span::before { content: '✓'; color: var(--brand); font-weight: 800; }
 
-  /* ===== DASHBOARD PREVIEW ===== */
-  .preview-wrap {
-    margin-top: 60px;
-    position: relative;
-    padding: 4px;
-    border-radius: var(--r-2xl);
-    background: linear-gradient(135deg, rgba(0,217,126,0.4), rgba(20,184,166,0.1), rgba(0,217,126,0));
-  }
-  .preview-wrap::before {
-    content: ''; position: absolute; inset: -40px;
-    background: radial-gradient(ellipse at center, rgba(0,217,126,0.15) 0%, transparent 60%);
-    z-index: -1; filter: blur(40px);
-  }
-  .dash {
-    background: var(--bg-surface-1);
-    border-radius: calc(var(--r-2xl) - 4px);
-    padding: 32px;
-    text-align: right;
-  }
-  .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  /* ========== STATS BAR ========== */
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; padding: 48px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); margin-top: 60px; }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-family: var(--font-en); font-size: 44px; font-weight: 800; color: var(--brand); letter-spacing: -1px; line-height: 1; margin-bottom: 8px; }
+  .stat-item .label { font-size: 13px; color: var(--text-2); }
+
+  /* ========== DASHBOARD PREVIEW ========== */
+  .preview-wrap { margin-top: 60px; position: relative; padding: 4px; border-radius: var(--r-2xl); background: linear-gradient(135deg, rgba(0,217,126,0.4), rgba(20,184,166,0.1), rgba(0,217,126,0)); }
+  .preview-wrap::before { content: ''; position: absolute; inset: -40px; background: radial-gradient(ellipse at center, rgba(0,217,126,0.15) 0%, transparent 60%); z-index: -1; filter: blur(40px); }
+  .dash { background: var(--bg-surface-1); border-radius: calc(var(--r-2xl) - 4px); padding: 32px; text-align: start; }
+  .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
   .dash-greeting h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
   .dash-greeting p { color: var(--text-3); font-size: 13px; }
   .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
-  .stat-card { background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--r-md); padding: 20px; }
-  .stat-card.highlight { background: linear-gradient(135deg, rgba(0,217,126,0.15) 0%, rgba(20,184,166,0.05) 100%); border-color: rgba(0,217,126,0.3); }
-  .stat-label { font-size: 12px; color: var(--text-2); margin-bottom: 8px; }
-  .stat-value { font-family: var(--font-en); font-size: 28px; font-weight: 700; margin-bottom: 6px; letter-spacing: -1px; }
-  .stat-change { font-size: 12px; display: flex; align-items: center; gap: 4px; }
-  .stat-change.up { color: var(--brand); }
-  .stat-change.down { color: var(--danger); }
+  .dstat { background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--r-md); padding: 20px; }
+  .dstat.highlight { background: linear-gradient(135deg, rgba(0,217,126,0.15) 0%, rgba(20,184,166,0.05) 100%); border-color: rgba(0,217,126,0.3); }
+  .dstat .lbl { font-size: 12px; color: var(--text-2); margin-bottom: 8px; }
+  .dstat .val { font-family: var(--font-en); font-size: 28px; font-weight: 700; margin-bottom: 6px; letter-spacing: -1px; }
+  .dstat .chg { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+  .dstat .chg.up { color: var(--brand); }
+  .dstat .chg.down { color: var(--danger); }
   .dash-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
   @media (max-width: 768px) { .dash-charts { grid-template-columns: 1fr; } .dash { padding: 20px; } }
   .chart-card { background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--r-md); padding: 20px; }
   .chart-card h3 { font-size: 13px; margin-bottom: 16px; color: var(--text-2); font-weight: 600; }
   .chart-wrap { position: relative; height: 200px; }
 
-  /* ===== SECTIONS ===== */
+  /* ========== SECTIONS ========== */
   section { padding: 100px 0; position: relative; }
   .section-head { text-align: center; max-width: 720px; margin: 0 auto 60px; }
   .section-eyebrow { display: inline-block; font-size: 12px; color: var(--brand); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding: 4px 12px; background: var(--brand-muted); border-radius: 9999px; }
-  .section-head h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; letter-spacing: -1.5px; }
+  .section-head h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; letter-spacing: -1px; }
   .section-head p { color: var(--text-2); font-size: 17px; }
 
-  /* ===== FEATURES ===== */
+  /* ========== FEATURES ========== */
   .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .feature-card {
-    background: var(--bg-surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--r-lg);
-    padding: 32px;
-    transition: all 0.3s;
-  }
+  .feature-card { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--r-lg); padding: 32px; transition: all 0.3s; }
   .feature-card:hover { border-color: var(--brand); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
-  .feature-icon {
-    width: 56px; height: 56px; border-radius: var(--r-md);
-    background: linear-gradient(135deg, var(--brand-muted), rgba(20,184,166,0.05));
-    border: 1px solid rgba(0,217,126,0.25);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 20px;
-  }
+  .feature-icon { width: 56px; height: 56px; border-radius: var(--r-md); background: linear-gradient(135deg, var(--brand-muted), rgba(20,184,166,0.05)); border: 1px solid rgba(0,217,126,0.25); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
   .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
   .feature-card p { color: var(--text-2); font-size: 14px; line-height: 1.7; }
 
-  /* ===== HOW IT WORKS ===== */
+  /* ========== FEATURE SPOTLIGHT ========== */
+  .spotlight { background: var(--bg-surface-1); border-radius: var(--r-2xl); padding: 60px 40px; margin-top: 40px; border: 1px solid var(--border-subtle); }
+  .spotlight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 900px) { .spotlight-grid { grid-template-columns: 1fr; } }
+  .spotlight-title { font-size: clamp(24px, 3vw, 36px); font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+  .spotlight-desc { color: var(--text-2); margin-bottom: 24px; font-size: 16px; line-height: 1.8; }
+  .spotlight-list { list-style: none; }
+  .spotlight-list li { padding: 12px 0; border-top: 1px solid var(--border-subtle); display: flex; align-items: start; gap: 12px; }
+  .spotlight-list li::before { content: '✓'; color: var(--brand); font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+  .spotlight-visual { background: var(--bg-surface-2); border-radius: var(--r-lg); padding: 24px; border: 1px solid var(--border-subtle); }
+  .advisor-card { background: linear-gradient(135deg, rgba(0,217,126,0.08), rgba(20,184,166,0.02)); border: 1px solid rgba(0,217,126,0.2); border-radius: var(--r-md); padding: 20px; margin-bottom: 12px; }
+  .advisor-card-title { font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .advisor-card-title::before { content: '!'; width: 24px; height: 24px; border-radius: 50%; background: var(--brand); color: #0A0A0F; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+  .advisor-card-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .advisor-card-ref { font-size: 11px; color: var(--text-3); margin-top: 8px; font-style: italic; }
+
+  /* ========== HOW IT WORKS ========== */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   @media (max-width: 768px) { .steps { grid-template-columns: 1fr; } }
-  .step-card {
-    background: var(--bg-surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--r-lg);
-    padding: 32px;
-    position: relative;
-  }
-  .step-num {
-    position: absolute;
-    top: -16px; right: 24px;
-    width: 48px; height: 48px; border-radius: 50%;
-    background: var(--brand); color: #0A0A0F;
-    font-family: var(--font-en); font-weight: 800; font-size: 20px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,217,126,0.3);
-  }
+  .step-card { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--r-lg); padding: 32px; position: relative; }
+  .step-num { position: absolute; top: -16px; inset-inline-end: 24px; width: 48px; height: 48px; border-radius: 50%; background: var(--brand); color: #0A0A0F; font-family: var(--font-en); font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,217,126,0.3); }
   .step-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; margin-top: 12px; }
   .step-card p { color: var(--text-2); font-size: 14px; }
 
-  /* ===== PRICING ===== */
-  .pricing-card {
-    max-width: 500px; margin: 0 auto;
-    background: var(--bg-surface-1);
-    border: 2px solid var(--brand);
-    border-radius: var(--r-xl);
-    padding: 48px 40px;
-    text-align: center;
-    position: relative;
-    box-shadow: var(--shadow-glow);
-  }
-  .pricing-badge {
-    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-    background: var(--brand); color: #0A0A0F;
-    padding: 6px 16px; border-radius: 9999px;
-    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
-  }
+  /* ========== PRICING ========== */
+  .pricing-card { max-width: 520px; margin: 0 auto; background: var(--bg-surface-1); border: 2px solid var(--brand); border-radius: var(--r-xl); padding: 48px 40px; text-align: center; position: relative; box-shadow: var(--shadow-glow); }
+  .pricing-badge { position: absolute; top: -14px; inset-inline-start: 50%; transform: translateX(-50%); background: var(--brand); color: #0A0A0F; padding: 6px 16px; border-radius: 9999px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
   .pricing-tagline { font-size: 14px; color: var(--text-2); margin-bottom: 20px; }
   .pricing-amount { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin-bottom: 8px; }
   .pricing-price { font-family: var(--font-en); font-size: 72px; font-weight: 800; color: var(--brand); letter-spacing: -3px; line-height: 1; }
+  .pricing-original { font-family: var(--font-en); font-size: 24px; color: var(--text-3); text-decoration: line-through; margin-inline-end: 8px; }
   .pricing-currency { font-size: 22px; color: var(--text-2); font-weight: 600; }
   .pricing-period { font-size: 14px; color: var(--text-3); margin-bottom: 32px; }
-  .pricing-features { text-align: right; margin-bottom: 32px; }
-  .pricing-features li { list-style: none; padding: 10px 0; display: flex; align-items: start; gap: 10px; font-size: 14px; color: var(--text-1); border-bottom: 1px solid var(--border-subtle); }
+  .pricing-features { text-align: start; margin-bottom: 32px; list-style: none; }
+  .pricing-features li { padding: 10px 0; display: flex; align-items: start; gap: 10px; font-size: 14px; color: var(--text-1); border-bottom: 1px solid var(--border-subtle); }
   .pricing-features li:last-child { border-bottom: none; }
   .pricing-features li::before { content: '✓'; color: var(--brand); font-weight: 800; flex-shrink: 0; font-size: 16px; }
-  .pricing-compare { font-size: 12px; color: var(--text-3); margin-top: 16px; font-style: italic; }
 
-  /* ===== PAYMENT FLOW ===== */
-  .payment-card {
-    background: var(--bg-surface-1);
-    border: 1px solid var(--border-default);
-    border-radius: var(--r-xl);
-    padding: 40px;
-    max-width: 720px; margin: 0 auto;
-  }
+  /* ========== PAYMENT ========== */
+  .payment-card { background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: var(--r-xl); padding: 40px; max-width: 720px; margin: 0 auto; }
   .payment-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
   .payment-step:last-child { border-bottom: none; }
   .payment-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--brand-muted); color: var(--brand); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: var(--font-en); flex-shrink: 0; }
   .payment-step-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
   .payment-step-content p { color: var(--text-2); font-size: 14px; line-height: 1.7; }
-  .payment-highlight { background: var(--brand-muted); border: 1px dashed var(--brand); border-radius: var(--r-md); padding: 16px; margin-top: 12px; }
-  .payment-highlight strong { color: var(--brand); font-family: var(--font-mono); font-size: 17px; letter-spacing: 1px; }
+  .payment-highlight { background: var(--brand-muted); border: 1px dashed var(--brand); border-radius: var(--r-md); padding: 14px 16px; margin-top: 12px; }
+  .payment-highlight strong { color: var(--brand); font-family: var(--font-mono); font-size: 18px; letter-spacing: 1px; }
 
-  /* ===== FAQ ===== */
+  /* ========== FAQ ========== */
   .faq-grid { display: grid; gap: 12px; max-width: 800px; margin: 0 auto; }
-  .faq-item {
-    background: var(--bg-surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--r-md);
-    padding: 20px 24px;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
+  .faq-item { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--r-md); padding: 20px 24px; cursor: pointer; transition: border-color 0.2s; }
   .faq-item:hover { border-color: var(--border-strong); }
-  .faq-item summary { font-weight: 700; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .faq-item summary { font-weight: 700; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: '+'; color: var(--brand); font-size: 24px; font-weight: 300; transition: transform 0.2s; }
+  .faq-item summary::after { content: '+'; color: var(--brand); font-size: 24px; font-weight: 300; transition: transform 0.2s; flex-shrink: 0; }
   .faq-item[open] summary::after { transform: rotate(45deg); }
   .faq-item p { color: var(--text-2); margin-top: 12px; line-height: 1.7; font-size: 14px; }
 
-  /* ===== FINAL CTA ===== */
-  .final-cta {
-    background: linear-gradient(135deg, var(--bg-surface-1), var(--bg-surface-2));
-    border: 1px solid var(--brand);
-    border-radius: var(--r-2xl);
-    padding: 64px 40px;
-    text-align: center;
-    box-shadow: var(--shadow-glow);
-  }
-  .final-cta h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
-  .final-cta p { color: var(--text-2); font-size: 17px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  /* ========== SIGNUP / CONTACT ========== */
+  .form-card { max-width: 520px; margin: 0 auto; background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: var(--r-xl); padding: 40px; }
+  .form-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; text-align: center; }
+  .form-card .sub { color: var(--text-2); text-align: center; margin-bottom: 28px; font-size: 14px; }
+  .form-field { margin-bottom: 16px; }
+  .form-field label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
+  .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 14px 16px; background: var(--bg-surface-2); border: 1px solid var(--border-default); border-radius: var(--r-sm); color: var(--text-1); font-family: inherit; font-size: 14px; transition: all 0.2s; }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-muted); }
+  .form-submit { width: 100%; padding: 16px; font-size: 16px; justify-content: center; }
 
-  /* ===== FOOTER ===== */
+  /* ========== FINAL CTA ========== */
+  .final-cta { background: linear-gradient(135deg, var(--bg-surface-1), var(--bg-surface-2)); border: 1px solid var(--brand); border-radius: var(--r-2xl); padding: 64px 40px; text-align: center; box-shadow: var(--shadow-glow); }
+  .final-cta h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+  .final-cta p { color: var(--text-2); font-size: 17px; margin-bottom: 32px; max-width: 600px; margin-inline: auto; }
+
+  /* ========== FOOTER ========== */
   footer { padding: 60px 0 40px; border-top: 1px solid var(--border-subtle); margin-top: 80px; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
   .footer-brand p { color: var(--text-3); font-size: 14px; line-height: 1.7; margin-top: 16px; max-width: 320px; }
   .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 16px; letter-spacing: 0.5px; }
   .footer-col a { display: block; color: var(--text-3); font-size: 14px; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
   .footer-col a:hover { color: var(--brand); }
   .footer-bottom { padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-3); font-size: 13px; }
-  .footer-bottom-brand { color: var(--text-2); }
-  .footer-bottom-brand strong { color: var(--brand); }
+  .footer-bottom strong { color: var(--brand); }
 
-  /* ===== SIGNUP MODAL ===== */
-  .signup-section { max-width: 480px; margin: 0 auto; background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: var(--r-xl); padding: 40px; }
-  .signup-section h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; text-align: center; }
-  .signup-section .sub { color: var(--text-2); text-align: center; margin-bottom: 28px; font-size: 14px; }
-  .form-field { margin-bottom: 16px; }
-  .form-field label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
-  .form-field input { width: 100%; padding: 14px 16px; background: var(--bg-surface-2); border: 1px solid var(--border-default); border-radius: var(--r-sm); color: var(--text-1); font-family: var(--font-ar); font-size: 14px; transition: all 0.2s; }
-  .form-field input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-muted); }
-  .form-submit { width: 100%; padding: 16px; font-size: 16px; }
-
-  /* ===== UTILITIES ===== */
+  /* ========== UTIL ========== */
   .hide-mobile { display: block; }
   @media (max-width: 768px) {
     .hide-mobile { display: none; }
@@ -319,36 +284,49 @@
 </head>
 <body>
 
-<!-- ============= NAV ============= -->
+<!-- ========== NAV ========== -->
 <nav class="nav">
   <div class="container nav-inner">
-    <a href="#" class="logo">Maaly<span class="logo-dot"></span></a>
+    <a href="#" class="logo">Mahfaza<span class="logo-dot"></span></a>
     <div class="nav-links hide-mobile">
-      <a href="#features">المميزات</a>
-      <a href="#how">إزاي بتشتغل</a>
-      <a href="#pricing">السعر</a>
-      <a href="#faq">أسئلة شائعة</a>
+      <a href="#features" data-i18n="nav.features">المزايا</a>
+      <a href="#advisor" data-i18n="nav.advisor">المستشار</a>
+      <a href="#pricing" data-i18n="nav.pricing">السعر</a>
+      <a href="#faq" data-i18n="nav.faq">الأسئلة الشائعة</a>
     </div>
     <div class="nav-cta">
-      <a href="#signup" class="btn btn-primary">ابدأ الآن</a>
+      <button class="icon-btn" id="langToggle" title="Language" aria-label="Toggle language">EN</button>
+      <button class="icon-btn" id="themeToggle" title="Theme" aria-label="Toggle theme">☾</button>
+      <a href="#signup" class="btn btn-primary" data-i18n="nav.cta">ابدأ الآن</a>
     </div>
   </div>
 </nav>
 
-<!-- ============= HERO ============= -->
+<!-- ========== HERO ========== -->
 <section class="hero">
   <div class="container">
-    <span class="hero-badge">مبني على قواعد مالية عالمية</span>
-    <h1>فلوسك بتنتهي قبل آخر الشهر؟<br><span class="accent">عرّفنا وين بتروح، ونوريك إزاي توقفها.</span></h1>
-    <p class="hero-sub">Maaly منصة إدارة مالية شخصية بتساعدك تتتبع مصاريفك، تطبق قواعد ادخار مُجرَّبة عالمياً، وتاخد قرارات أذكى — كل ده بـ 199 جنيه مرة واحدة، للأبد.</p>
+    <span class="hero-badge" data-i18n="hero.badge">مبنية على القواعد المالية العالمية</span>
+    <h1>
+      <span data-i18n="hero.title1">هل تنتهي أموالك قبل نهاية الشهر؟</span><br>
+      <span class="accent" data-i18n="hero.title2">اكتشف أين تذهب، وكيف تستعيد السيطرة.</span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">محفظة منصة لإدارة الأموال الشخصية، تساعدك على تتبع دخلك ومصروفاتك، وتطبيق منهجيات الادخار المعتمدة عالميًا، واتخاذ قرارات مالية أكثر ذكاءً — كل ذلك بدفعة واحدة فقط، مدى الحياة.</p>
     <div class="hero-ctas">
-      <a href="#signup" class="btn btn-primary btn-lg">ابدأ بـ 199 جنيه فقط ←</a>
-      <a href="#how" class="btn btn-secondary btn-lg">شوف إزاي بتشتغل</a>
+      <a href="#signup" class="btn btn-primary btn-lg"><span data-i18n="hero.cta1">ابدأ بسعر</span> <span id="heroPrice">199</span> <span data-i18n="hero.currency">جنيهًا فقط</span> ←</a>
+      <a href="#how" class="btn btn-secondary btn-lg" data-i18n="hero.cta2">شاهد آلية العمل</a>
     </div>
     <div class="hero-trust">
-      <span>دفعة واحدة، استخدام مدى الحياة</span>
-      <span>بياناتك مشفّرة وآمنة</span>
-      <span>بدون اشتراك شهري</span>
+      <span data-i18n="hero.trust1">دفعة واحدة، استخدام مدى الحياة</span>
+      <span data-i18n="hero.trust2">بياناتك مشفّرة وآمنة</span>
+      <span data-i18n="hero.trust3">بدون اشتراك شهري</span>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stat-item"><div class="num">3</div><div class="label" data-i18n="stats.s1">منهجيات مالية عالمية</div></div>
+      <div class="stat-item"><div class="num">4</div><div class="label" data-i18n="stats.s2">أنواع تقارير</div></div>
+      <div class="stat-item"><div class="num">100%</div><div class="label" data-i18n="stats.s3">خصوصية مضمونة</div></div>
+      <div class="stat-item"><div class="num">∞</div><div class="label" data-i18n="stats.s4">تحديثات مدى الحياة</div></div>
     </div>
 
     <!-- DASHBOARD PREVIEW -->
@@ -356,34 +334,34 @@
       <div class="dash">
         <div class="dash-header">
           <div class="dash-greeting">
-            <h2>أهلاً محمود 👋</h2>
-            <p>وضعك المالي الشهر ده ممتاز — كمّل كده</p>
+            <h2 data-i18n="dash.greeting">أهلاً بك في محفظة 👋</h2>
+            <p data-i18n="dash.subtitle">وضعك المالي هذا الشهر ممتاز — استمر على هذا النهج</p>
           </div>
         </div>
         <div class="dash-grid">
-          <div class="stat-card highlight">
-            <div class="stat-label">صافي الثروة</div>
-            <div class="stat-value">45,200 ج</div>
-            <div class="stat-change up">▲ 8.5% عن الشهر اللي فات</div>
+          <div class="dstat highlight">
+            <div class="lbl" data-i18n="dash.netWorth">صافي الثروة</div>
+            <div class="val">45,200 EGP</div>
+            <div class="chg up" data-i18n="dash.chg1">▲ 8.5% مقارنةً بالشهر الماضي</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">الدخل (يونيو)</div>
-            <div class="stat-value">18,000 ج</div>
-            <div class="stat-change up">▲ ثابت</div>
+          <div class="dstat">
+            <div class="lbl" data-i18n="dash.income">الدخل</div>
+            <div class="val">18,000 EGP</div>
+            <div class="chg up" data-i18n="dash.chg2">▲ ثابت</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">المصاريف</div>
-            <div class="stat-value">9,250 ج</div>
-            <div class="stat-change down">▼ 12% — ادخرت أكتر</div>
+          <div class="dstat">
+            <div class="lbl" data-i18n="dash.expenses">المصروفات</div>
+            <div class="val">9,250 EGP</div>
+            <div class="chg down" data-i18n="dash.chg3">▼ 12% — ادخار أعلى</div>
           </div>
         </div>
         <div class="dash-charts">
           <div class="chart-card">
-            <h3>الدخل vs المصاريف (آخر 6 شهور)</h3>
+            <h3 data-i18n="dash.trend">الدخل مقابل المصروفات (آخر 6 أشهر)</h3>
             <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
           </div>
           <div class="chart-card">
-            <h3>وين بتصرف فلوسك</h3>
+            <h3 data-i18n="dash.category">أين تُنفق أموالك</h3>
             <div class="chart-wrap"><canvas id="catChart"></canvas></div>
           </div>
         </div>
@@ -392,317 +370,636 @@
   </div>
 </section>
 
-<!-- ============= FEATURES ============= -->
+<!-- ========== FEATURES ========== -->
 <section id="features">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">المميزات</span>
-      <h2>كل اللي محتاجه لإدارة فلوسك في مكان واحد</h2>
-      <p>منصة كاملة مبنية على قواعد عالمية زي 50/30/20 و Pay Yourself First — مش مجرد tracker عادي.</p>
+      <span class="section-eyebrow" data-i18n="features.eyebrow">المزايا</span>
+      <h2 data-i18n="features.title">كل ما تحتاجه لإدارة أموالك في منصة واحدة</h2>
+      <p data-i18n="features.desc">منصة متكاملة مبنية على منهجيات عالمية مثل 50/30/20 و Pay Yourself First — ليست مجرد أداة تتبع عادية.</p>
     </div>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <h3>تتبع كل قرش</h3>
-        <p>سجّل دخلك ومصروفاتك بسرعة. شوف كل فلوسك في مكان واحد بتنظيم ووضوح كامل.</p>
+        <h3 data-i18n="feat.1.t">تتبع كل قرش</h3>
+        <p data-i18n="feat.1.d">سجّل دخلك ومصروفاتك بسرعة. شاهد كل أموالك في مكان واحد بتنظيم ووضوح كامل.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🧠</div>
-        <h3>تحليل ذكي بقواعد عالمية</h3>
-        <p>المنصة بتحلل فلوسك بناءً على 50/30/20، Zero-Based Budgeting، وPay Yourself First — مش كلام في الهوى.</p>
+        <h3 data-i18n="feat.2.t">تحليل ذكي بقواعد عالمية</h3>
+        <p data-i18n="feat.2.d">المنصة تحلل أموالك بناءً على 50/30/20، الميزانية الصفرية، وادفع لنفسك أولاً — قواعد علمية مُثبتة.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📈</div>
-        <h3>تقارير تفاعلية</h3>
-        <p>charts تفاعلية وتقارير يومية، أسبوعية، شهرية، وسنوية. قارن بين أي فترتين بضغطة زر.</p>
+        <h3 data-i18n="feat.3.t">تقارير تفاعلية</h3>
+        <p data-i18n="feat.3.d">رسوم بيانية تفاعلية وتقارير يومية، أسبوعية، شهرية، وسنوية. قارن بين أي فترتين بضغطة زر.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">💡</div>
-        <h3>نصايح شخصية ليك أنت</h3>
-        <p>المنصة بتديك توصيات مبنية على وضعك المالي بالظبط: ادخر إيه، استثمر إزاي، وقلل صرفك في إيه.</p>
+        <h3 data-i18n="feat.4.t">نصائح شخصية مُخصّصة</h3>
+        <p data-i18n="feat.4.d">توصيات مبنية على وضعك المالي بالضبط: ادّخر كم، استثمر كيف، وقلّل من إنفاقك في أي مجال.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🛡️</div>
-        <h3>صندوق طوارئ وأهداف</h3>
-        <p>حدد أهدافك المالية (سداد دين، شقة، فرح) وشوف خطة واضحة للوصول لها بناءً على دخلك.</p>
+        <h3 data-i18n="feat.5.t">صندوق الطوارئ والأهداف</h3>
+        <p data-i18n="feat.5.d">حدد أهدافك المالية (سداد دين، منزل، مناسبة) وشاهد خطة واضحة للوصول إليها بناءً على دخلك.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔔</div>
-        <h3>تنبيهات قبل ما تخسر</h3>
-        <p>المنصة بتنبهك قبل ما تتعدى ميزانيتك، ولما تلاحظ نمط صرف غير طبيعي تنبهك له فوراً.</p>
+        <h3 data-i18n="feat.6.t">تنبيهات قبل التجاوز</h3>
+        <p data-i18n="feat.6.d">المنصة تنبهك قبل أن تتجاوز ميزانيتك، وعند ملاحظة أي نمط إنفاق غير معتاد تخبرك على الفور.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= HOW IT WORKS ============= -->
-<section id="how" style="background: var(--bg-surface-1);">
+<!-- ========== ADVISOR SPOTLIGHT ========== -->
+<section id="advisor" style="background: var(--bg-surface-1);">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">إزاي بتشتغل</span>
-      <h2>3 خطوات وتبدأ تتحكم في فلوسك</h2>
+      <span class="section-eyebrow" data-i18n="adv.eyebrow">المستشار المالي</span>
+      <h2 data-i18n="adv.title">ليست مجرد أرقام — توصيات حقيقية بقواعد عالمية</h2>
+      <p data-i18n="adv.desc">قلب المنصة هو المستشار المالي الذكي الذي يحلل وضعك ويقدم خطوات عملية مبنية على منهجيات معتمدة من خبراء الاقتصاد عالميًا.</p>
+    </div>
+
+    <div class="spotlight">
+      <div class="spotlight-grid">
+        <div>
+          <h3 class="spotlight-title" data-i18n="adv.s.title">توصيات مبنية على أبحاث حقيقية</h3>
+          <p class="spotlight-desc" data-i18n="adv.s.desc">كل توصية في محفظة مبنية على قاعدة مالية مُثبتة من مصدر موثوق — لا توجد تخمينات أو نصائح عشوائية.</p>
+          <ul class="spotlight-list">
+            <li data-i18n="adv.s.l1">قاعدة 50/30/20 من كتاب Elizabeth Warren — "All Your Worth"</li>
+            <li data-i18n="adv.s.l2">منهجية Pay Yourself First من David Bach — "The Automatic Millionaire"</li>
+            <li data-i18n="adv.s.l3">الميزانية الصفرية من Dave Ramsey و YNAB</li>
+            <li data-i18n="adv.s.l4">معيار Debt-to-Income من إرشادات CFPB الأمريكية</li>
+            <li data-i18n="adv.s.l5">تعديلات خاصة بالسياق المصري (التضخم، تنويع العملات)</li>
+          </ul>
+        </div>
+        <div class="spotlight-visual">
+          <div class="advisor-card">
+            <div class="advisor-card-title" data-i18n="adv.card1.t">صندوق الطوارئ يصل إلى 60% من الهدف</div>
+            <div class="advisor-card-desc" data-i18n="adv.card1.d">لديك 12,000 جنيه محتجزة. الهدف 3 أشهر مصاريف = 27,750 جنيه. بإضافة 2,500 جنيه شهريًا، ستصل إلى الهدف خلال 6 أشهر.</div>
+            <div class="advisor-card-ref" data-i18n="adv.card1.r">المرجع: Dave Ramsey Baby Step 3 — Emergency Fund</div>
+          </div>
+          <div class="advisor-card">
+            <div class="advisor-card-title" data-i18n="adv.card2.t">نسبة ادخارك 22% — فوق المتوسط العالمي</div>
+            <div class="advisor-card-desc" data-i18n="adv.card2.d">المتوسط العالمي للادخار هو 15-20%. أنت في الفئة الممتازة. الخطوة التالية: استثمار 30% من الفائض.</div>
+            <div class="advisor-card-ref" data-i18n="adv.card2.r">المرجع: FIRE Movement Benchmarks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section id="how">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow" data-i18n="how.eyebrow">آلية العمل</span>
+      <h2 data-i18n="how.title">ثلاث خطوات لتبدأ التحكم في أموالك</h2>
     </div>
     <div class="steps">
       <div class="step-card">
         <div class="step-num">1</div>
-        <h3>سجّل حساب جديد</h3>
-        <p>اعمل حساب في أقل من دقيقة بالإيميل وكلمة سر. هتاخد Order ID مميز ليك.</p>
+        <h3 data-i18n="how.s1.t">سجّل حسابًا جديدًا</h3>
+        <p data-i18n="how.s1.d">أنشئ حسابك في أقل من دقيقة بالبريد الإلكتروني وكلمة المرور. ستحصل على رقم طلب مميز خاص بك.</p>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
-        <h3>ادفع 199 جنيه عبر InstaPay</h3>
-        <p>حوّل المبلغ على رقمنا، واكتب Order ID بتاعك في وصف التحويل. ابعت لقطة الشاشة عبر WhatsApp.</p>
+        <h3 data-i18n="how.s2.t">ادفع عبر InstaPay</h3>
+        <p data-i18n="how.s2.d">حوّل المبلغ على رقمنا، واكتب رقم الطلب الخاص بك في وصف التحويل. أرسل صورة التحويل عبر واتساب.</p>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
-        <h3>استلم كود التفعيل وابدأ</h3>
-        <p>هنبعتلك كود التفعيل خلال ساعة. أدخله في حسابك واستخدم Maaly مدى الحياة.</p>
+        <h3 data-i18n="how.s3.t">استلم كود التفعيل</h3>
+        <p data-i18n="how.s3.d">سنرسل لك كود التفعيل خلال ساعة. أدخله في حسابك واستخدم محفظة مدى الحياة.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= PRICING ============= -->
-<section id="pricing">
+<!-- ========== PRICING ========== -->
+<section id="pricing" style="background: var(--bg-surface-1);">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">السعر</span>
-      <h2>سعر واحد. للأبد. بدون مفاجآت.</h2>
-      <p>التطبيقات العالمية بتاخد منك 200+ جنيه شهرياً. إحنا بناخدها مرة واحدة بس.</p>
+      <span class="section-eyebrow" data-i18n="pricing.eyebrow">السعر</span>
+      <h2 data-i18n="pricing.title">سعر واحد. مدى الحياة. بلا مفاجآت.</h2>
+      <p data-i18n="pricing.desc">المنصات العالمية تتقاضى منك أكثر من 200 جنيه شهريًا. نحن نتقاضاها مرة واحدة فقط.</p>
     </div>
     <div class="pricing-card">
-      <div class="pricing-badge">عرض الإطلاق</div>
-      <div class="pricing-tagline">Maaly Lifetime Access</div>
+      <div class="pricing-badge" id="pricingBadge" data-i18n="pricing.badge">عرض الإطلاق</div>
+      <div class="pricing-tagline" data-i18n="pricing.tagline">Mahfaza Lifetime Access</div>
       <div class="pricing-amount">
-        <span class="pricing-price">199</span>
-        <span class="pricing-currency">جنيه</span>
+        <span class="pricing-original" id="originalPrice" style="display:none;"></span>
+        <span class="pricing-price" id="displayPrice">199</span>
+        <span class="pricing-currency" data-i18n="pricing.currency">جنيهًا</span>
       </div>
-      <div class="pricing-period">مرة واحدة فقط — استخدام مدى الحياة</div>
+      <div class="pricing-period" data-i18n="pricing.period">مرة واحدة فقط — استخدام مدى الحياة</div>
       <ul class="pricing-features">
-        <li>كل المميزات بدون استثناء</li>
-        <li>تحديثات مجانية مدى الحياة</li>
-        <li>تقارير غير محدودة</li>
-        <li>دعم فني عبر WhatsApp</li>
-        <li>بياناتك مشفّرة وآمنة 100%</li>
-        <li>بدون إعلانات، بدون اشتراكات</li>
+        <li data-i18n="pricing.f1">كل المزايا بلا استثناء</li>
+        <li data-i18n="pricing.f2">تحديثات مجانية مدى الحياة</li>
+        <li data-i18n="pricing.f3">تقارير غير محدودة</li>
+        <li data-i18n="pricing.f4">دعم فني عبر واتساب</li>
+        <li data-i18n="pricing.f5">بياناتك مشفّرة وآمنة 100%</li>
+        <li data-i18n="pricing.f6">بدون إعلانات، بدون اشتراكات</li>
       </ul>
-      <a href="#signup" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">ابدأ دلوقتي ←</a>
-      <div class="pricing-compare">مقارنة بمتوسط 50 جنيه/شهر = توفير 401 جنيه في أول سنة فقط</div>
+      <a href="#signup" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;" data-i18n="pricing.cta">ابدأ الآن ←</a>
     </div>
   </div>
 </section>
 
-<!-- ============= SIGNUP ============= -->
-<section id="signup" style="background: var(--bg-surface-1);">
+<!-- ========== SIGNUP ========== -->
+<section id="signup">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">ابدأ دلوقتي</span>
-      <h2>سجّل حسابك في دقيقة</h2>
-      <p>بعد ما تسجل، هنوريك إزاي تكمل الدفع وتاخد كود التفعيل.</p>
+      <span class="section-eyebrow" data-i18n="signup.eyebrow">ابدأ الآن</span>
+      <h2 data-i18n="signup.title">سجّل حسابك في دقيقة</h2>
+      <p data-i18n="signup.desc">بعد التسجيل، سنوضّح لك كيفية إتمام الدفع واستلام كود التفعيل.</p>
     </div>
-    <div class="signup-section">
-      <h3>اعمل حسابك</h3>
-      <div class="sub">خطوتك الأولى نحو إدارة فلوسك بذكاء</div>
+    <div class="form-card">
+      <h3 data-i18n="signup.formTitle">أنشئ حسابك</h3>
+      <div class="sub" data-i18n="signup.formSub">خطوتك الأولى نحو إدارة أموالك بذكاء</div>
       <form onsubmit="handleSignup(event)">
         <div class="form-field">
-          <label for="name">الاسم</label>
-          <input type="text" id="name" placeholder="محمود رمضان" required>
+          <label data-i18n="signup.name">الاسم الكامل</label>
+          <input type="text" id="su-name" required>
         </div>
         <div class="form-field">
-          <label for="email">الإيميل</label>
-          <input type="email" id="email" placeholder="you@example.com" required>
+          <label data-i18n="signup.email">البريد الإلكتروني</label>
+          <input type="email" id="su-email" required>
         </div>
         <div class="form-field">
-          <label for="password">كلمة السر</label>
-          <input type="password" id="password" placeholder="على الأقل 8 حروف" minlength="8" required>
+          <label data-i18n="signup.password">كلمة المرور</label>
+          <input type="password" id="su-password" minlength="8" required>
         </div>
-        <button type="submit" class="btn btn-primary form-submit">إنشاء حساب ←</button>
-        <p style="text-align:center; margin-top:16px; color: var(--text-3); font-size: 12px;">بالتسجيل، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
+        <button type="submit" class="btn btn-primary form-submit" data-i18n="signup.submit">إنشاء حساب ←</button>
+        <p style="text-align:center; margin-top:16px; color: var(--text-3); font-size: 12px;" data-i18n="signup.terms">بالتسجيل، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ============= PAYMENT INSTRUCTIONS ============= -->
-<section id="payment">
+<!-- ========== PAYMENT INSTRUCTIONS ========== -->
+<section id="payment" style="background: var(--bg-surface-1);">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">طريقة الدفع</span>
-      <h2>الدفع عبر InstaPay — بسيط وآمن</h2>
+      <span class="section-eyebrow" data-i18n="pay.eyebrow">طريقة الدفع</span>
+      <h2 data-i18n="pay.title">الدفع عبر InstaPay — بسيط وآمن</h2>
     </div>
     <div class="payment-card">
       <div class="payment-step">
         <div class="payment-step-num">1</div>
         <div class="payment-step-content">
-          <h4>افتح تطبيق InstaPay أو محفظتك الإلكترونية</h4>
-          <p>ادخل على أي بنك أو محفظة (فودافون كاش، اتصالات كاش، أورانج كاش) المتصلة بـ InstaPay.</p>
+          <h4 data-i18n="pay.s1.t">افتح تطبيق InstaPay أو محفظتك الإلكترونية</h4>
+          <p data-i18n="pay.s1.d">يمكنك استخدام أي بنك أو محفظة (فودافون كاش، اتصالات كاش، أورانج كاش) متصلة بـ InstaPay.</p>
         </div>
       </div>
       <div class="payment-step">
         <div class="payment-step-num">2</div>
         <div class="payment-step-content">
-          <h4>حوّل 199 جنيه على الرقم ده</h4>
-          <p>رقم InstaPay الخاص بنا:</p>
-          <div class="payment-highlight"><strong>01124941148</strong></div>
+          <h4><span data-i18n="pay.s2.t1">حوّل</span> <span id="payAmount">199</span> <span data-i18n="pay.s2.t2">جنيهًا على الرقم التالي</span></h4>
+          <p data-i18n="pay.s2.d">رقم InstaPay الخاص بنا:</p>
+          <div class="payment-highlight"><strong id="payInstaPay">01124941148</strong></div>
         </div>
       </div>
       <div class="payment-step">
         <div class="payment-step-num">3</div>
         <div class="payment-step-content">
-          <h4>اكتب Order ID في وصف التحويل</h4>
-          <p>هتلاقي Order ID بتاعك بعد ما تسجل حساب. اكتبه في خانة "وصف التحويل" عشان نقدر نطابق دفعتك بحسابك.</p>
+          <h4 data-i18n="pay.s3.t">اكتب رقم الطلب في وصف التحويل</h4>
+          <p data-i18n="pay.s3.d">ستجد رقم الطلب الخاص بك بعد إنشاء الحساب. اكتبه في خانة "وصف التحويل" لمطابقة دفعتك بحسابك.</p>
         </div>
       </div>
       <div class="payment-step">
         <div class="payment-step-num">4</div>
         <div class="payment-step-content">
-          <h4>ابعت Screenshot على WhatsApp</h4>
-          <p>صوّر شاشة التحويل وابعتها على رقمنا:</p>
-          <div class="payment-highlight"><strong>01112435090</strong></div>
-          <a href="https://wa.me/201112435090" class="btn btn-primary" style="margin-top:12px;">📱 افتح WhatsApp</a>
+          <h4 data-i18n="pay.s4.t">أرسل صورة التحويل عبر واتساب</h4>
+          <p data-i18n="pay.s4.d">صوّر شاشة التحويل وأرسلها على رقمنا:</p>
+          <div class="payment-highlight"><strong id="payWhatsApp">01112435090</strong></div>
+          <a id="whatsappLink" href="https://wa.me/201112435090" class="btn btn-primary" style="margin-top:12px;" data-i18n="pay.s4.cta">📱 افتح واتساب</a>
         </div>
       </div>
       <div class="payment-step">
         <div class="payment-step-num">5</div>
         <div class="payment-step-content">
-          <h4>استلم كود التفعيل خلال ساعة</h4>
-          <p>هنراجع التحويل ونبعتلك كود التفعيل على الواتساب. أدخله في حسابك واستخدم Maaly فوراً.</p>
+          <h4 data-i18n="pay.s5.t">استلم كود التفعيل خلال ساعة</h4>
+          <p data-i18n="pay.s5.d">سنراجع التحويل ونرسل لك كود التفعيل عبر واتساب. أدخله في حسابك واستخدم محفظة فورًا.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= FAQ ============= -->
-<section id="faq" style="background: var(--bg-surface-1);">
+<!-- ========== FAQ ========== -->
+<section id="faq">
   <div class="container">
     <div class="section-head">
-      <span class="section-eyebrow">أسئلة شائعة</span>
-      <h2>الأسئلة اللي ممكن تجي في بالك</h2>
+      <span class="section-eyebrow" data-i18n="faq.eyebrow">الأسئلة الشائعة</span>
+      <h2 data-i18n="faq.title">الأسئلة التي قد تخطر ببالك</h2>
     </div>
     <div class="faq-grid">
       <details class="faq-item">
-        <summary>هل بياناتي المالية آمنة؟</summary>
-        <p>أيوه، 100%. بياناتك مشفّرة بتقنيات بنكية (AES-256) ومحفوظة على Supabase الموثوقة عالمياً. محدش يقدر يشوف بياناتك غيرك أنت.</p>
+        <summary data-i18n="faq.q1">هل بياناتي المالية آمنة؟</summary>
+        <p data-i18n="faq.a1">نعم، 100%. بياناتك مشفّرة بمعايير بنكية (AES-256) ومحفوظة على Supabase الموثوقة عالميًا. لا يستطيع أحد رؤية بياناتك سواك.</p>
       </details>
       <details class="faq-item">
-        <summary>هل ينفع أسترد فلوسي لو مش عاجبني؟</summary>
-        <p>عندك 7 أيام من تاريخ التفعيل لو حسيت إن المنصة مش بتفيدك، استرد فلوسك كاملة بدون أي أسئلة. ابعت رسالة على الواتساب وخلاص.</p>
+        <summary data-i18n="faq.q2">هل يمكنني استرداد المبلغ إن لم تعجبني؟</summary>
+        <p data-i18n="faq.a2">لديك 7 أيام من تاريخ التفعيل لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.</p>
       </details>
       <details class="faq-item">
-        <summary>هل بتعملوا تحديثات وإضافات جديدة؟</summary>
-        <p>طبعاً. اشتراكك Lifetime يعني أي feature جديدة بنطلعها هتستفيد بيها أوتوماتيكياً بدون أي رسوم إضافية.</p>
+        <summary data-i18n="faq.q3">هل تطلقون تحديثات وميزات جديدة؟</summary>
+        <p data-i18n="faq.a3">بالتأكيد. اشتراكك مدى الحياة يعني الاستفادة من أي ميزة جديدة نطلقها تلقائيًا بلا رسوم إضافية.</p>
       </details>
       <details class="faq-item">
-        <summary>أنا مش فاهم محاسبة، هينفع أستخدمها؟</summary>
-        <p>Maaly مصممة للناس العادية، مش للمحاسبين. كل حاجة فيها بسيطة ومشروحة بالعربي. الـ onboarding بياخدك خطوة بخطوة، وفي 5 دقايق هتكون عارف تستخدمها كاملة.</p>
+        <summary data-i18n="faq.q4">لست خبيرًا في المحاسبة، هل أستطيع استخدامها؟</summary>
+        <p data-i18n="faq.a4">محفظة مصممة للأشخاص العاديين، وليست للمحاسبين. كل شيء فيها بسيط ومشروح. عملية التهيئة تأخذك خطوة بخطوة، وخلال 5 دقائق ستتقن استخدامها.</p>
       </details>
       <details class="faq-item">
-        <summary>إيه الفرق بين Maaly وأي app تاني؟</summary>
-        <p>3 فروقات أساسية: (1) دفعة واحدة بدون اشتراك شهري، (2) النصايح مبنية على قواعد عالمية مُجرَّبة مش عشوائية، (3) مصممة خصيصاً للسياق المصري (الجنيه، التضخم، طرق الادخار المحلية).</p>
+        <summary data-i18n="faq.q5">ما الفرق بين محفظة وأي منصة أخرى؟</summary>
+        <p data-i18n="faq.a5">ثلاثة فروقات أساسية: (1) دفعة واحدة بلا اشتراك شهري، (2) النصائح مبنية على قواعد عالمية مُثبتة، (3) مصممة خصيصًا للسياق المصري (الجنيه، التضخم، طرق الادخار المحلية).</p>
       </details>
       <details class="faq-item">
-        <summary>هل أقدر أستخدمها من أكتر من جهاز؟</summary>
-        <p>تقدر تدخل من أي جهاز (موبايل، لاب، تابلت)، بس على جهاز واحد في نفس الوقت. لو دخلت من جهاز جديد، الجهاز القديم هيتم تسجيل خروجه أوتوماتيكياً.</p>
+        <summary data-i18n="faq.q6">هل يمكنني الاستخدام من أكثر من جهاز؟</summary>
+        <p data-i18n="faq.a6">يمكنك الدخول من أي جهاز (هاتف، حاسوب، تابلت)، لكن على جهاز واحد في الوقت ذاته. عند الدخول من جهاز جديد، يتم تسجيل الخروج تلقائيًا من الجهاز السابق.</p>
       </details>
       <details class="faq-item">
-        <summary>هل لازم أربط الحساب بحساب البنك بتاعي؟</summary>
-        <p>لا، إنت بتدخل بياناتك بنفسك. مش بنطلب أي صلاحيات على حسابك البنكي. ده بيخليها أكتر أماناً.</p>
+        <summary data-i18n="faq.q7">هل يجب ربط الحساب بحسابي البنكي؟</summary>
+        <p data-i18n="faq.a7">لا. أنت تُدخل بياناتك بنفسك. لا نطلب أي صلاحيات على حسابك البنكي، مما يجعلها أكثر أمانًا.</p>
       </details>
       <details class="faq-item">
-        <summary>كام يستغرق الـ activation بعد الدفع؟</summary>
-        <p>عادة خلال ساعة في ساعات العمل (10 صباحاً - 10 مساءً). لو دفعت بالليل، هتلاقي الكود واصلك أول الصبح.</p>
+        <summary data-i18n="faq.q8">كم يستغرق التفعيل بعد الدفع؟</summary>
+        <p data-i18n="faq.a8">عادةً خلال ساعة في ساعات العمل (10 صباحًا - 10 مساءً). إذا دفعت ليلًا، ستجد الكود وصلك صباح اليوم التالي.</p>
       </details>
     </div>
   </div>
 </section>
 
-<!-- ============= FINAL CTA ============= -->
+<!-- ========== FINAL CTA ========== -->
 <section>
   <div class="container">
     <div class="final-cta">
-      <h2>جاهز تتحكم في فلوسك؟</h2>
-      <p>انضم لمئات اللي بدأوا رحلتهم نحو حياة مالية أكتر استقراراً مع Maaly.</p>
-      <a href="#signup" class="btn btn-primary btn-lg">ابدأ بـ 199 جنيه فقط ←</a>
+      <h2 data-i18n="cta.title">جاهز للتحكم في أموالك؟</h2>
+      <p data-i18n="cta.desc">انضم إلى المئات الذين بدأوا رحلتهم نحو حياة مالية أكثر استقرارًا مع محفظة.</p>
+      <a href="#signup" class="btn btn-primary btn-lg"><span data-i18n="cta.btn">ابدأ بسعر</span> <span id="ctaPrice">199</span> <span data-i18n="cta.currency">جنيهًا فقط</span> ←</a>
     </div>
   </div>
 </section>
 
-<!-- ============= FOOTER ============= -->
+<!-- ========== FOOTER ========== -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="logo">Maaly<span class="logo-dot"></span></a>
-        <p>منصة إدارة فلوسك الشخصية بذكاء. مصممة للسياق المصري ومبنية على قواعد مالية عالمية.</p>
+        <a href="#" class="logo">Mahfaza<span class="logo-dot"></span></a>
+        <p data-i18n="footer.about">منصة إدارة الأموال الشخصية بذكاء. مصممة للسياق المصري ومبنية على قواعد مالية عالمية.</p>
       </div>
       <div class="footer-col">
-        <h4>المنتج</h4>
-        <a href="#features">المميزات</a>
-        <a href="#how">إزاي بتشتغل</a>
-        <a href="#pricing">السعر</a>
-        <a href="#faq">أسئلة شائعة</a>
+        <h4 data-i18n="footer.product">المنتج</h4>
+        <a href="#features" data-i18n="nav.features">المزايا</a>
+        <a href="#how" data-i18n="nav.how">آلية العمل</a>
+        <a href="#pricing" data-i18n="nav.pricing">السعر</a>
+        <a href="#faq" data-i18n="nav.faq">الأسئلة الشائعة</a>
       </div>
       <div class="footer-col">
-        <h4>تواصل</h4>
-        <a href="https://wa.me/201112435090">WhatsApp</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">TikTok</a>
+        <h4 data-i18n="footer.legal">قانوني</h4>
+        <a href="terms.html" data-i18n="footer.terms">شروط الاستخدام</a>
+        <a href="privacy.html" data-i18n="footer.privacy">سياسة الخصوصية</a>
+        <a href="refund.html" data-i18n="footer.refund">سياسة الاسترداد</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">تواصل</h4>
+        <a id="footerWhatsApp" href="https://wa.me/201112435090">WhatsApp</a>
+        <a href="#" id="footerIG">Instagram</a>
+        <a href="#" id="footerFB">Facebook</a>
+        <a href="#" id="footerTT">TikTok</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-bottom-brand">A <strong>Smart Solutions</strong> Product © 2026</div>
-      <div>صُنع بحب في القاهرة 🇪🇬</div>
+      <div data-i18n="footer.copyright">A <strong>Smart Solutions</strong> Product © 2026</div>
+      <div data-i18n="footer.tagline">صُنع بحب في القاهرة 🇪🇬</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // Trend Chart
-  new Chart(document.getElementById('trendChart'), {
-    type: 'line',
-    data: {
-      labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
-      datasets: [
-        { label: 'الدخل', data: [16000, 17000, 17500, 18000, 18000, 18000], borderColor: '#00D97E', backgroundColor: 'rgba(0,217,126,0.1)', tension: 0.4, fill: true, borderWidth: 3, pointRadius: 3, pointBackgroundColor: '#00D97E' },
-        { label: 'المصاريف', data: [11000, 12500, 10500, 11200, 10500, 9250], borderColor: '#FF4D5E', backgroundColor: 'rgba(255,77,94,0.05)', tension: 0.4, fill: true, borderWidth: 3, pointRadius: 3, pointBackgroundColor: '#FF4D5E' }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { color: '#A1A1AA', font: { family: 'Cairo', size: 11 }, boxWidth: 12 } } },
-      scales: {
-        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6B6B73', font: { size: 10 } } },
-        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6B6B73', font: { size: 10 } } }
-      }
-    }
-  });
+/* ============================================================
+   SITE CONFIG — Centralized values for admin panel control
+   Later: this object will be fetched from Supabase site_settings table
+   For now: hardcoded. Change values here to update site instantly.
+   ============================================================ */
+const SITE_CONFIG = {
+  // Pricing - admin can modify
+  price: {
+    current: 199,         // Current displayed price
+    original: 199,        // Original price (for showing strikethrough discount)
+    currency: { ar: 'جنيهًا', en: 'EGP' },
+    showDiscount: false   // Set true to show original price crossed out
+  },
+  // Payment numbers - admin can modify
+  payment: {
+    instaPay: '01124941148',
+    whatsapp: '01112435090',
+    whatsappLink: 'https://wa.me/201112435090'
+  },
+  // Social media links - admin can modify
+  social: {
+    instagram: '#',
+    facebook: '#',
+    tiktok: '#'
+  },
+  // Promotional badge - admin can modify
+  promoBadge: { ar: 'عرض الإطلاق', en: 'Launch Offer', show: true }
+};
 
-  // Category Pie
-  new Chart(document.getElementById('catChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['طعام', 'مواصلات', 'فواتير', 'ترفيه', 'تسوق', 'أخرى'],
-      datasets: [{
-        data: [2800, 1200, 1800, 1500, 1200, 750],
-        backgroundColor: ['#00D97E', '#14B8A6', '#4D9FFF', '#A78BFA', '#FF6B9D', '#FFB020'],
-        borderColor: '#13131A', borderWidth: 3
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, cutout: '60%',
-      plugins: { legend: { position: 'right', labels: { color: '#A1A1AA', font: { family: 'Cairo', size: 10 }, padding: 6, boxWidth: 10 } } }
-    }
-  });
-
-  // Signup handler (placeholder - will connect to Supabase later)
-  function handleSignup(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    alert(`تم تسجيلك بـ: ${email}\n\nالخطوة الجاية: نظام الدفع والتفعيل بيتم ربطه بـ Supabase حالياً. لما يخلص، هتقدر تكمل الـ Order ID وتدفع.\n\nبكره الـ form ده هيشتغل بشكل كامل ومتصل بقاعدة البيانات.`);
-    return false;
+/* ============================================================
+   i18n STRINGS — Arabic (formal فصحى) + English
+   ============================================================ */
+const STRINGS = {
+  ar: {
+    'nav.features': 'المزايا', 'nav.advisor': 'المستشار', 'nav.pricing': 'السعر',
+    'nav.faq': 'الأسئلة الشائعة', 'nav.how': 'آلية العمل', 'nav.cta': 'ابدأ الآن',
+    'hero.badge': 'مبنية على القواعد المالية العالمية',
+    'hero.title1': 'هل تنتهي أموالك قبل نهاية الشهر؟',
+    'hero.title2': 'اكتشف أين تذهب، وكيف تستعيد السيطرة.',
+    'hero.sub': 'محفظة منصة لإدارة الأموال الشخصية، تساعدك على تتبع دخلك ومصروفاتك، وتطبيق منهجيات الادخار المعتمدة عالميًا، واتخاذ قرارات مالية أكثر ذكاءً — كل ذلك بدفعة واحدة فقط، مدى الحياة.',
+    'hero.cta1': 'ابدأ بسعر', 'hero.currency': 'جنيهًا فقط', 'hero.cta2': 'شاهد آلية العمل',
+    'hero.trust1': 'دفعة واحدة، استخدام مدى الحياة',
+    'hero.trust2': 'بياناتك مشفّرة وآمنة',
+    'hero.trust3': 'بدون اشتراك شهري',
+    'stats.s1': 'منهجيات مالية عالمية', 'stats.s2': 'أنواع تقارير',
+    'stats.s3': 'خصوصية مضمونة', 'stats.s4': 'تحديثات مدى الحياة',
+    'dash.greeting': 'أهلاً بك في محفظة 👋', 'dash.subtitle': 'وضعك المالي هذا الشهر ممتاز — استمر على هذا النهج',
+    'dash.netWorth': 'صافي الثروة', 'dash.income': 'الدخل', 'dash.expenses': 'المصروفات',
+    'dash.chg1': '▲ 8.5% مقارنةً بالشهر الماضي', 'dash.chg2': '▲ ثابت', 'dash.chg3': '▼ 12% — ادخار أعلى',
+    'dash.trend': 'الدخل مقابل المصروفات (آخر 6 أشهر)', 'dash.category': 'أين تُنفق أموالك',
+    'features.eyebrow': 'المزايا', 'features.title': 'كل ما تحتاجه لإدارة أموالك في منصة واحدة',
+    'features.desc': 'منصة متكاملة مبنية على منهجيات عالمية مثل 50/30/20 و Pay Yourself First — ليست مجرد أداة تتبع عادية.',
+    'feat.1.t': 'تتبع كل قرش', 'feat.1.d': 'سجّل دخلك ومصروفاتك بسرعة. شاهد كل أموالك في مكان واحد بتنظيم ووضوح كامل.',
+    'feat.2.t': 'تحليل ذكي بقواعد عالمية', 'feat.2.d': 'المنصة تحلل أموالك بناءً على 50/30/20، الميزانية الصفرية، وادفع لنفسك أولاً — قواعد علمية مُثبتة.',
+    'feat.3.t': 'تقارير تفاعلية', 'feat.3.d': 'رسوم بيانية تفاعلية وتقارير يومية، أسبوعية، شهرية، وسنوية. قارن بين أي فترتين بضغطة زر.',
+    'feat.4.t': 'نصائح شخصية مُخصّصة', 'feat.4.d': 'توصيات مبنية على وضعك المالي بالضبط: ادّخر كم، استثمر كيف، وقلّل من إنفاقك في أي مجال.',
+    'feat.5.t': 'صندوق الطوارئ والأهداف', 'feat.5.d': 'حدد أهدافك المالية (سداد دين، منزل، مناسبة) وشاهد خطة واضحة للوصول إليها بناءً على دخلك.',
+    'feat.6.t': 'تنبيهات قبل التجاوز', 'feat.6.d': 'المنصة تنبهك قبل أن تتجاوز ميزانيتك، وعند ملاحظة أي نمط إنفاق غير معتاد تخبرك على الفور.',
+    'adv.eyebrow': 'المستشار المالي', 'adv.title': 'ليست مجرد أرقام — توصيات حقيقية بقواعد عالمية',
+    'adv.desc': 'قلب المنصة هو المستشار المالي الذكي الذي يحلل وضعك ويقدم خطوات عملية مبنية على منهجيات معتمدة من خبراء الاقتصاد عالميًا.',
+    'adv.s.title': 'توصيات مبنية على أبحاث حقيقية',
+    'adv.s.desc': 'كل توصية في محفظة مبنية على قاعدة مالية مُثبتة من مصدر موثوق — لا توجد تخمينات أو نصائح عشوائية.',
+    'adv.s.l1': 'قاعدة 50/30/20 من كتاب Elizabeth Warren — "All Your Worth"',
+    'adv.s.l2': 'منهجية Pay Yourself First من David Bach — "The Automatic Millionaire"',
+    'adv.s.l3': 'الميزانية الصفرية من Dave Ramsey و YNAB',
+    'adv.s.l4': 'معيار Debt-to-Income من إرشادات CFPB الأمريكية',
+    'adv.s.l5': 'تعديلات خاصة بالسياق المصري (التضخم، تنويع العملات)',
+    'adv.card1.t': 'صندوق الطوارئ يصل إلى 60% من الهدف',
+    'adv.card1.d': 'لديك 12,000 جنيه محتجزة. الهدف 3 أشهر مصاريف = 27,750 جنيه. بإضافة 2,500 جنيه شهريًا، ستصل إلى الهدف خلال 6 أشهر.',
+    'adv.card1.r': 'المرجع: Dave Ramsey Baby Step 3 — Emergency Fund',
+    'adv.card2.t': 'نسبة ادخارك 22% — فوق المتوسط العالمي',
+    'adv.card2.d': 'المتوسط العالمي للادخار هو 15-20%. أنت في الفئة الممتازة. الخطوة التالية: استثمار 30% من الفائض.',
+    'adv.card2.r': 'المرجع: FIRE Movement Benchmarks',
+    'how.eyebrow': 'آلية العمل', 'how.title': 'ثلاث خطوات لتبدأ التحكم في أموالك',
+    'how.s1.t': 'سجّل حسابًا جديدًا', 'how.s1.d': 'أنشئ حسابك في أقل من دقيقة بالبريد الإلكتروني وكلمة المرور. ستحصل على رقم طلب مميز خاص بك.',
+    'how.s2.t': 'ادفع عبر InstaPay', 'how.s2.d': 'حوّل المبلغ على رقمنا، واكتب رقم الطلب الخاص بك في وصف التحويل. أرسل صورة التحويل عبر واتساب.',
+    'how.s3.t': 'استلم كود التفعيل', 'how.s3.d': 'سنرسل لك كود التفعيل خلال ساعة. أدخله في حسابك واستخدم محفظة مدى الحياة.',
+    'pricing.eyebrow': 'السعر', 'pricing.title': 'سعر واحد. مدى الحياة. بلا مفاجآت.',
+    'pricing.desc': 'المنصات العالمية تتقاضى منك أكثر من 200 جنيه شهريًا. نحن نتقاضاها مرة واحدة فقط.',
+    'pricing.badge': 'عرض الإطلاق', 'pricing.tagline': 'Mahfaza Lifetime Access',
+    'pricing.currency': 'جنيهًا', 'pricing.period': 'مرة واحدة فقط — استخدام مدى الحياة',
+    'pricing.f1': 'كل المزايا بلا استثناء', 'pricing.f2': 'تحديثات مجانية مدى الحياة',
+    'pricing.f3': 'تقارير غير محدودة', 'pricing.f4': 'دعم فني عبر واتساب',
+    'pricing.f5': 'بياناتك مشفّرة وآمنة 100%', 'pricing.f6': 'بدون إعلانات، بدون اشتراكات',
+    'pricing.cta': 'ابدأ الآن ←',
+    'signup.eyebrow': 'ابدأ الآن', 'signup.title': 'سجّل حسابك في دقيقة',
+    'signup.desc': 'بعد التسجيل، سنوضّح لك كيفية إتمام الدفع واستلام كود التفعيل.',
+    'signup.formTitle': 'أنشئ حسابك', 'signup.formSub': 'خطوتك الأولى نحو إدارة أموالك بذكاء',
+    'signup.name': 'الاسم الكامل', 'signup.email': 'البريد الإلكتروني',
+    'signup.password': 'كلمة المرور', 'signup.submit': 'إنشاء حساب ←',
+    'signup.terms': 'بالتسجيل، أنت توافق على شروط الاستخدام وسياسة الخصوصية',
+    'pay.eyebrow': 'طريقة الدفع', 'pay.title': 'الدفع عبر InstaPay — بسيط وآمن',
+    'pay.s1.t': 'افتح تطبيق InstaPay أو محفظتك الإلكترونية',
+    'pay.s1.d': 'يمكنك استخدام أي بنك أو محفظة (فودافون كاش، اتصالات كاش، أورانج كاش) متصلة بـ InstaPay.',
+    'pay.s2.t1': 'حوّل', 'pay.s2.t2': 'جنيهًا على الرقم التالي',
+    'pay.s2.d': 'رقم InstaPay الخاص بنا:',
+    'pay.s3.t': 'اكتب رقم الطلب في وصف التحويل',
+    'pay.s3.d': 'ستجد رقم الطلب الخاص بك بعد إنشاء الحساب. اكتبه في خانة "وصف التحويل" لمطابقة دفعتك بحسابك.',
+    'pay.s4.t': 'أرسل صورة التحويل عبر واتساب',
+    'pay.s4.d': 'صوّر شاشة التحويل وأرسلها على رقمنا:',
+    'pay.s4.cta': '📱 افتح واتساب',
+    'pay.s5.t': 'استلم كود التفعيل خلال ساعة',
+    'pay.s5.d': 'سنراجع التحويل ونرسل لك كود التفعيل عبر واتساب. أدخله في حسابك واستخدم محفظة فورًا.',
+    'faq.eyebrow': 'الأسئلة الشائعة', 'faq.title': 'الأسئلة التي قد تخطر ببالك',
+    'faq.q1': 'هل بياناتي المالية آمنة؟', 'faq.a1': 'نعم، 100%. بياناتك مشفّرة بمعايير بنكية (AES-256) ومحفوظة على Supabase الموثوقة عالميًا. لا يستطيع أحد رؤية بياناتك سواك.',
+    'faq.q2': 'هل يمكنني استرداد المبلغ إن لم تعجبني؟', 'faq.a2': 'لديك 7 أيام من تاريخ التفعيل لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.',
+    'faq.q3': 'هل تطلقون تحديثات وميزات جديدة؟', 'faq.a3': 'بالتأكيد. اشتراكك مدى الحياة يعني الاستفادة من أي ميزة جديدة نطلقها تلقائيًا بلا رسوم إضافية.',
+    'faq.q4': 'لست خبيرًا في المحاسبة، هل أستطيع استخدامها؟', 'faq.a4': 'محفظة مصممة للأشخاص العاديين، وليست للمحاسبين. كل شيء فيها بسيط ومشروح. عملية التهيئة تأخذك خطوة بخطوة، وخلال 5 دقائق ستتقن استخدامها.',
+    'faq.q5': 'ما الفرق بين محفظة وأي منصة أخرى؟', 'faq.a5': 'ثلاثة فروقات أساسية: (1) دفعة واحدة بلا اشتراك شهري، (2) النصائح مبنية على قواعد عالمية مُثبتة، (3) مصممة خصيصًا للسياق المصري (الجنيه، التضخم، طرق الادخار المحلية).',
+    'faq.q6': 'هل يمكنني الاستخدام من أكثر من جهاز؟', 'faq.a6': 'يمكنك الدخول من أي جهاز (هاتف، حاسوب، تابلت)، لكن على جهاز واحد في الوقت ذاته. عند الدخول من جهاز جديد، يتم تسجيل الخروج تلقائيًا من الجهاز السابق.',
+    'faq.q7': 'هل يجب ربط الحساب بحسابي البنكي؟', 'faq.a7': 'لا. أنت تُدخل بياناتك بنفسك. لا نطلب أي صلاحيات على حسابك البنكي، مما يجعلها أكثر أمانًا.',
+    'faq.q8': 'كم يستغرق التفعيل بعد الدفع؟', 'faq.a8': 'عادةً خلال ساعة في ساعات العمل (10 صباحًا - 10 مساءً). إذا دفعت ليلًا، ستجد الكود وصلك صباح اليوم التالي.',
+    'cta.title': 'جاهز للتحكم في أموالك؟',
+    'cta.desc': 'انضم إلى المئات الذين بدأوا رحلتهم نحو حياة مالية أكثر استقرارًا مع محفظة.',
+    'cta.btn': 'ابدأ بسعر', 'cta.currency': 'جنيهًا فقط',
+    'footer.about': 'منصة إدارة الأموال الشخصية بذكاء. مصممة للسياق المصري ومبنية على قواعد مالية عالمية.',
+    'footer.product': 'المنتج', 'footer.legal': 'قانوني', 'footer.contact': 'تواصل',
+    'footer.terms': 'شروط الاستخدام', 'footer.privacy': 'سياسة الخصوصية', 'footer.refund': 'سياسة الاسترداد',
+    'footer.copyright': 'A <strong>Smart Solutions</strong> Product © 2026',
+    'footer.tagline': 'صُنع بحب في القاهرة 🇪🇬'
+  },
+  en: {
+    'nav.features': 'Features', 'nav.advisor': 'Advisor', 'nav.pricing': 'Pricing',
+    'nav.faq': 'FAQ', 'nav.how': 'How It Works', 'nav.cta': 'Get Started',
+    'hero.badge': 'Built on Global Financial Frameworks',
+    'hero.title1': 'Running out of money before month-end?',
+    'hero.title2': 'See where it goes — and take back control.',
+    'hero.sub': 'Mahfaza is a personal finance platform that helps you track income and expenses, apply globally-proven savings methodologies, and make smarter money decisions — with a single one-time payment, for life.',
+    'hero.cta1': 'Get started for just', 'hero.currency': 'EGP', 'hero.cta2': 'See how it works',
+    'hero.trust1': 'One-time payment, lifetime access',
+    'hero.trust2': 'Bank-grade encryption',
+    'hero.trust3': 'No monthly subscription',
+    'stats.s1': 'Global Frameworks', 'stats.s2': 'Report Types',
+    'stats.s3': 'Privacy Guaranteed', 'stats.s4': 'Lifetime Updates',
+    'dash.greeting': 'Welcome to Mahfaza 👋', 'dash.subtitle': 'Your finances this month are excellent — keep it up',
+    'dash.netWorth': 'Net Worth', 'dash.income': 'Income', 'dash.expenses': 'Expenses',
+    'dash.chg1': '▲ 8.5% vs last month', 'dash.chg2': '▲ Stable', 'dash.chg3': '▼ 12% — saved more',
+    'dash.trend': 'Income vs Expenses (Last 6 months)', 'dash.category': 'Where your money goes',
+    'features.eyebrow': 'Features', 'features.title': 'Everything you need to manage your money in one platform',
+    'features.desc': 'A complete platform built on global methodologies like 50/30/20 and Pay Yourself First — not just another tracker.',
+    'feat.1.t': 'Track every penny', 'feat.1.d': 'Log income and expenses quickly. See all your money in one place with full clarity and organization.',
+    'feat.2.t': 'Smart analysis with global rules', 'feat.2.d': 'The platform analyzes your money using 50/30/20, Zero-Based Budgeting, and Pay Yourself First — proven scientific rules.',
+    'feat.3.t': 'Interactive reports', 'feat.3.d': 'Interactive charts and daily, weekly, monthly, and yearly reports. Compare any two periods with one click.',
+    'feat.4.t': 'Personalized advice', 'feat.4.d': 'Recommendations built on your exact financial situation: how much to save, how to invest, and where to cut spending.',
+    'feat.5.t': 'Emergency fund & goals', 'feat.5.d': 'Set financial goals (debt payoff, home, event) and see a clear plan to reach them based on your income.',
+    'feat.6.t': 'Alerts before you overspend', 'feat.6.d': 'The platform alerts you before exceeding your budget, and notifies you instantly when an unusual spending pattern is detected.',
+    'adv.eyebrow': 'Financial Advisor', 'adv.title': 'Not just numbers — real advice based on global rules',
+    'adv.desc': 'The heart of the platform is the smart financial advisor that analyzes your situation and offers practical steps based on globally-recognized methodologies.',
+    'adv.s.title': 'Recommendations rooted in real research',
+    'adv.s.desc': 'Every recommendation in Mahfaza is built on a proven financial rule from a trusted source — no guesses, no random advice.',
+    'adv.s.l1': '50/30/20 Rule from Elizabeth Warren — "All Your Worth"',
+    'adv.s.l2': 'Pay Yourself First from David Bach — "The Automatic Millionaire"',
+    'adv.s.l3': 'Zero-Based Budgeting from Dave Ramsey & YNAB',
+    'adv.s.l4': 'Debt-to-Income benchmark from US CFPB guidelines',
+    'adv.s.l5': 'Egypt-specific adjustments (inflation, currency diversification)',
+    'adv.card1.t': 'Emergency fund at 60% of goal',
+    'adv.card1.d': 'You have 12,000 EGP saved. Goal is 3 months of expenses = 27,750 EGP. Adding 2,500 EGP/month, you\'ll reach the goal in 6 months.',
+    'adv.card1.r': 'Reference: Dave Ramsey Baby Step 3 — Emergency Fund',
+    'adv.card2.t': 'Your savings rate is 22% — above the global average',
+    'adv.card2.d': 'The global average savings rate is 15-20%. You\'re in the excellent tier. Next step: invest 30% of the surplus.',
+    'adv.card2.r': 'Reference: FIRE Movement Benchmarks',
+    'how.eyebrow': 'How It Works', 'how.title': 'Three steps to start controlling your money',
+    'how.s1.t': 'Create a new account', 'how.s1.d': 'Sign up in less than a minute with email and password. You\'ll get a unique Order ID just for you.',
+    'how.s2.t': 'Pay via InstaPay', 'how.s2.d': 'Transfer the amount to our number, and write your Order ID in the transfer description. Send a screenshot via WhatsApp.',
+    'how.s3.t': 'Receive your activation code', 'how.s3.d': 'We\'ll send your activation code within an hour. Enter it in your account and use Mahfaza for life.',
+    'pricing.eyebrow': 'Pricing', 'pricing.title': 'One price. For life. No surprises.',
+    'pricing.desc': 'Global platforms charge you 200+ EGP monthly. We charge it once.',
+    'pricing.badge': 'Launch Offer', 'pricing.tagline': 'Mahfaza Lifetime Access',
+    'pricing.currency': 'EGP', 'pricing.period': 'One-time only — lifetime access',
+    'pricing.f1': 'All features, no exceptions', 'pricing.f2': 'Free updates for life',
+    'pricing.f3': 'Unlimited reports', 'pricing.f4': 'WhatsApp customer support',
+    'pricing.f5': '100% encrypted and secure data', 'pricing.f6': 'No ads, no subscriptions',
+    'pricing.cta': 'Get Started Now →',
+    'signup.eyebrow': 'Get Started', 'signup.title': 'Create your account in a minute',
+    'signup.desc': 'After signup, we\'ll guide you through payment and activation.',
+    'signup.formTitle': 'Create your account', 'signup.formSub': 'Your first step toward smarter money management',
+    'signup.name': 'Full Name', 'signup.email': 'Email Address',
+    'signup.password': 'Password', 'signup.submit': 'Create Account →',
+    'signup.terms': 'By signing up, you agree to the Terms of Service and Privacy Policy',
+    'pay.eyebrow': 'Payment Method', 'pay.title': 'Pay via InstaPay — simple and secure',
+    'pay.s1.t': 'Open InstaPay or your e-wallet app',
+    'pay.s1.d': 'You can use any bank or wallet (Vodafone Cash, Etisalat Cash, Orange Cash) connected to InstaPay.',
+    'pay.s2.t1': 'Transfer', 'pay.s2.t2': 'EGP to the following number',
+    'pay.s2.d': 'Our InstaPay number:',
+    'pay.s3.t': 'Write the Order ID in the transfer description',
+    'pay.s3.d': 'You\'ll find your Order ID after creating an account. Write it in the "transfer description" field so we can match your payment to your account.',
+    'pay.s4.t': 'Send the transfer screenshot via WhatsApp',
+    'pay.s4.d': 'Take a screenshot of the transfer and send it to our number:',
+    'pay.s4.cta': '📱 Open WhatsApp',
+    'pay.s5.t': 'Receive activation code within an hour',
+    'pay.s5.d': 'We\'ll review the transfer and send you the activation code via WhatsApp. Enter it in your account and use Mahfaza immediately.',
+    'faq.eyebrow': 'FAQ', 'faq.title': 'Questions that might come to mind',
+    'faq.q1': 'Is my financial data safe?', 'faq.a1': 'Yes, 100%. Your data is encrypted with banking-grade standards (AES-256) and stored on globally trusted Supabase. No one can see your data except you.',
+    'faq.q2': 'Can I get a refund if I don\'t like it?', 'faq.a2': 'You have 7 days from activation to get a full refund with no questions asked. Send a WhatsApp message and we\'ll refund you.',
+    'faq.q3': 'Do you release updates and new features?', 'faq.a3': 'Absolutely. Lifetime access means you benefit from any new feature we release automatically with no additional fees.',
+    'faq.q4': 'I\'m not an accounting expert, can I use it?', 'faq.a4': 'Mahfaza is designed for ordinary people, not accountants. Everything is simple and explained. The setup takes you step by step, and within 5 minutes you\'ll master it.',
+    'faq.q5': 'What\'s the difference between Mahfaza and other platforms?', 'faq.a5': 'Three key differences: (1) one-time payment with no monthly subscription, (2) advice built on globally-proven rules, (3) designed specifically for the Egyptian context (EGP, inflation, local savings methods).',
+    'faq.q6': 'Can I use it from multiple devices?', 'faq.a6': 'You can sign in from any device (phone, computer, tablet), but only one at a time. When you sign in from a new device, the previous one is automatically signed out.',
+    'faq.q7': 'Do I need to link my bank account?', 'faq.a7': 'No. You enter your data manually. We don\'t ask for any access to your bank account, making it more secure.',
+    'faq.q8': 'How long does activation take after payment?', 'faq.a8': 'Usually within an hour during work hours (10 AM - 10 PM). If you pay at night, you\'ll find the code waiting in the morning.',
+    'cta.title': 'Ready to control your money?',
+    'cta.desc': 'Join the hundreds who\'ve started their journey toward more stable financial lives with Mahfaza.',
+    'cta.btn': 'Get started for just', 'cta.currency': 'EGP',
+    'footer.about': 'Smart personal finance management. Designed for the Egyptian context and built on global financial rules.',
+    'footer.product': 'Product', 'footer.legal': 'Legal', 'footer.contact': 'Contact',
+    'footer.terms': 'Terms of Service', 'footer.privacy': 'Privacy Policy', 'footer.refund': 'Refund Policy',
+    'footer.copyright': 'A <strong>Smart Solutions</strong> Product © 2026',
+    'footer.tagline': 'Made with love in Cairo 🇪🇬'
   }
+};
+
+/* ============================================================
+   APPLY CONFIG to DOM (renders all dynamic values from SITE_CONFIG)
+   ============================================================ */
+function applyConfig() {
+  const lang = document.documentElement.getAttribute('lang') || 'ar';
+  const p = SITE_CONFIG.price;
+
+  // Update all price displays
+  document.getElementById('heroPrice').textContent = p.current;
+  document.getElementById('ctaPrice').textContent = p.current;
+  document.getElementById('payAmount').textContent = p.current;
+  const displayPriceEl = document.getElementById('displayPrice');
+  displayPriceEl.textContent = p.current;
+
+  // Show discount/original price if active
+  const origEl = document.getElementById('originalPrice');
+  if (p.showDiscount && p.original > p.current) {
+    origEl.textContent = p.original;
+    origEl.style.display = 'inline';
+  } else {
+    origEl.style.display = 'none';
+  }
+
+  // Payment numbers
+  document.getElementById('payInstaPay').textContent = SITE_CONFIG.payment.instaPay;
+  document.getElementById('payWhatsApp').textContent = SITE_CONFIG.payment.whatsapp;
+  document.getElementById('whatsappLink').href = SITE_CONFIG.payment.whatsappLink;
+  document.getElementById('footerWhatsApp').href = SITE_CONFIG.payment.whatsappLink;
+
+  // Social links
+  document.getElementById('footerIG').href = SITE_CONFIG.social.instagram;
+  document.getElementById('footerFB').href = SITE_CONFIG.social.facebook;
+  document.getElementById('footerTT').href = SITE_CONFIG.social.tiktok;
+
+  // Promo badge
+  const badge = document.getElementById('pricingBadge');
+  badge.style.display = SITE_CONFIG.promoBadge.show ? 'inline-block' : 'none';
+  badge.textContent = SITE_CONFIG.promoBadge[lang];
+}
+
+/* ============================================================
+   I18N — applyLanguage()
+   ============================================================ */
+function applyLanguage(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  const dict = STRINGS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+  localStorage.setItem('mahfaza_lang', lang);
+  applyConfig();
+}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☾' : '☀';
+  localStorage.setItem('mahfaza_theme', theme);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.getElementById('langToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('lang') || 'ar';
+  applyLanguage(current === 'ar' ? 'en' : 'ar');
+});
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+// Restore preferences
+applyLanguage(localStorage.getItem('mahfaza_lang') || 'ar');
+applyTheme(localStorage.getItem('mahfaza_theme') || 'dark');
+applyConfig();
+
+// Charts
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [
+      { label: 'Income', data: [16000,17000,17500,18000,18000,18000], borderColor: '#00D97E', backgroundColor: 'rgba(0,217,126,0.1)', tension: 0.4, fill: true, borderWidth: 3, pointRadius: 3 },
+      { label: 'Expenses', data: [11000,12500,10500,11200,10500,9250], borderColor: '#FF4D5E', backgroundColor: 'rgba(255,77,94,0.05)', tension: 0.4, fill: true, borderWidth: 3, pointRadius: 3 }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#A1A1AA', font: { size: 11 }, boxWidth: 12 } } }, scales: { x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6B6B73', font: { size: 10 } } }, y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6B6B73', font: { size: 10 } } } } }
+});
+new Chart(document.getElementById('catChart'), {
+  type: 'doughnut',
+  data: { labels: ['Food','Transport','Bills','Leisure','Shopping','Other'], datasets: [{ data: [2800,1200,1800,1500,1200,750], backgroundColor: ['#00D97E','#14B8A6','#4D9FFF','#A78BFA','#FF6B9D','#FFB020'], borderColor: '#13131A', borderWidth: 3 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#A1A1AA', font: { size: 10 }, padding: 6, boxWidth: 10 } } } }
+});
+
+// Signup handler (will connect to Supabase later)
+function handleSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('su-email').value;
+  alert('سيتم ربط النموذج بـ Supabase في الخطوة التالية.\nالبريد المُدخل: ' + email);
+  return false;
+}
 </script>
 </body>
 </html>

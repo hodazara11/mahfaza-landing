@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --brand:#00D97E; --transition:0.3s ease; }
+  [data-theme="dark"] {
+    --bg:#0A0A0F; --surface:#13131A; --surface-2:#1C1C26;
+    --text:#F5F5F7; --text-2:#A1A1AA; --text-3:#6B6B73;
+    --border:rgba(255,255,255,0.08); --border-2:rgba(255,255,255,0.15);
+  }
+  [data-theme="light"] {
+    --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
+    --text:#18181B; --text-2:#52525B; --text-3:#71717A;
+    --border:rgba(0,0,0,0.08); --border-2:rgba(0,0,0,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Cairo',sans-serif; line-height:1.8; transition:background var(--transition), color var(--transition); }
+  [lang="en"] body { font-family:'Plus Jakarta Sans', sans-serif; }
+  .nav { position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:16px 0; }
+  .nav-inner { max-width:800px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .logo { display:flex; align-items:center; gap:6px; font-family:'Plus Jakarta Sans', sans-serif; font-weight:800; font-size:20px; color:var(--text); text-decoration:none; letter-spacing:-1px; }
+  .logo-dot { width:7px; height:7px; border-radius:50%; background:var(--brand); align-self:flex-end; margin-bottom:5px; box-shadow:0 0 12px rgba(0,217,126,0.5); }
+  .nav-actions { display:flex; gap:8px; align-items:center; }
+  .icon-btn { width:36px; height:36px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; font-family:'Plus Jakarta Sans', sans-serif; transition:all 0.2s; }
+  .icon-btn:hover { border-color:var(--border-2); }
+  .back-btn { padding:8px 14px; border-radius:8px; background:transparent; border:1px solid var(--border); color:var(--text-2); text-decoration:none; font-size:13px; font-weight:600; transition:all 0.2s; font-family:inherit; }
+  .back-btn:hover { color:var(--text); border-color:var(--border-2); }
+  .container { max-width:800px; margin:0 auto; padding:60px 24px; }
+  h1 { font-size:clamp(28px, 5vw, 40px); margin-bottom:8px; font-weight:800; letter-spacing:-1.5px; }
+  .meta { color:var(--text-3); font-size:13px; margin-bottom:48px; }
+  h2 { font-size:20px; margin:36px 0 12px; color:var(--brand); font-weight:700; }
+  p, li { color:var(--text-2); margin-bottom:12px; font-size:15px; line-height:1.85; }
+  ul, ol { padding-inline-start:24px; }
+  strong { color:var(--text); font-weight:700; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <a href="index.html" class="back-btn" id="backBtn">← الرئيسية</a>
+      <button class="icon-btn" id="langToggle">EN</button>
+      <button class="icon-btn" id="themeToggle">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 data-i18n="title">سياسة الخصوصية</h1>
+  <div class="meta" data-i18n="updated">آخر تحديث: يونيو 2026</div>
+
+  <h2 data-i18n="h1">1. التزامنا بخصوصيتك</h2>
+  <p data-i18n="p1">في Mahfaza، خصوصية بياناتك المالية هي أولويتنا القصوى. نلتزم بحماية معلوماتك وعدم مشاركتها مع أي طرف ثالث تحت أي ظرف.</p>
+
+  <h2 data-i18n="h2">2. البيانات التي نجمعها</h2>
+  <p data-i18n="p2intro">نجمع فقط البيانات الضرورية لتشغيل الخدمة:</p>
+  <ul>
+    <li data-i18n="p2a"><strong>بيانات الحساب:</strong> الاسم، البريد الإلكتروني، كلمة المرور (مشفّرة).</li>
+    <li data-i18n="p2b"><strong>البيانات المالية التي تُدخلها:</strong> الدخل، المصروفات، الفئات، الأهداف.</li>
+    <li data-i18n="p2c"><strong>بيانات الاستخدام:</strong> سجلات تسجيل الدخول، معرّف الجهاز (لتطبيق سياسة الجهاز الواحد).</li>
+  </ul>
+  <p data-i18n="p2outro"><strong>ما لا نجمعه أبدًا:</strong> أرقام الحسابات البنكية، أرقام البطاقات، كلمات مرور البنوك، أي بيانات حقيقية متصلة بحسابك البنكي.</p>
+
+  <h2 data-i18n="h3">3. كيف نستخدم بياناتك</h2>
+  <ul>
+    <li data-i18n="p3a">تقديم الخدمة (عرض تقاريرك ونصائحك).</li>
+    <li data-i18n="p3b">تحسين التجربة (تطوير ميزات جديدة).</li>
+    <li data-i18n="p3c">التواصل معك (تأكيدات، تنبيهات، دعم فني).</li>
+    <li data-i18n="p3d">الأمان (الكشف عن أي محاولات اختراق).</li>
+  </ul>
+
+  <h2 data-i18n="h4">4. كيف نحمي بياناتك</h2>
+  <ul>
+    <li data-i18n="p4a">تشفير AES-256 لجميع البيانات الحساسة.</li>
+    <li data-i18n="p4b">اتصال HTTPS مُشفّر لكل التفاعلات.</li>
+    <li data-i18n="p4c">تخزين على خوادم Supabase المعتمدة (SOC 2 Compliant).</li>
+    <li data-i18n="p4d">كلمات المرور مُشفّرة بـ bcrypt — لا يمكن لأحد قراءتها حتى نحن.</li>
+  </ul>
+
+  <h2 data-i18n="h5">5. مشاركة البيانات</h2>
+  <p data-i18n="p5">لا نبيع بياناتك. لا نشاركها مع أي طرف ثالث لأغراض تسويقية. الاستثناء الوحيد هو الالتزام بأمر قضائي صادر عن محكمة مصرية مختصة.</p>
+
+  <h2 data-i18n="h6">6. حقوقك</h2>
+  <ul>
+    <li data-i18n="p6a"><strong>حق الوصول:</strong> اطلب نسخة من كل بياناتك في أي وقت.</li>
+    <li data-i18n="p6b"><strong>حق التعديل:</strong> صحّح أو حدّث أي بيانات.</li>
+    <li data-i18n="p6c"><strong>حق الحذف:</strong> اطلب حذف حسابك وكل بياناتك نهائيًا.</li>
+    <li data-i18n="p6d"><strong>حق التصدير:</strong> احصل على ملف بكل بياناتك بصيغة JSON.</li>
+  </ul>
+
+  <h2 data-i18n="h7">7. ملفات تعريف الارتباط (Cookies)</h2>
+  <p data-i18n="p7">نستخدم ملفات تعريف ارتباط أساسية فقط لتشغيل الموقع (تذكّر تسجيل دخولك، تفضيل اللغة، الوضع المظلم). لا نستخدم Cookies للتتبع التسويقي.</p>
+
+  <h2 data-i18n="h8">8. الأطفال</h2>
+  <p data-i18n="p8">المنصة موجّهة لمن هم في عمر 18 سنة فأكبر. لا نجمع بيانات قاصرين عن قصد.</p>
+
+  <h2 data-i18n="h9">9. تعديل السياسة</h2>
+  <p data-i18n="p9">نُحدّث هذه السياسة بشكل دوري. سنُعلمك بأي تغييرات جوهرية عبر البريد الإلكتروني قبل دخولها حيز التنفيذ.</p>
+
+  <h2 data-i18n="h10">10. التواصل</h2>
+  <p data-i18n="p10">لأي استفسار حول خصوصيتك، تواصل معنا عبر واتساب: <strong style="color:var(--brand);">01112435090</strong></p>
+</div>
+
+<script>
+const STRINGS = {
+  ar: {
+    title: 'سياسة الخصوصية', updated: 'آخر تحديث: يونيو 2026', back: '← الرئيسية',
+    h1: '1. التزامنا بخصوصيتك', p1: 'في Mahfaza، خصوصية بياناتك المالية هي أولويتنا القصوى. نلتزم بحماية معلوماتك وعدم مشاركتها مع أي طرف ثالث تحت أي ظرف.',
+    h2: '2. البيانات التي نجمعها', p2intro: 'نجمع فقط البيانات الضرورية لتشغيل الخدمة:',
+    p2a: '<strong>بيانات الحساب:</strong> الاسم، البريد الإلكتروني، كلمة المرور (مشفّرة).',
+    p2b: '<strong>البيانات المالية التي تُدخلها:</strong> الدخل، المصروفات، الفئات، الأهداف.',
+    p2c: '<strong>بيانات الاستخدام:</strong> سجلات تسجيل الدخول، معرّف الجهاز (لتطبيق سياسة الجهاز الواحد).',
+    p2outro: '<strong>ما لا نجمعه أبدًا:</strong> أرقام الحسابات البنكية، أرقام البطاقات، كلمات مرور البنوك، أي بيانات حقيقية متصلة بحسابك البنكي.',
+    h3: '3. كيف نستخدم بياناتك',
+    p3a: 'تقديم الخدمة (عرض تقاريرك ونصائحك).',
+    p3b: 'تحسين التجربة (تطوير ميزات جديدة).',
+    p3c: 'التواصل معك (تأكيدات، تنبيهات، دعم فني).',
+    p3d: 'الأمان (الكشف عن أي محاولات اختراق).',
+    h4: '4. كيف نحمي بياناتك',
+    p4a: 'تشفير AES-256 لجميع البيانات الحساسة.',
+    p4b: 'اتصال HTTPS مُشفّر لكل التفاعلات.',
+    p4c: 'تخزين على خوادم Supabase المعتمدة (SOC 2 Compliant).',
+    p4d: 'كلمات المرور مُشفّرة بـ bcrypt — لا يمكن لأحد قراءتها حتى نحن.',
+    h5: '5. مشاركة البيانات', p5: 'لا نبيع بياناتك. لا نشاركها مع أي طرف ثالث لأغراض تسويقية. الاستثناء الوحيد هو الالتزام بأمر قضائي صادر عن محكمة مصرية مختصة.',
+    h6: '6. حقوقك',
+    p6a: '<strong>حق الوصول:</strong> اطلب نسخة من كل بياناتك في أي وقت.',
+    p6b: '<strong>حق التعديل:</strong> صحّح أو حدّث أي بيانات.',
+    p6c: '<strong>حق الحذف:</strong> اطلب حذف حسابك وكل بياناتك نهائيًا.',
+    p6d: '<strong>حق التصدير:</strong> احصل على ملف بكل بياناتك بصيغة JSON.',
+    h7: '7. ملفات تعريف الارتباط (Cookies)', p7: 'نستخدم ملفات تعريف ارتباط أساسية فقط لتشغيل الموقع (تذكّر تسجيل دخولك، تفضيل اللغة، الوضع المظلم). لا نستخدم Cookies للتتبع التسويقي.',
+    h8: '8. الأطفال', p8: 'المنصة موجّهة لمن هم في عمر 18 سنة فأكبر. لا نجمع بيانات قاصرين عن قصد.',
+    h9: '9. تعديل السياسة', p9: 'نُحدّث هذه السياسة بشكل دوري. سنُعلمك بأي تغييرات جوهرية عبر البريد الإلكتروني قبل دخولها حيز التنفيذ.',
+    h10: '10. التواصل', p10: 'لأي استفسار حول خصوصيتك، تواصل معنا عبر واتساب: <strong style="color:var(--brand);">01112435090</strong>'
+  },
+  en: {
+    title: 'Privacy Policy', updated: 'Last updated: June 2026', back: '← Home',
+    h1: '1. Our Commitment to Your Privacy', p1: 'At Mahfaza, the privacy of your financial data is our top priority. We commit to protecting your information and never sharing it with any third party under any circumstance.',
+    h2: '2. Data We Collect', p2intro: 'We collect only the data necessary to run the service:',
+    p2a: '<strong>Account data:</strong> name, email address, password (encrypted).',
+    p2b: '<strong>Financial data you enter:</strong> income, expenses, categories, goals.',
+    p2c: '<strong>Usage data:</strong> login records, device ID (for single-device policy enforcement).',
+    p2outro: '<strong>What we never collect:</strong> bank account numbers, card numbers, bank passwords, any real data connected to your bank account.',
+    h3: '3. How We Use Your Data',
+    p3a: 'Provide the service (showing your reports and advice).',
+    p3b: 'Improve the experience (developing new features).',
+    p3c: 'Contact you (confirmations, alerts, technical support).',
+    p3d: 'Security (detecting any hacking attempts).',
+    h4: '4. How We Protect Your Data',
+    p4a: 'AES-256 encryption for all sensitive data.',
+    p4b: 'Encrypted HTTPS connection for all interactions.',
+    p4c: 'Storage on certified Supabase servers (SOC 2 Compliant).',
+    p4d: 'Passwords encrypted with bcrypt — no one can read them, not even us.',
+    h5: '5. Data Sharing', p5: 'We do not sell your data. We do not share it with any third party for marketing purposes. The only exception is compliance with a court order issued by a competent Egyptian court.',
+    h6: '6. Your Rights',
+    p6a: '<strong>Right to access:</strong> request a copy of all your data at any time.',
+    p6b: '<strong>Right to correct:</strong> fix or update any data.',
+    p6c: '<strong>Right to delete:</strong> request permanent deletion of your account and all your data.',
+    p6d: '<strong>Right to export:</strong> get a file with all your data in JSON format.',
+    h7: '7. Cookies', p7: 'We use only essential cookies to run the site (remember your login, language preference, dark mode). We do not use cookies for marketing tracking.',
+    h8: '8. Children', p8: 'The platform is intended for those 18 years and older. We do not knowingly collect data from minors.',
+    h9: '9. Policy Modifications', p9: 'We update this policy periodically. We will notify you of any material changes via email before they take effect.',
+    h10: '10. Contact', p10: 'For any question about your privacy, contact us via WhatsApp: <strong style="color:var(--brand);">01112435090</strong>'
+  }
+};
+
+function applyLanguage(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  const dict = STRINGS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.getElementById('backBtn').textContent = dict.back;
+  document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+  document.title = dict.title + ' — Mahfaza';
+  localStorage.setItem('mahfaza_lang', lang);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☾' : '☀';
+  localStorage.setItem('mahfaza_theme', theme);
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('lang') || 'ar';
+  applyLanguage(cur === 'ar' ? 'en' : 'ar');
+});
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+
+applyLanguage(localStorage.getItem('mahfaza_lang') || 'ar');
+applyTheme(localStorage.getItem('mahfaza_theme') || 'dark');
+</script>
+</body>
+</html>

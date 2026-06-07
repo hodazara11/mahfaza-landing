@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund Policy — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --brand:#00D97E; --transition:0.3s ease; }
+  [data-theme="dark"] {
+    --bg:#0A0A0F; --surface:#13131A; --surface-2:#1C1C26;
+    --text:#F5F5F7; --text-2:#A1A1AA; --text-3:#6B6B73;
+    --border:rgba(255,255,255,0.08); --border-2:rgba(255,255,255,0.15);
+  }
+  [data-theme="light"] {
+    --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
+    --text:#18181B; --text-2:#52525B; --text-3:#71717A;
+    --border:rgba(0,0,0,0.08); --border-2:rgba(0,0,0,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Cairo',sans-serif; line-height:1.8; transition:background var(--transition), color var(--transition); }
+  [lang="en"] body { font-family:'Plus Jakarta Sans', sans-serif; }
+  .nav { position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:16px 0; }
+  .nav-inner { max-width:800px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .logo { display:flex; align-items:center; gap:6px; font-family:'Plus Jakarta Sans', sans-serif; font-weight:800; font-size:20px; color:var(--text); text-decoration:none; letter-spacing:-1px; }
+  .logo-dot { width:7px; height:7px; border-radius:50%; background:var(--brand); align-self:flex-end; margin-bottom:5px; box-shadow:0 0 12px rgba(0,217,126,0.5); }
+  .nav-actions { display:flex; gap:8px; align-items:center; }
+  .icon-btn { width:36px; height:36px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; font-family:'Plus Jakarta Sans', sans-serif; transition:all 0.2s; }
+  .icon-btn:hover { border-color:var(--border-2); }
+  .back-btn { padding:8px 14px; border-radius:8px; background:transparent; border:1px solid var(--border); color:var(--text-2); text-decoration:none; font-size:13px; font-weight:600; transition:all 0.2s; font-family:inherit; }
+  .back-btn:hover { color:var(--text); border-color:var(--border-2); }
+  .container { max-width:800px; margin:0 auto; padding:60px 24px; }
+  h1 { font-size:clamp(28px, 5vw, 40px); margin-bottom:8px; font-weight:800; letter-spacing:-1.5px; }
+  .meta { color:var(--text-3); font-size:13px; margin-bottom:48px; }
+  h2 { font-size:20px; margin:36px 0 12px; color:var(--brand); font-weight:700; }
+  p, li { color:var(--text-2); margin-bottom:12px; font-size:15px; line-height:1.85; }
+  ul, ol { padding-inline-start:24px; }
+  strong { color:var(--text); font-weight:700; }
+  .highlight { background:rgba(0,217,126,0.08); border:1px solid rgba(0,217,126,0.25); border-radius:12px; padding:20px; margin:24px 0; }
+  .highlight strong { color:var(--brand); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <a href="index.html" class="back-btn" id="backBtn">← الرئيسية</a>
+      <button class="icon-btn" id="langToggle">EN</button>
+      <button class="icon-btn" id="themeToggle">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 data-i18n="title">سياسة الاسترداد</h1>
+  <div class="meta" data-i18n="updated">آخر تحديث: يونيو 2026</div>
+
+  <div class="highlight">
+    <strong data-i18n="guarantee">الضمانة:</strong> <span data-i18n="guaranteeText">7 أيام لاسترداد كامل المبلغ بلا أي أسئلة، إذا لم تجد المنصة مفيدة لك.</span>
+  </div>
+
+  <h2 data-i18n="h1">1. الفترة المسموح بها للاسترداد</h2>
+  <p data-i18n="p1">يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>7 أيام تقويمية</strong> من تاريخ تفعيل حسابك (وليس من تاريخ الدفع).</p>
+
+  <h2 data-i18n="h2">2. شروط الاسترداد</h2>
+  <ul>
+    <li data-i18n="p2a">يجب أن يكون الطلب خلال فترة الـ 7 أيام.</li>
+    <li data-i18n="p2b">لسنا بحاجة لأي مبررات أو شرح للسبب.</li>
+    <li data-i18n="p2c">الاسترداد يكون لكامل المبلغ المدفوع.</li>
+  </ul>
+
+  <h2 data-i18n="h3">3. كيفية طلب الاسترداد</h2>
+  <ol>
+    <li data-i18n="p3a">أرسل رسالة على واتساب: <strong style="color:var(--brand);">01112435090</strong></li>
+    <li data-i18n="p3b">اذكر بريدك الإلكتروني ورقم الطلب الخاص بك.</li>
+    <li data-i18n="p3c">اكتب "أطلب استرداد المبلغ" أو ما يشابه.</li>
+    <li data-i18n="p3d">سيتم مراجعة طلبك خلال 24 ساعة وتأكيد الاسترداد.</li>
+  </ol>
+
+  <h2 data-i18n="h4">4. مدة استلام المبلغ</h2>
+  <p data-i18n="p4">سيتم تحويل المبلغ على نفس وسيلة الدفع التي استخدمتها (InstaPay) خلال <strong>3-5 أيام عمل</strong> من تأكيد الطلب.</p>
+
+  <h2 data-i18n="h5">5. ماذا يحدث لحسابي بعد الاسترداد؟</h2>
+  <p data-i18n="p5">يتم إيقاف حسابك فور تأكيد الاسترداد، ولن يكون بإمكانك الوصول للمنصة. يتم حذف بياناتك خلال 30 يومًا من إيقاف الحساب.</p>
+
+  <h2 data-i18n="h6">6. ما بعد فترة الاسترداد</h2>
+  <p data-i18n="p6">بعد مرور 7 أيام من التفعيل، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.</p>
+
+  <h2 data-i18n="h7">7. التواصل</h2>
+  <p data-i18n="p7">لأي استفسار حول الاسترداد، تواصل معنا على واتساب: <strong style="color:var(--brand);">01112435090</strong></p>
+</div>
+
+<script>
+const STRINGS = {
+  ar: {
+    title: 'سياسة الاسترداد', updated: 'آخر تحديث: يونيو 2026', back: '← الرئيسية',
+    guarantee: 'الضمانة:', guaranteeText: '7 أيام لاسترداد كامل المبلغ بلا أي أسئلة، إذا لم تجد المنصة مفيدة لك.',
+    h1: '1. الفترة المسموح بها للاسترداد', p1: 'يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>7 أيام تقويمية</strong> من تاريخ تفعيل حسابك (وليس من تاريخ الدفع).',
+    h2: '2. شروط الاسترداد',
+    p2a: 'يجب أن يكون الطلب خلال فترة الـ 7 أيام.',
+    p2b: 'لسنا بحاجة لأي مبررات أو شرح للسبب.',
+    p2c: 'الاسترداد يكون لكامل المبلغ المدفوع.',
+    h3: '3. كيفية طلب الاسترداد',
+    p3a: 'أرسل رسالة على واتساب: <strong style="color:var(--brand);">01112435090</strong>',
+    p3b: 'اذكر بريدك الإلكتروني ورقم الطلب الخاص بك.',
+    p3c: 'اكتب "أطلب استرداد المبلغ" أو ما يشابه.',
+    p3d: 'سيتم مراجعة طلبك خلال 24 ساعة وتأكيد الاسترداد.',
+    h4: '4. مدة استلام المبلغ', p4: 'سيتم تحويل المبلغ على نفس وسيلة الدفع التي استخدمتها (InstaPay) خلال <strong>3-5 أيام عمل</strong> من تأكيد الطلب.',
+    h5: '5. ماذا يحدث لحسابي بعد الاسترداد؟', p5: 'يتم إيقاف حسابك فور تأكيد الاسترداد، ولن يكون بإمكانك الوصول للمنصة. يتم حذف بياناتك خلال 30 يومًا من إيقاف الحساب.',
+    h6: '6. ما بعد فترة الاسترداد', p6: 'بعد مرور 7 أيام من التفعيل، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.',
+    h7: '7. التواصل', p7: 'لأي استفسار حول الاسترداد، تواصل معنا على واتساب: <strong style="color:var(--brand);">01112435090</strong>'
+  },
+  en: {
+    title: 'Refund Policy', updated: 'Last updated: June 2026', back: '← Home',
+    guarantee: 'Guarantee:', guaranteeText: '7 days for a full refund with no questions asked, if you find the platform isn\'t useful for you.',
+    h1: '1. Refund Window', p1: 'You are entitled to request a full refund of the amount paid (199 EGP) within <strong>7 calendar days</strong> from your account activation date (not the payment date).',
+    h2: '2. Refund Conditions',
+    p2a: 'The request must be within the 7-day window.',
+    p2b: 'We don\'t need any justification or explanation.',
+    p2c: 'The refund is for the full amount paid.',
+    h3: '3. How to Request a Refund',
+    p3a: 'Send a WhatsApp message: <strong style="color:var(--brand);">01112435090</strong>',
+    p3b: 'Mention your email and your Order ID.',
+    p3c: 'Write "I request a refund" or similar.',
+    p3d: 'Your request will be reviewed within 24 hours and the refund confirmed.',
+    h4: '4. Time to Receive the Refund', p4: 'The amount will be transferred via the same payment method you used (InstaPay) within <strong>3-5 business days</strong> of confirmation.',
+    h5: '5. What Happens to My Account After Refund?', p5: 'Your account is suspended immediately upon refund confirmation, and you will no longer have access to the platform. Your data is deleted within 30 days of suspension.',
+    h6: '6. Beyond the Refund Window', p6: 'After 7 days from activation, refunds are not available. However, in exceptional cases (a technical issue we couldn\'t resolve), you can contact us and we\'ll review the case individually.',
+    h7: '7. Contact', p7: 'For any question about refunds, contact us via WhatsApp: <strong style="color:var(--brand);">01112435090</strong>'
+  }
+};
+
+function applyLanguage(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  const dict = STRINGS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.getElementById('backBtn').textContent = dict.back;
+  document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+  document.title = dict.title + ' — Mahfaza';
+  localStorage.setItem('mahfaza_lang', lang);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☾' : '☀';
+  localStorage.setItem('mahfaza_theme', theme);
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('lang') || 'ar';
+  applyLanguage(cur === 'ar' ? 'en' : 'ar');
+});
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+
+applyLanguage(localStorage.getItem('mahfaza_lang') || 'ar');
+applyTheme(localStorage.getItem('mahfaza_theme') || 'dark');
+</script>
+</body>
+</html>

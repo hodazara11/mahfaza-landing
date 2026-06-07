@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --brand:#00D97E; --transition:0.3s ease; }
+  [data-theme="dark"] {
+    --bg:#0A0A0F; --surface:#13131A; --surface-2:#1C1C26;
+    --text:#F5F5F7; --text-2:#A1A1AA; --text-3:#6B6B73;
+    --border:rgba(255,255,255,0.08); --border-2:rgba(255,255,255,0.15);
+  }
+  [data-theme="light"] {
+    --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
+    --text:#18181B; --text-2:#52525B; --text-3:#71717A;
+    --border:rgba(0,0,0,0.08); --border-2:rgba(0,0,0,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Cairo',sans-serif; line-height:1.8; transition:background var(--transition), color var(--transition); }
+  [lang="en"] body { font-family:'Plus Jakarta Sans', sans-serif; }
+  .nav { position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:16px 0; }
+  .nav-inner { max-width:800px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .logo { display:flex; align-items:center; gap:6px; font-family:'Plus Jakarta Sans', sans-serif; font-weight:800; font-size:20px; color:var(--text); text-decoration:none; letter-spacing:-1px; }
+  .logo-dot { width:7px; height:7px; border-radius:50%; background:var(--brand); align-self:flex-end; margin-bottom:5px; box-shadow:0 0 12px rgba(0,217,126,0.5); }
+  .nav-actions { display:flex; gap:8px; align-items:center; }
+  .icon-btn { width:36px; height:36px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; font-family:'Plus Jakarta Sans', sans-serif; transition:all 0.2s; }
+  .icon-btn:hover { border-color:var(--border-2); }
+  .back-btn { padding:8px 14px; border-radius:8px; background:transparent; border:1px solid var(--border); color:var(--text-2); text-decoration:none; font-size:13px; font-weight:600; transition:all 0.2s; font-family:inherit; }
+  .back-btn:hover { color:var(--text); border-color:var(--border-2); }
+  .container { max-width:800px; margin:0 auto; padding:60px 24px; }
+  h1 { font-size:clamp(28px, 5vw, 40px); margin-bottom:8px; font-weight:800; letter-spacing:-1.5px; }
+  .meta { color:var(--text-3); font-size:13px; margin-bottom:48px; }
+  h2 { font-size:20px; margin:36px 0 12px; color:var(--brand); font-weight:700; }
+  p, li { color:var(--text-2); margin-bottom:12px; font-size:15px; line-height:1.85; }
+  ul, ol { padding-inline-start:24px; }
+  strong { color:var(--text); font-weight:700; }
+  .highlight { background:rgba(0,217,126,0.08); border:1px solid rgba(0,217,126,0.25); border-radius:12px; padding:20px; margin:24px 0; }
+  .highlight strong { color:var(--brand); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <a href="index.html" class="back-btn" id="backBtn">← الرئيسية</a>
+      <button class="icon-btn" id="langToggle" aria-label="Toggle language">EN</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 data-i18n="title">شروط الاستخدام</h1>
+  <div class="meta" data-i18n="updated">آخر تحديث: يونيو 2026</div>
+
+  <h2 data-i18n="h1">1. قبول الشروط</h2>
+  <p data-i18n="p1">باستخدامك لمنصة Mahfaza (محفظة)، فأنت توافق على هذه الشروط بالكامل. إذا لم توافق على أي بند، يُرجى عدم استخدام المنصة.</p>
+
+  <h2 data-i18n="h2">2. وصف الخدمة</h2>
+  <p data-i18n="p2">محفظة هي منصة ويب لإدارة الأموال الشخصية تساعدك على تتبع دخلك ومصروفاتك وتقديم نصائح مالية مبنية على منهجيات عالمية. الخدمة <strong>تعليمية وتثقيفية</strong> وليست استشارة مالية رسمية، ولا تحل محل المستشار المالي المعتمد.</p>
+
+  <h2 data-i18n="h3">3. الاشتراك والدفع</h2>
+  <ul>
+    <li data-i18n="p3a">السعر: دفعة واحدة بقيمة 199 جنيهًا مصريًا لاستخدام مدى الحياة.</li>
+    <li data-i18n="p3b">الدفع يتم عبر InstaPay على الرقم الموضّح في صفحة الدفع.</li>
+    <li data-i18n="p3c">التفعيل يدوي عبر إرسال صورة التحويل ورقم الطلب على واتساب.</li>
+    <li data-i18n="p3d">الوصول للمنصة يبدأ فور استلامك كود التفعيل وإدخاله بنجاح.</li>
+  </ul>
+
+  <h2 data-i18n="h4">4. سياسة الجهاز الواحد</h2>
+  <p data-i18n="p4">يُسمح لكل حساب بجلسة نشطة واحدة في وقت واحد. عند تسجيل الدخول من جهاز جديد، يتم تسجيل الخروج تلقائيًا من الجهاز السابق. مشاركة الحساب مع آخرين تُعدّ مخالفة لهذه الشروط.</p>
+
+  <h2 data-i18n="h5">5. مسؤوليات المستخدم</h2>
+  <ul>
+    <li data-i18n="p5a">الحفاظ على سرية بيانات الدخول الخاصة بك.</li>
+    <li data-i18n="p5b">إدخال بيانات صحيحة عن وضعك المالي.</li>
+    <li data-i18n="p5c">عدم استخدام المنصة لأي غرض غير قانوني.</li>
+    <li data-i18n="p5d">الالتزام بعدم محاولة اختراق المنصة أو إساءة استخدامها.</li>
+  </ul>
+
+  <h2 data-i18n="h6">6. الملكية الفكرية</h2>
+  <p data-i18n="p6">كل محتوى المنصة (الشعار، التصميم، الكود، النصوص، المنهجيات المعروضة) مملوك لشركة Smart Solutions ومحمي بقوانين الملكية الفكرية. لا يُسمح بنسخه أو إعادة توزيعه دون إذن كتابي.</p>
+
+  <h2 data-i18n="h7">7. إخلاء المسؤولية</h2>
+  <p data-i18n="p7">نقدّم النصائح والتوصيات بحسن نية ومبنية على منهجيات معتمدة، لكننا لا نضمن نتائج مالية محددة. القرارات المالية مسؤوليتك وحدك. لا نتحمل مسؤولية أي خسائر قد تنتج عن قرارات اتخذتها بناءً على المنصة.</p>
+
+  <h2 data-i18n="h8">8. تعديل الشروط</h2>
+  <p data-i18n="p8">يحق لنا تعديل هذه الشروط في أي وقت. سنُعلمك بأي تعديلات جوهرية عبر البريد الإلكتروني أو واتساب. استمرارك في استخدام المنصة بعد التعديل يعني موافقتك على الشروط الجديدة.</p>
+
+  <h2 data-i18n="h9">9. إنهاء الخدمة</h2>
+  <p data-i18n="p9">يحق لنا إيقاف حسابك في حالة مخالفة هذه الشروط دون استرداد. يحق لك إغلاق حسابك في أي وقت عبر التواصل معنا على واتساب.</p>
+
+  <h2 data-i18n="h10">10. القانون الحاكم</h2>
+  <p data-i18n="p10">تخضع هذه الشروط للقانون المصري، وتُحل أي نزاعات أمام المحاكم المصرية المختصة.</p>
+
+  <h2 data-i18n="h11">11. التواصل</h2>
+  <p data-i18n="p11">لأي استفسار حول هذه الشروط، تواصل معنا عبر واتساب: <strong style="color:var(--brand);">01112435090</strong></p>
+</div>
+
+<script>
+const STRINGS = {
+  ar: {
+    title: 'شروط الاستخدام', updated: 'آخر تحديث: يونيو 2026', back: '← الرئيسية',
+    h1: '1. قبول الشروط', p1: 'باستخدامك لمنصة Mahfaza (محفظة)، فأنت توافق على هذه الشروط بالكامل. إذا لم توافق على أي بند، يُرجى عدم استخدام المنصة.',
+    h2: '2. وصف الخدمة', p2: 'محفظة هي منصة ويب لإدارة الأموال الشخصية تساعدك على تتبع دخلك ومصروفاتك وتقديم نصائح مالية مبنية على منهجيات عالمية. الخدمة <strong>تعليمية وتثقيفية</strong> وليست استشارة مالية رسمية، ولا تحل محل المستشار المالي المعتمد.',
+    h3: '3. الاشتراك والدفع',
+    p3a: 'السعر: دفعة واحدة بقيمة 199 جنيهًا مصريًا لاستخدام مدى الحياة.',
+    p3b: 'الدفع يتم عبر InstaPay على الرقم الموضّح في صفحة الدفع.',
+    p3c: 'التفعيل يدوي عبر إرسال صورة التحويل ورقم الطلب على واتساب.',
+    p3d: 'الوصول للمنصة يبدأ فور استلامك كود التفعيل وإدخاله بنجاح.',
+    h4: '4. سياسة الجهاز الواحد', p4: 'يُسمح لكل حساب بجلسة نشطة واحدة في وقت واحد. عند تسجيل الدخول من جهاز جديد، يتم تسجيل الخروج تلقائيًا من الجهاز السابق. مشاركة الحساب مع آخرين تُعدّ مخالفة لهذه الشروط.',
+    h5: '5. مسؤوليات المستخدم',
+    p5a: 'الحفاظ على سرية بيانات الدخول الخاصة بك.',
+    p5b: 'إدخال بيانات صحيحة عن وضعك المالي.',
+    p5c: 'عدم استخدام المنصة لأي غرض غير قانوني.',
+    p5d: 'الالتزام بعدم محاولة اختراق المنصة أو إساءة استخدامها.',
+    h6: '6. الملكية الفكرية', p6: 'كل محتوى المنصة (الشعار، التصميم، الكود، النصوص، المنهجيات المعروضة) مملوك لشركة Smart Solutions ومحمي بقوانين الملكية الفكرية. لا يُسمح بنسخه أو إعادة توزيعه دون إذن كتابي.',
+    h7: '7. إخلاء المسؤولية', p7: 'نقدّم النصائح والتوصيات بحسن نية ومبنية على منهجيات معتمدة، لكننا لا نضمن نتائج مالية محددة. القرارات المالية مسؤوليتك وحدك. لا نتحمل مسؤولية أي خسائر قد تنتج عن قرارات اتخذتها بناءً على المنصة.',
+    h8: '8. تعديل الشروط', p8: 'يحق لنا تعديل هذه الشروط في أي وقت. سنُعلمك بأي تعديلات جوهرية عبر البريد الإلكتروني أو واتساب. استمرارك في استخدام المنصة بعد التعديل يعني موافقتك على الشروط الجديدة.',
+    h9: '9. إنهاء الخدمة', p9: 'يحق لنا إيقاف حسابك في حالة مخالفة هذه الشروط دون استرداد. يحق لك إغلاق حسابك في أي وقت عبر التواصل معنا على واتساب.',
+    h10: '10. القانون الحاكم', p10: 'تخضع هذه الشروط للقانون المصري، وتُحل أي نزاعات أمام المحاكم المصرية المختصة.',
+    h11: '11. التواصل', p11: 'لأي استفسار حول هذه الشروط، تواصل معنا عبر واتساب: <strong style="color:var(--brand);">01112435090</strong>'
+  },
+  en: {
+    title: 'Terms of Service', updated: 'Last updated: June 2026', back: '← Home',
+    h1: '1. Acceptance of Terms', p1: 'By using Mahfaza, you agree to these terms in full. If you do not agree with any clause, please do not use the platform.',
+    h2: '2. Service Description', p2: 'Mahfaza is a web platform for personal finance management that helps you track income, expenses, and offers financial recommendations based on global methodologies. The service is <strong>educational and informational</strong>, not formal financial advice, and does not replace a certified financial advisor.',
+    h3: '3. Subscription and Payment',
+    p3a: 'Price: a one-time payment of 199 EGP for lifetime access.',
+    p3b: 'Payment is made via InstaPay to the number shown on the payment page.',
+    p3c: 'Activation is manual by sending the transfer screenshot and Order ID via WhatsApp.',
+    p3d: 'Access to the platform begins immediately after you receive and successfully enter your activation code.',
+    h4: '4. Single-Device Policy', p4: 'Each account is allowed one active session at a time. When you sign in from a new device, the previous device is automatically signed out. Sharing your account with others is a violation of these terms.',
+    h5: '5. User Responsibilities',
+    p5a: 'Maintain the confidentiality of your login credentials.',
+    p5b: 'Enter accurate data about your financial situation.',
+    p5c: 'Do not use the platform for any unlawful purpose.',
+    p5d: 'Do not attempt to hack or misuse the platform.',
+    h6: '6. Intellectual Property', p6: 'All platform content (logo, design, code, text, methodologies presented) is owned by Smart Solutions and protected by intellectual property laws. Copying or redistribution without written permission is not allowed.',
+    h7: '7. Disclaimer', p7: 'We provide advice and recommendations in good faith based on accepted methodologies, but we do not guarantee specific financial results. Financial decisions are your sole responsibility. We are not liable for any losses arising from decisions you make based on the platform.',
+    h8: '8. Modification of Terms', p8: 'We may modify these terms at any time. We will notify you of any material changes via email or WhatsApp. Your continued use of the platform after modification means your acceptance of the new terms.',
+    h9: '9. Termination', p9: 'We may suspend your account in case of violation of these terms without refund. You may close your account at any time by contacting us via WhatsApp.',
+    h10: '10. Governing Law', p10: 'These terms are governed by Egyptian law. Any disputes are resolved before the competent Egyptian courts.',
+    h11: '11. Contact', p11: 'For any inquiry about these terms, contact us via WhatsApp: <strong style="color:var(--brand);">01112435090</strong>'
+  }
+};
+
+function applyLanguage(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  const dict = STRINGS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.getElementById('backBtn').textContent = dict.back;
+  document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+  document.title = dict.title + ' — Mahfaza';
+  localStorage.setItem('mahfaza_lang', lang);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☾' : '☀';
+  localStorage.setItem('mahfaza_theme', theme);
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('lang') || 'ar';
+  applyLanguage(cur === 'ar' ? 'en' : 'ar');
+});
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+
+applyLanguage(localStorage.getItem('mahfaza_lang') || 'ar');
+applyTheme(localStorage.getItem('mahfaza_theme') || 'dark');
+</script>
+</body>
+</html>
