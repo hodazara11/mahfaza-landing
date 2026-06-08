@@ -105,9 +105,27 @@
   .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   .logo { display: flex; align-items: center; gap: 6px; font-family: var(--font-en); font-weight: 800; font-size: 22px; letter-spacing: -1px; text-decoration: none; color: var(--text-1); }
   .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 16px var(--brand-glow); align-self: flex-end; margin-bottom: 6px; }
-  .nav-links { display: flex; gap: 28px; align-items: center; }
-  .nav-links a { color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--brand); }
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    border-radius: 9999px;
+    padding: 5px;
+  }
+  .nav-links a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+    padding: 8px 18px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .nav-links a:hover { color: var(--text-1); background: var(--bg-surface-3); }
   .nav-cta { display: flex; gap: 8px; align-items: center; }
   .icon-btn {
     width: 38px; height: 38px; border-radius: var(--r-sm);
@@ -132,9 +150,11 @@
   .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 8px var(--brand-glow); }
   .hero h1 {
     font-family: inherit; font-weight: 800;
-    font-size: clamp(36px, 6vw, 68px);
-    line-height: 1.15; letter-spacing: -2px;
-    margin-bottom: 24px;
+    font-size: clamp(26px, 3.6vw, 44px);
+    line-height: 1.3; letter-spacing: -0.5px;
+    margin: 0 auto 24px;
+    max-width: 900px;
+    text-align: center;
     background: linear-gradient(135deg, var(--hero-gradient-from) 0%, var(--hero-gradient-to) 100%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -280,6 +300,67 @@
     section { padding: 60px 0; }
     .hero { padding: 40px 0 60px; }
   }
+
+  /* ========== ARABIC TYPOGRAPHY OVERRIDES ==========
+     Arabic letters are cursive (connected). Negative letter-spacing
+     causes glyph overlap. Large sizes feel cramped. These rules use
+     !important to ensure they override the base styles. */
+  [lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3, [lang="ar"] h4 { letter-spacing: 0 !important; }
+
+  /* HERO — much smaller in Arabic, generous line-height, capped width */
+  [lang="ar"] .hero h1 {
+    font-size: clamp(22px, 3.2vw, 38px) !important;
+    line-height: 1.55 !important;
+    font-weight: 700 !important;
+    max-width: 820px;
+    margin-inline: auto;
+  }
+  [lang="ar"] .hero-sub { font-size: clamp(14px, 1.4vw, 16px); line-height: 1.95; max-width: 620px; }
+  [lang="ar"] .hero-badge { font-size: 12px; padding: 5px 12px; }
+  [lang="ar"] .hero-trust { gap: 24px; font-size: 12px; }
+
+  /* SECTION TITLES — smaller, more breathing room */
+  [lang="ar"] .section-head h2 { font-size: clamp(20px, 2.6vw, 30px) !important; line-height: 1.5 !important; font-weight: 700 !important; }
+  [lang="ar"] .section-head p { font-size: 15px; line-height: 1.9; }
+  [lang="ar"] .spotlight-title { font-size: clamp(18px, 2.2vw, 26px) !important; line-height: 1.5 !important; font-weight: 700 !important; }
+  [lang="ar"] .final-cta h2 { font-size: clamp(20px, 2.6vw, 30px) !important; line-height: 1.5 !important; font-weight: 700 !important; }
+
+  /* CARDS — smaller text */
+  [lang="ar"] .feature-card h3 { font-size: 16px; line-height: 1.6; font-weight: 700; }
+  [lang="ar"] .feature-card p { font-size: 13.5px; line-height: 1.9; }
+  [lang="ar"] .step-card h3 { font-size: 17px; line-height: 1.6; font-weight: 700; }
+  [lang="ar"] .step-card p { font-size: 13.5px; line-height: 1.9; }
+  [lang="ar"] .advisor-card-title { font-size: 14px; line-height: 1.5; }
+  [lang="ar"] .advisor-card-desc { font-size: 12.5px; line-height: 1.8; }
+
+  /* PRICING & DASHBOARD STATS — keep numbers tight */
+  [lang="ar"] .pricing-price { letter-spacing: -1px !important; }
+  [lang="ar"] .pricing-tagline { font-size: 13px; }
+  [lang="ar"] .pricing-period { font-size: 13px; }
+  [lang="ar"] .pricing-features li { font-size: 14px; }
+  [lang="ar"] .stat-item .num { letter-spacing: 0; }
+  [lang="ar"] .stat-item .label { font-size: 12.5px; line-height: 1.5; }
+  [lang="ar"] .dstat .val { letter-spacing: 0; }
+  [lang="ar"] .dstat .lbl { font-size: 12px; }
+  [lang="ar"] .dash-greeting h2 { font-size: 19px !important; }
+  [lang="ar"] .dash-greeting p { font-size: 12.5px; }
+
+  /* NAV — Arabic version of pill frame */
+  [lang="ar"] .nav-links a { font-size: 13.5px; font-weight: 600; padding: 8px 16px; }
+  [lang="ar"] .btn { font-size: 14px; font-weight: 700; }
+  [lang="ar"] .btn-lg { font-size: 15px; }
+
+  /* FAQ */
+  [lang="ar"] .faq-item summary { font-size: 15px; line-height: 1.5; }
+  [lang="ar"] .faq-item p { font-size: 13.5px; line-height: 1.9; }
+
+  /* PAYMENT STEPS */
+  [lang="ar"] .payment-step-content h4 { font-size: 15px; line-height: 1.5; }
+  [lang="ar"] .payment-step-content p { font-size: 13.5px; line-height: 1.85; }
+
+  /* GLOBAL line-height for Arabic body */
+  [lang="ar"] body { line-height: 1.85; }
+  [lang="ar"] .section-eyebrow { font-size: 11px; letter-spacing: 1.5px; }
 </style>
 </head>
 <body>
