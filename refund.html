@@ -40,6 +40,12 @@
   strong { color:var(--text); font-weight:700; }
   .highlight { background:rgba(0,217,126,0.08); border:1px solid rgba(0,217,126,0.25); border-radius:12px; padding:20px; margin:24px 0; }
   .highlight strong { color:var(--brand); }
+
+  /* Arabic typography fixes — negative letter-spacing breaks cursive Arabic */
+  [lang="ar"] h1 { letter-spacing: 0 !important; font-size: clamp(24px, 4vw, 34px); line-height: 1.4; font-weight: 700; }
+  [lang="ar"] h2 { letter-spacing: 0 !important; font-size: 18px; line-height: 1.5; }
+  [lang="ar"] p, [lang="ar"] li { font-size: 14.5px; line-height: 1.95; }
+  [lang="ar"] body { line-height: 1.85; }
 </style>
 </head>
 <body>
@@ -60,15 +66,15 @@
   <div class="meta" data-i18n="updated">آخر تحديث: يونيو 2026</div>
 
   <div class="highlight">
-    <strong data-i18n="guarantee">الضمانة:</strong> <span data-i18n="guaranteeText">7 أيام لاسترداد كامل المبلغ بلا أي أسئلة، إذا لم تجد المنصة مفيدة لك.</span>
+    <strong data-i18n="guarantee">الضمانة:</strong> <span data-i18n="guaranteeText">3 أيام لاسترداد كامل المبلغ بلا أي أسئلة من تاريخ الدفع، إذا لم تجد المنصة مفيدة لك.</span>
   </div>
 
   <h2 data-i18n="h1">1. الفترة المسموح بها للاسترداد</h2>
-  <p data-i18n="p1">يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>7 أيام تقويمية</strong> من تاريخ تفعيل حسابك (وليس من تاريخ الدفع).</p>
+  <p data-i18n="p1">يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>3 أيام تقويمية</strong> من تاريخ الدفع (وليس من تاريخ التفعيل).</p>
 
   <h2 data-i18n="h2">2. شروط الاسترداد</h2>
   <ul>
-    <li data-i18n="p2a">يجب أن يكون الطلب خلال فترة الـ 7 أيام.</li>
+    <li data-i18n="p2a">يجب أن يكون الطلب خلال فترة الـ 3 أيام من تاريخ الدفع.</li>
     <li data-i18n="p2b">لسنا بحاجة لأي مبررات أو شرح للسبب.</li>
     <li data-i18n="p2c">الاسترداد يكون لكامل المبلغ المدفوع.</li>
   </ul>
@@ -88,7 +94,7 @@
   <p data-i18n="p5">يتم إيقاف حسابك فور تأكيد الاسترداد، ولن يكون بإمكانك الوصول للمنصة. يتم حذف بياناتك خلال 30 يومًا من إيقاف الحساب.</p>
 
   <h2 data-i18n="h6">6. ما بعد فترة الاسترداد</h2>
-  <p data-i18n="p6">بعد مرور 7 أيام من التفعيل، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.</p>
+  <p data-i18n="p6">بعد مرور 3 أيام من تاريخ الدفع، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.</p>
 
   <h2 data-i18n="h7">7. التواصل</h2>
   <p data-i18n="p7">لأي استفسار حول الاسترداد، تواصل معنا على واتساب: <strong style="color:var(--brand);">01112435090</strong></p>
@@ -98,10 +104,10 @@
 const STRINGS = {
   ar: {
     title: 'سياسة الاسترداد', updated: 'آخر تحديث: يونيو 2026', back: '← الرئيسية',
-    guarantee: 'الضمانة:', guaranteeText: '7 أيام لاسترداد كامل المبلغ بلا أي أسئلة، إذا لم تجد المنصة مفيدة لك.',
-    h1: '1. الفترة المسموح بها للاسترداد', p1: 'يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>7 أيام تقويمية</strong> من تاريخ تفعيل حسابك (وليس من تاريخ الدفع).',
+    guarantee: 'الضمانة:', guaranteeText: '3 أيام لاسترداد كامل المبلغ بلا أي أسئلة من تاريخ الدفع، إذا لم تجد المنصة مفيدة لك.',
+    h1: '1. الفترة المسموح بها للاسترداد', p1: 'يحق لك طلب استرداد كامل المبلغ المدفوع (199 جنيهًا) خلال <strong>3 أيام تقويمية</strong> من تاريخ الدفع (وليس من تاريخ التفعيل).',
     h2: '2. شروط الاسترداد',
-    p2a: 'يجب أن يكون الطلب خلال فترة الـ 7 أيام.',
+    p2a: 'يجب أن يكون الطلب خلال فترة الـ 3 أيام من تاريخ الدفع.',
     p2b: 'لسنا بحاجة لأي مبررات أو شرح للسبب.',
     p2c: 'الاسترداد يكون لكامل المبلغ المدفوع.',
     h3: '3. كيفية طلب الاسترداد',
@@ -111,15 +117,15 @@ const STRINGS = {
     p3d: 'سيتم مراجعة طلبك خلال 24 ساعة وتأكيد الاسترداد.',
     h4: '4. مدة استلام المبلغ', p4: 'سيتم تحويل المبلغ على نفس وسيلة الدفع التي استخدمتها (InstaPay) خلال <strong>3-5 أيام عمل</strong> من تأكيد الطلب.',
     h5: '5. ماذا يحدث لحسابي بعد الاسترداد؟', p5: 'يتم إيقاف حسابك فور تأكيد الاسترداد، ولن يكون بإمكانك الوصول للمنصة. يتم حذف بياناتك خلال 30 يومًا من إيقاف الحساب.',
-    h6: '6. ما بعد فترة الاسترداد', p6: 'بعد مرور 7 أيام من التفعيل، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.',
+    h6: '6. ما بعد فترة الاسترداد', p6: 'بعد مرور 3 أيام من تاريخ الدفع، لا يمكن استرداد المبلغ. ولكن في حالات استثنائية (مشكلة تقنية لم نتمكن من حلها)، يمكنك التواصل معنا وسنبحث الحالة فرديًا.',
     h7: '7. التواصل', p7: 'لأي استفسار حول الاسترداد، تواصل معنا على واتساب: <strong style="color:var(--brand);">01112435090</strong>'
   },
   en: {
     title: 'Refund Policy', updated: 'Last updated: June 2026', back: '← Home',
-    guarantee: 'Guarantee:', guaranteeText: '7 days for a full refund with no questions asked, if you find the platform isn\'t useful for you.',
-    h1: '1. Refund Window', p1: 'You are entitled to request a full refund of the amount paid (199 EGP) within <strong>7 calendar days</strong> from your account activation date (not the payment date).',
+    guarantee: 'Guarantee:', guaranteeText: '3 days for a full refund from payment date with no questions asked, if you find the platform isn\'t useful for you.',
+    h1: '1. Refund Window', p1: 'You are entitled to request a full refund of the amount paid (199 EGP) within <strong>3 calendar days</strong> from the payment date (not the activation date).',
     h2: '2. Refund Conditions',
-    p2a: 'The request must be within the 7-day window.',
+    p2a: 'The request must be within the 3-day window from payment date.',
     p2b: 'We don\'t need any justification or explanation.',
     p2c: 'The refund is for the full amount paid.',
     h3: '3. How to Request a Refund',
@@ -129,7 +135,7 @@ const STRINGS = {
     p3d: 'Your request will be reviewed within 24 hours and the refund confirmed.',
     h4: '4. Time to Receive the Refund', p4: 'The amount will be transferred via the same payment method you used (InstaPay) within <strong>3-5 business days</strong> of confirmation.',
     h5: '5. What Happens to My Account After Refund?', p5: 'Your account is suspended immediately upon refund confirmation, and you will no longer have access to the platform. Your data is deleted within 30 days of suspension.',
-    h6: '6. Beyond the Refund Window', p6: 'After 7 days from activation, refunds are not available. However, in exceptional cases (a technical issue we couldn\'t resolve), you can contact us and we\'ll review the case individually.',
+    h6: '6. Beyond the Refund Window', p6: 'After 3 days from payment date, refunds are not available. However, in exceptional cases (a technical issue we couldn\'t resolve), you can contact us and we\'ll review the case individually.',
     h7: '7. Contact', p7: 'For any question about refunds, contact us via WhatsApp: <strong style="color:var(--brand);">01112435090</strong>'
   }
 };
