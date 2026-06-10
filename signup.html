@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء حساب — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/shared-styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <button class="icon-btn" id="langToggle" aria-label="Language">EN</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Theme">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 data-i18n="title">أنشئ حسابك</h1>
+      <p data-i18n="sub">ابدأ رحلتك نحو إدارة أموالك بذكاء</p>
+    </div>
+
+    <div id="alertBox" style="display:none;"></div>
+
+    <form id="signupForm">
+      <div class="form-field">
+        <label data-i18n="name">الاسم الكامل</label>
+        <input type="text" id="fullName" required minlength="2" autocomplete="name">
+      </div>
+
+      <div class="form-field">
+        <label data-i18n="email">البريد الإلكتروني</label>
+        <input type="email" id="email" required autocomplete="email">
+      </div>
+
+      <div class="form-field">
+        <label data-i18n="password">كلمة المرور (8 حروف على الأقل)</label>
+        <input type="password" id="password" required minlength="8" autocomplete="new-password">
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span id="btnText" data-i18n="submit">إنشاء حساب</span>
+      </button>
+
+      <p style="text-align:center;margin-top:16px;color:var(--text-3);font-size:12px;" data-i18n="terms">
+        بإنشاء حساب، أنت توافق على <a href="terms.html" style="color:var(--brand);">شروط الاستخدام</a> و<a href="privacy.html" style="color:var(--brand);">سياسة الخصوصية</a>
+      </p>
+    </form>
+
+    <div class="auth-footer">
+      <span data-i18n="haveAccount">لديك حساب بالفعل؟</span>
+      <a href="login.html" data-i18n="loginLink">سجل الدخول</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lib/supabase.js"></script>
+<script src="lib/auth.js"></script>
+<script src="lib/theme-lang.js"></script>
+<script>
+const STRINGS = {
+  ar: {
+    title: 'أنشئ حسابك',
+    sub: 'ابدأ رحلتك نحو إدارة أموالك بذكاء',
+    name: 'الاسم الكامل',
+    email: 'البريد الإلكتروني',
+    password: 'كلمة المرور (8 حروف على الأقل)',
+    submit: 'إنشاء حساب',
+    terms: 'بإنشاء حساب، أنت توافق على <a href="terms.html" style="color:var(--brand);">شروط الاستخدام</a> و<a href="privacy.html" style="color:var(--brand);">سياسة الخصوصية</a>',
+    haveAccount: 'لديك حساب بالفعل؟',
+    loginLink: 'سجل الدخول',
+    errEmail: 'البريد الإلكتروني مستخدم بالفعل أو غير صحيح',
+    errWeak: 'كلمة المرور ضعيفة، استخدم 8 حروف على الأقل',
+    errGeneric: 'حدث خطأ، حاول مرة أخرى',
+    loading: 'جاري الإنشاء...'
+  },
+  en: {
+    title: 'Create your account',
+    sub: 'Start your journey to smarter money management',
+    name: 'Full Name',
+    email: 'Email Address',
+    password: 'Password (at least 8 characters)',
+    submit: 'Create Account',
+    terms: 'By signing up, you agree to <a href="terms.html" style="color:var(--brand);">Terms of Service</a> and <a href="privacy.html" style="color:var(--brand);">Privacy Policy</a>',
+    haveAccount: 'Already have an account?',
+    loginLink: 'Sign in',
+    errEmail: 'Email already in use or invalid',
+    errWeak: 'Password too weak, use at least 8 characters',
+    errGeneric: 'Something went wrong, please try again',
+    loading: 'Creating...'
+  }
+};
+
+MahfazaUI.init(STRINGS);
+
+function showAlert(type, message) {
+  const box = document.getElementById('alertBox');
+  box.className = 'alert alert-' + type;
+  box.textContent = message;
+  box.style.display = 'flex';
+}
+
+function getString(key) {
+  const lang = localStorage.getItem('mahfaza_lang') || 'ar';
+  return STRINGS[lang][key] || key;
+}
+
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const data = await MahfazaAuth.signUp({
+      fullName: document.getElementById('fullName').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    });
+
+    if (data.user) {
+      window.location.href = '/pending.html';
+    }
+  } catch (error) {
+    let msg = getString('errGeneric');
+    if (error.message.includes('email')) msg = getString('errEmail');
+    if (error.message.includes('password')) msg = getString('errWeak');
+    showAlert('error', msg);
+    btn.disabled = false;
+    btnText.textContent = getString('submit');
+  }
+});
+</script>
+
+</body>
+</html>

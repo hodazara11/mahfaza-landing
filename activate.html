@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تفعيل الحساب — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/shared-styles.css">
+<style>
+#codeInput {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <button class="icon-btn" id="langToggle">EN</button>
+      <button class="icon-btn" id="themeToggle">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div style="font-size:40px;margin-bottom:16px;">🔓</div>
+      <h1 data-i18n="title">أدخل كود التفعيل</h1>
+      <p data-i18n="sub">الكود اللي وصلك على واتساب بعد تأكيد الدفع</p>
+    </div>
+
+    <div id="alertBox" style="display:none;"></div>
+
+    <form id="activateForm">
+      <div class="form-field">
+        <label data-i18n="codeLabel">كود التفعيل</label>
+        <input type="text" id="codeInput" required placeholder="XXXX-XXXX-XXXX" maxlength="14" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span id="btnText" data-i18n="submit">تفعيل الحساب</span>
+      </button>
+    </form>
+
+    <a href="pending.html" class="btn btn-ghost" style="margin-top:12px;" data-i18n="back">
+      ← لسه ما دفعتش
+    </a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lib/supabase.js"></script>
+<script src="lib/auth.js"></script>
+<script src="lib/theme-lang.js"></script>
+<script>
+const STRINGS = {
+  ar: {
+    title: 'أدخل كود التفعيل',
+    sub: 'الكود اللي وصلك على واتساب بعد تأكيد الدفع',
+    codeLabel: 'كود التفعيل',
+    submit: 'تفعيل الحساب',
+    back: '← لسه ما دفعتش',
+    success: '✅ تم التفعيل بنجاح! جاري تحويلك...',
+    errInvalid: '❌ الكود غير صحيح أو منتهي الصلاحية',
+    errGeneric: 'حدث خطأ، حاول مرة أخرى',
+    loading: 'جاري التفعيل...'
+  },
+  en: {
+    title: 'Enter Activation Code',
+    sub: 'The code you received via WhatsApp after payment',
+    codeLabel: 'Activation Code',
+    submit: 'Activate Account',
+    back: '← I haven\'t paid yet',
+    success: '✅ Activated! Redirecting...',
+    errInvalid: '❌ Invalid or expired code',
+    errGeneric: 'Something went wrong, please try again',
+    loading: 'Activating...'
+  }
+};
+
+MahfazaUI.init(STRINGS);
+
+setTimeout(async () => {
+  const user = await MahfazaAuth.requireAuth();
+  if (!user) return;
+  const profile = await MahfazaAuth.getProfile(user.id);
+  if (profile && profile.subscription_status === 'active') {
+    window.location.href = profile.onboarding_completed ? '/dashboard.html' : '/onboarding.html';
+  }
+}, 100);
+
+function showAlert(type, message) {
+  const box = document.getElementById('alertBox');
+  box.className = 'alert alert-' + type;
+  box.textContent = message;
+  box.style.display = 'flex';
+}
+
+function getString(key) {
+  const lang = localStorage.getItem('mahfaza_lang') || 'ar';
+  return STRINGS[lang][key] || key;
+}
+
+// Auto-format code with dashes
+document.getElementById('codeInput').addEventListener('input', (e) => {
+  let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (val.length > 4) val = val.slice(0, 4) + '-' + val.slice(4);
+  if (val.length > 9) val = val.slice(0, 9) + '-' + val.slice(9, 13);
+  e.target.value = val;
+});
+
+document.getElementById('activateForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const code = document.getElementById('codeInput').value;
+    const success = await MahfazaAuth.redeemActivationCode(code);
+
+    if (success) {
+      showAlert('success', getString('success'));
+      setTimeout(() => {
+        window.location.href = '/onboarding.html';
+      }, 1500);
+    } else {
+      showAlert('error', getString('errInvalid'));
+      btn.disabled = false;
+      btnText.textContent = getString('submit');
+    }
+  } catch (error) {
+    showAlert('error', getString('errGeneric'));
+    btn.disabled = false;
+    btnText.textContent = getString('submit');
+  }
+});
+</script>
+
+</body>
+</html>

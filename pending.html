@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>في انتظار التفعيل — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/shared-styles.css">
+<style>
+.container { max-width: 560px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <button class="icon-btn" id="langToggle">EN</button>
+      <button class="icon-btn" id="themeToggle">☾</button>
+      <button class="icon-btn" id="logoutBtn" style="width:auto;padding:0 12px;font-size:12px;">خروج</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div style="font-size:40px;margin-bottom:16px;">⏳</div>
+      <h1 data-i18n="title">حسابك جاهز، استكمل الدفع</h1>
+      <p data-i18n="sub">اتبع الخطوات أدناه لتفعيل اشتراكك خلال ساعة</p>
+    </div>
+
+    <div class="order-id-display">
+      <div class="label" data-i18n="orderIdLabel">رقم الطلب الخاص بك</div>
+      <strong id="orderIdValue">MAHFAZA-XXXX</strong>
+      <button class="copy-btn" id="copyOrderBtn" data-i18n="copy">نسخ</button>
+    </div>
+
+    <div class="alert alert-info" data-i18n="importantNote">
+      ⚠️ مهم: اكتب رقم الطلب في وصف التحويل عشان نتأكد من دفعتك بسرعة
+    </div>
+
+    <ul class="steps-list">
+      <li><strong>1</strong> <span data-i18n="step1">حوّل <strong style="color:var(--brand);">199 جنيه</strong> على InstaPay رقم: <strong style="font-family:var(--font-mono);" id="instaPayNum">01124941148</strong></span></li>
+      <li><strong>2</strong> <span data-i18n="step2">اكتب رقم الطلب <strong style="font-family:var(--font-mono);">MAHFAZA-XXXX</strong> في وصف التحويل</span></li>
+      <li><strong>3</strong> <span data-i18n="step3">ابعت screenshot للتحويل على واتساب</span></li>
+      <li><strong>4</strong> <span data-i18n="step4">هتستلم كود التفعيل خلال ساعة من العمل</span></li>
+    </ul>
+
+    <a href="#" class="btn btn-primary" id="whatsappBtn" target="_blank">
+      <span data-i18n="whatsappBtn">📱 افتح واتساب وابعت Screenshot</span>
+    </a>
+
+    <a href="activate.html" class="btn btn-ghost" style="margin-top:12px;" data-i18n="haveCode">
+      عندي كود التفعيل بالفعل
+    </a>
+
+    <div class="auth-footer" style="margin-top:24px;">
+      <span data-i18n="checkStatus">في حالة استلامك الكود، اضغط هنا للتفعيل ←</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lib/supabase.js"></script>
+<script src="lib/auth.js"></script>
+<script src="lib/theme-lang.js"></script>
+<script>
+const STRINGS = {
+  ar: {
+    title: 'حسابك جاهز، استكمل الدفع',
+    sub: 'اتبع الخطوات أدناه لتفعيل اشتراكك خلال ساعة',
+    orderIdLabel: 'رقم الطلب الخاص بك',
+    copy: 'نسخ',
+    importantNote: '⚠️ مهم: اكتب رقم الطلب في وصف التحويل عشان نتأكد من دفعتك بسرعة',
+    step1: 'حوّل <strong style="color:var(--brand);">199 جنيه</strong> على InstaPay رقم: <strong style="font-family:var(--font-mono);" id="instaPayNum">01124941148</strong>',
+    step2: 'اكتب رقم الطلب <strong style="font-family:var(--font-mono);" id="orderInline"></strong> في وصف التحويل',
+    step3: 'ابعت screenshot للتحويل على واتساب',
+    step4: 'هتستلم كود التفعيل خلال ساعة من العمل',
+    whatsappBtn: '📱 افتح واتساب وابعت Screenshot',
+    haveCode: 'عندي كود التفعيل بالفعل',
+    checkStatus: 'في حالة استلامك الكود، اضغط هنا للتفعيل ←',
+    copied: 'تم النسخ!'
+  },
+  en: {
+    title: 'Account ready — complete payment',
+    sub: 'Follow these steps to activate within an hour',
+    orderIdLabel: 'Your Order ID',
+    copy: 'Copy',
+    importantNote: '⚠️ Important: Write your Order ID in the transfer description for faster processing',
+    step1: 'Transfer <strong style="color:var(--brand);">199 EGP</strong> via InstaPay to: <strong style="font-family:var(--font-mono);">01124941148</strong>',
+    step2: 'Write your Order ID in the transfer description',
+    step3: 'Send the transfer screenshot via WhatsApp',
+    step4: 'You\'ll receive activation code within an hour (work hours)',
+    whatsappBtn: '📱 Open WhatsApp and Send Screenshot',
+    haveCode: 'I already have an activation code',
+    checkStatus: 'If you received the code, click here to activate →',
+    copied: 'Copied!'
+  }
+};
+
+MahfazaUI.init(STRINGS);
+
+async function load() {
+  setTimeout(async () => {
+    const user = await MahfazaAuth.requireAuth();
+    if (!user) return;
+
+    const profile = await MahfazaAuth.getProfile(user.id);
+    if (!profile) return;
+
+    if (profile.subscription_status === 'active') {
+      window.location.href = profile.onboarding_completed ? '/dashboard.html' : '/onboarding.html';
+      return;
+    }
+
+    document.getElementById('orderIdValue').textContent = profile.order_id;
+
+    // Load site settings for payment numbers
+    const { data: settings } = await window.supabaseClient
+      .from('site_settings')
+      .select('key, value')
+      .in('key', ['payment_instapay', 'payment_whatsapp_link']);
+
+    const settingsMap = {};
+    if (settings) settings.forEach(s => { settingsMap[s.key] = s.value; });
+
+    const instapay = settingsMap['payment_instapay'] || '01124941148';
+    const whatsappLink = settingsMap['payment_whatsapp_link'] || 'https://wa.me/201112435090';
+
+    document.querySelectorAll('#instaPayNum').forEach(el => { el.textContent = instapay; });
+
+    const whatsappMsg = encodeURIComponent(
+      `طلب تفعيل\nرقم الطلب: ${profile.order_id}\nالإيميل: ${user.email}`
+    );
+    document.getElementById('whatsappBtn').href = `${whatsappLink}?text=${whatsappMsg}`;
+  }, 100);
+}
+
+load();
+
+document.getElementById('copyOrderBtn').addEventListener('click', async (e) => {
+  const orderId = document.getElementById('orderIdValue').textContent;
+  try {
+    await navigator.clipboard.writeText(orderId);
+    const lang = localStorage.getItem('mahfaza_lang') || 'ar';
+    e.target.textContent = STRINGS[lang].copied;
+    setTimeout(() => { e.target.textContent = STRINGS[lang].copy; }, 2000);
+  } catch (err) { console.error(err); }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => MahfazaAuth.logout());
+</script>
+
+</body>
+</html>
