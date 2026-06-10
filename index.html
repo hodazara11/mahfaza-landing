@@ -11,6 +11,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lib/supabase.js"></script>
+<script src="lib/auth.js"></script>
 <style>
   /* ========== TOKENS ========== */
   :root {
@@ -685,7 +688,7 @@
       </details>
       <details class="faq-item">
         <summary data-i18n="faq.q2">هل يمكنني استرداد المبلغ إن لم تعجبني؟</summary>
-        <p data-i18n="faq.a2">لديك 7 أيام من تاريخ التفعيل لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.</p>
+        <p data-i18n="faq.a2">لديك 3 أيام من تاريخ الدفع لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.</p>
       </details>
       <details class="faq-item">
         <summary data-i18n="faq.q3">هل تطلقون تحديثات وميزات جديدة؟</summary>
@@ -749,10 +752,10 @@
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.contact">تواصل</h4>
-        <a id="footerWhatsApp" href="https://wa.me/201112435090">WhatsApp</a>
-        <a href="#" id="footerIG">Instagram</a>
-        <a href="#" id="footerFB">Facebook</a>
-        <a href="#" id="footerTT">TikTok</a>
+        <a id="footerWhatsApp" href="https://wa.me/201112435090" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/ssolutions01/" id="footerIG" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/share/1H2mwrtZ5h/" id="footerFB" target="_blank">Facebook</a>
+        <a href="https://www.tiktok.com/@smartsolutions011" id="footerTT" target="_blank">TikTok</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -784,9 +787,9 @@ const SITE_CONFIG = {
   },
   // Social media links - admin can modify
   social: {
-    instagram: '#',
-    facebook: '#',
-    tiktok: '#'
+    instagram: 'https://www.instagram.com/ssolutions01/',
+    facebook: 'https://www.facebook.com/share/1H2mwrtZ5h/',
+    tiktok: 'https://www.tiktok.com/@smartsolutions011'
   },
   // Promotional badge - admin can modify
   promoBadge: { ar: 'عرض الإطلاق', en: 'Launch Offer', show: true }
@@ -868,7 +871,7 @@ const STRINGS = {
     'pay.s5.d': 'سنراجع التحويل ونرسل لك كود التفعيل عبر واتساب. أدخله في حسابك واستخدم محفظة فورًا.',
     'faq.eyebrow': 'الأسئلة الشائعة', 'faq.title': 'الأسئلة التي قد تخطر ببالك',
     'faq.q1': 'هل بياناتي المالية آمنة؟', 'faq.a1': 'نعم، 100%. بياناتك مشفّرة بمعايير بنكية (AES-256) ومحفوظة على Supabase الموثوقة عالميًا. لا يستطيع أحد رؤية بياناتك سواك.',
-    'faq.q2': 'هل يمكنني استرداد المبلغ إن لم تعجبني؟', 'faq.a2': 'لديك 7 أيام من تاريخ التفعيل لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.',
+    'faq.q2': 'هل يمكنني استرداد المبلغ إن لم تعجبني؟', 'faq.a2': 'لديك 3 أيام من تاريخ الدفع لاسترداد كامل المبلغ بلا أي أسئلة. أرسل رسالة عبر واتساب وسنعيد لك المبلغ.',
     'faq.q3': 'هل تطلقون تحديثات وميزات جديدة؟', 'faq.a3': 'بالتأكيد. اشتراكك مدى الحياة يعني الاستفادة من أي ميزة جديدة نطلقها تلقائيًا بلا رسوم إضافية.',
     'faq.q4': 'لست خبيرًا في المحاسبة، هل أستطيع استخدامها؟', 'faq.a4': 'محفظة مصممة للأشخاص العاديين، وليست للمحاسبين. كل شيء فيها بسيط ومشروح. عملية التهيئة تأخذك خطوة بخطوة، وخلال 5 دقائق ستتقن استخدامها.',
     'faq.q5': 'ما الفرق بين محفظة وأي منصة أخرى؟', 'faq.a5': 'ثلاثة فروقات أساسية: (1) دفعة واحدة بلا اشتراك شهري، (2) النصائح مبنية على قواعد عالمية مُثبتة، (3) مصممة خصيصًا للسياق المصري (الجنيه، التضخم، طرق الادخار المحلية).',
@@ -956,7 +959,7 @@ const STRINGS = {
     'pay.s5.d': 'We\'ll review the transfer and send you the activation code via WhatsApp. Enter it in your account and use Mahfaza immediately.',
     'faq.eyebrow': 'FAQ', 'faq.title': 'Questions that might come to mind',
     'faq.q1': 'Is my financial data safe?', 'faq.a1': 'Yes, 100%. Your data is encrypted with banking-grade standards (AES-256) and stored on globally trusted Supabase. No one can see your data except you.',
-    'faq.q2': 'Can I get a refund if I don\'t like it?', 'faq.a2': 'You have 7 days from activation to get a full refund with no questions asked. Send a WhatsApp message and we\'ll refund you.',
+    'faq.q2': 'Can I get a refund if I don\'t like it?', 'faq.a2': 'You have 3 days from the payment date for a full refund with no questions asked. Send a WhatsApp message and we\'ll refund you.',
     'faq.q3': 'Do you release updates and new features?', 'faq.a3': 'Absolutely. Lifetime access means you benefit from any new feature we release automatically with no additional fees.',
     'faq.q4': 'I\'m not an accounting expert, can I use it?', 'faq.a4': 'Mahfaza is designed for ordinary people, not accountants. Everything is simple and explained. The setup takes you step by step, and within 5 minutes you\'ll master it.',
     'faq.q5': 'What\'s the difference between Mahfaza and other platforms?', 'faq.a5': 'Three key differences: (1) one-time payment with no monthly subscription, (2) advice built on globally-proven rules, (3) designed specifically for the Egyptian context (EGP, inflation, local savings methods).',
@@ -1074,13 +1077,63 @@ new Chart(document.getElementById('catChart'), {
   options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#A1A1AA', font: { size: 10 }, padding: 6, boxWidth: 10 } } } }
 });
 
-// Signup handler (will connect to Supabase later)
-function handleSignup(e) {
+// Signup handler — connected to Supabase, creates account + redirects to /pending.html
+async function handleSignup(e) {
   e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = document.documentElement.getAttribute('lang') === 'en' ? 'Creating...' : 'جاري الإنشاء...';
+
+  const fullName = document.getElementById('su-name').value;
   const email = document.getElementById('su-email').value;
-  alert('سيتم ربط النموذج بـ Supabase في الخطوة التالية.\nالبريد المُدخل: ' + email);
+  const password = document.getElementById('su-password').value;
+
+  try {
+    if (!window.MahfazaAuth) throw new Error('Auth library not loaded');
+    const data = await window.MahfazaAuth.signUp({ fullName, email, password });
+    if (data && data.user) {
+      window.location.href = '/pending.html';
+    } else {
+      throw new Error('Signup failed');
+    }
+  } catch (error) {
+    const lang = document.documentElement.getAttribute('lang') || 'ar';
+    let msg;
+    const errMsg = (error.message || '').toLowerCase();
+    if (errMsg.includes('already registered') || errMsg.includes('user already')) {
+      msg = lang === 'en' ? 'This email is already registered. Try logging in instead.' : 'البريد الإلكتروني مسجّل بالفعل. حاول تسجيل الدخول.';
+    } else if (errMsg.includes('password')) {
+      msg = lang === 'en' ? 'Password too weak. Use at least 8 characters.' : 'كلمة المرور ضعيفة. استخدم 8 حروف على الأقل.';
+    } else if (errMsg.includes('email') || errMsg.includes('invalid')) {
+      msg = lang === 'en' ? 'Invalid email address.' : 'البريد الإلكتروني غير صحيح.';
+    } else {
+      msg = lang === 'en' ? 'Something went wrong: ' + error.message : 'حدث خطأ: ' + error.message;
+    }
+    alert(msg);
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
   return false;
 }
+
+// If user is already logged in, route CTAs intelligently
+setTimeout(async () => {
+  try {
+    if (!window.supabaseClient || !window.MahfazaAuth) return;
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    if (user) {
+      const profile = await window.MahfazaAuth.getProfile(user.id);
+      if (profile) {
+        const ctas = document.querySelectorAll('a[href="#signup"]');
+        const target = profile.subscription_status === 'pending_activation' ? '/pending.html'
+                     : profile.subscription_status === 'active' ? '/dashboard.html'
+                     : null;
+        if (target) ctas.forEach(btn => { btn.href = target; });
+      }
+    }
+  } catch (e) { /* silent */ }
+}, 500);
 </script>
 </body>
 </html>
