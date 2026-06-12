@@ -113,7 +113,7 @@ async function load() {
     if (!profile) return;
 
     if (profile.subscription_status === 'active') {
-      window.location.href = profile.onboarding_completed ? '/dashboard.html' : '/onboarding.html';
+      window.location.href = '/dashboard.html';
       return;
     }
 

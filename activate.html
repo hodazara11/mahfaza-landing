@@ -94,7 +94,7 @@ setTimeout(async () => {
   if (!user) return;
   const profile = await MahfazaAuth.getProfile(user.id);
   if (profile && profile.subscription_status === 'active') {
-    window.location.href = profile.onboarding_completed ? '/dashboard.html' : '/onboarding.html';
+    window.location.href = '/dashboard.html';
   }
 }, 100);
 
@@ -133,7 +133,7 @@ document.getElementById('activateForm').addEventListener('submit', async (e) => 
     if (success) {
       showAlert('success', getString('success'));
       setTimeout(() => {
-        window.location.href = '/onboarding.html';
+        window.location.href = '/dashboard.html';
       }, 1500);
     } else {
       showAlert('error', getString('errInvalid'));
