@@ -371,9 +371,9 @@ document.getElementById('refreshBtn').addEventListener('click', loadOverview);
 
 async function loadOrders() {
   const client = window.supabaseClient;
-  const { data, error } = await client.from('admin_users_view').select('*').eq('subscription_status', 'pending_activation').order('created_at', { ascending: true });
-  if (error) { console.error(error); return; }
-  allOrders = data || [];
+  const { data, error } = await client.rpc('admin_get_users', { p_status: 'pending_activation' });
+  if (error) { console.error('loadOrders error:', error); document.getElementById('ordersBody').innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">⚠️</div>خطأ: ' + error.message + '</div></td></tr>'; return; }
+  allOrders = (data || []).sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   renderOrders(allOrders);
 }
 
@@ -456,8 +456,8 @@ document.getElementById('bulkGenBtn').addEventListener('click', async () => {
 
 async function loadUsers() {
   const client = window.supabaseClient;
-  const { data, error } = await client.from('admin_users_view').select('*').order('created_at', { ascending: false }).limit(500);
-  if (error) { console.error(error); return; }
+  const { data, error } = await client.rpc('admin_get_users', { p_status: null });
+  if (error) { console.error('loadUsers error:', error); document.getElementById('usersBody').innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">⚠️</div>خطأ: ' + error.message + '</div></td></tr>'; return; }
   allUsers = data || [];
   renderUsers();
 }
