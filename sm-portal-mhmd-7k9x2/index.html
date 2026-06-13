@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #00D97E; --brand-hover: #00C570; --brand-muted: rgba(0,217,126,0.12);
+  --teal: #14B8A6; --blue: #4D9FFF; --purple: #A78BFA;
+  --danger: #FF4D5E; --warning: #FFB020;
+  --bg: #0A0A0F; --surface: #13131A; --surface-2: #1C1C26; --surface-3: #252531;
+  --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.15);
+  --text: #F5F5F7; --text-2: #A1A1AA; --text-3: #6B6B73;
+  --font-en: 'Plus Jakarta Sans', sans-serif; --font-ar: 'Cairo', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-ar); font-size: 14px; min-height: 100vh; }
+body.unauthorized { display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-3); }
+body.authorized { display: flex; }
+
+.sidebar {
+  width: 240px; background: var(--surface); border-inline-start: 1px solid var(--border);
+  height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 24px 16px;
+}
+.logo { display: flex; align-items: center; gap: 6px; font-family: var(--font-en); font-weight: 800; font-size: 22px; letter-spacing: -1px; color: var(--text); text-decoration: none; padding: 0 8px; margin-bottom: 8px; }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 16px rgba(0,217,126,0.35); align-self: flex-end; margin-bottom: 6px; }
+.admin-badge { background: var(--brand-muted); color: var(--brand); font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-family: var(--font-en); margin-inline-start: 8px; align-self: center; }
+.nav-section { font-size: 11px; color: var(--text-3); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 16px 12px 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--r-sm); color: var(--text-2); cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; position: relative; }
+.nav-item:hover { background: var(--surface-2); color: var(--text); }
+.nav-item.active { background: var(--brand-muted); color: var(--brand); }
+.nav-item .icon { font-size: 16px; }
+.nav-item .badge { position: absolute; inset-inline-end: 12px; background: var(--danger); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 9999px; font-weight: 700; }
+.sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+.user-info { padding: 12px; font-size: 12px; color: var(--text-3); }
+.logout-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--border); color: var(--text-2); border-radius: var(--r-sm); cursor: pointer; font-family: inherit; font-size: 13px; transition: all 0.2s; }
+.logout-btn:hover { color: var(--danger); border-color: var(--danger); }
+
+.main { flex: 1; padding: 32px; overflow-y: auto; max-width: calc(100vw - 240px); }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+.page-subtitle { color: var(--text-2); font-size: 13px; margin-top: 4px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; border-radius: var(--r-sm); font-family: inherit; font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
+.btn-primary { background: var(--brand); color: #0A0A0F; }
+.btn-primary:hover:not(:disabled) { background: var(--brand-hover); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--surface-3); border-color: var(--border-2); }
+.btn-danger { background: rgba(255,77,94,0.1); color: var(--danger); border: 1px solid rgba(255,77,94,0.3); }
+.btn-danger:hover { background: rgba(255,77,94,0.2); }
+.btn-sm { padding: 6px 10px; font-size: 12px; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px; }
+.stat-card.highlight { background: linear-gradient(135deg, rgba(0,217,126,0.1), rgba(20,184,166,0.05)); border-color: rgba(0,217,126,0.25); }
+.stat-card.warning { background: rgba(255,176,32,0.05); border-color: rgba(255,176,32,0.3); }
+.stat-label { font-size: 12px; color: var(--text-2); margin-bottom: 8px; }
+.stat-value { font-family: var(--font-en); font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+.stat-value.small { font-size: 22px; }
+.stat-meta { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px; margin-bottom: 16px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.card-title { font-size: 15px; font-weight: 700; }
+.card-meta { font-size: 12px; color: var(--text-3); }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { text-align: start; padding: 10px 12px; background: var(--surface-2); color: var(--text-2); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+tbody td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+tbody tr:hover { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: none; }
+
+.badge { display: inline-block; padding: 3px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+.badge-success { background: rgba(0,217,126,0.12); color: var(--brand); }
+.badge-warning { background: rgba(255,176,32,0.12); color: var(--warning); }
+.badge-danger { background: rgba(255,77,94,0.12); color: var(--danger); }
+.badge-info { background: rgba(77,159,255,0.12); color: var(--blue); }
+.badge-neutral { background: var(--surface-3); color: var(--text-2); }
+
+.mono { font-family: var(--font-mono); font-size: 12px; }
+
+.search-bar { width: 100%; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--text); font-family: inherit; font-size: 13px; margin-bottom: 16px; }
+.search-bar:focus { outline: none; border-color: var(--brand); }
+
+.filter-tabs { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-tab { padding: 6px 14px; background: transparent; border: 1px solid var(--border); border-radius: 9999px; color: var(--text-2); cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 600; }
+.filter-tab.active { background: var(--brand-muted); color: var(--brand); border-color: var(--brand); }
+
+.form-row { display: grid; grid-template-columns: 200px 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.form-row:last-child { border-bottom: none; }
+.form-row label { color: var(--text-2); font-size: 13px; font-weight: 600; }
+.form-row input, .form-row select { padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--text); font-family: inherit; font-size: 13px; min-width: 100px; }
+.form-row input:focus { outline: none; border-color: var(--brand); }
+.form-row .switch { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.switch input { display: none; }
+.switch-track { width: 36px; height: 20px; background: var(--surface-3); border-radius: 9999px; position: relative; transition: background 0.2s; }
+.switch-track::after { content: ''; position: absolute; top: 2px; inset-inline-start: 2px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+.switch input:checked + .switch-track { background: var(--brand); }
+.switch input:checked + .switch-track::after { transform: translateX(16px); }
+[dir="rtl"] .switch input:checked + .switch-track::after { transform: translateX(-16px); }
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; }
+.modal-backdrop.active { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 24px; max-width: 480px; width: 100%; }
+.modal h3 { font-size: 18px; margin-bottom: 16px; }
+
+.copied-toast { position: fixed; bottom: 24px; inset-inline-start: 50%; transform: translateX(-50%); background: var(--brand); color: #0A0A0F; padding: 10px 20px; border-radius: var(--r-sm); font-weight: 600; font-size: 13px; z-index: 200; opacity: 0; transition: opacity 0.3s; }
+.copied-toast.show { opacity: 1; }
+[dir="rtl"] .copied-toast { transform: translateX(50%); }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-3); }
+.empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+.loading { text-align: center; padding: 40px; color: var(--text-3); }
+
+#shell { display: none; }
+body.authorized #shell { display: flex; width: 100%; }
+
+@media (max-width: 900px) {
+  body.authorized #shell { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 4px; }
+  .sidebar-footer { display: none; }
+  .nav-section { display: none; }
+  .nav-item { padding: 6px 10px; font-size: 12px; }
+  .main { max-width: 100vw; padding: 16px; }
+  .form-row { grid-template-columns: 1fr; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="loading-screen" style="position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:12px;">.</div>
+
+<div id="shell">
+<aside class="sidebar">
+  <a href="#" class="logo">Mahfaza<span class="logo-dot"></span><span class="admin-badge">ADMIN</span></a>
+
+  <div class="nav-section">القائمة</div>
+  <div class="nav-item active" data-section="overview"><span class="icon">🏠</span> <span>الرئيسية</span></div>
+  <div class="nav-item" data-section="orders"><span class="icon">📋</span> <span>الطلبات</span> <span class="badge" id="pendingBadge" style="display:none;"></span></div>
+  <div class="nav-item" data-section="codes"><span class="icon">🎫</span> <span>الأكواد</span></div>
+  <div class="nav-item" data-section="users"><span class="icon">👥</span> <span>المستخدمين</span></div>
+  <div class="nav-item" data-section="settings"><span class="icon">⚙️</span> <span>الإعدادات</span></div>
+
+  <div class="sidebar-footer">
+    <div class="user-info" id="adminInfo">Loading...</div>
+    <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
+  </div>
+</aside>
+
+<main class="main">
+
+  <div class="section active" id="section-overview">
+    <div class="page-header">
+      <div><div class="page-title">الرئيسية</div><div class="page-subtitle">نظرة عامة على المنصة</div></div>
+      <button class="btn btn-secondary" id="refreshBtn">🔄 تحديث</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card highlight"><div class="stat-label">إجمالي المستخدمين</div><div class="stat-value" id="totalUsers">—</div></div>
+      <div class="stat-card warning"><div class="stat-label">طلبات بانتظار التفعيل</div><div class="stat-value" id="pendingOrders">—</div><div class="stat-meta">اضغط "الطلبات" للتفعيل</div></div>
+      <div class="stat-card"><div class="stat-label">المشتركين النشطين</div><div class="stat-value" id="activeSubs">—</div></div>
+      <div class="stat-card"><div class="stat-label">طلبات استرداد</div><div class="stat-value" id="refundedCount">—</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">💰 الإيرادات</div><div class="card-meta">بناءً على السعر الحالي</div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">اليوم</div><div class="stat-value small" id="todayRev">— ج</div></div>
+        <div class="stat-card"><div class="stat-label">هذا الأسبوع</div><div class="stat-value small" id="weekRev">— ج</div></div>
+        <div class="stat-card"><div class="stat-label">هذا الشهر</div><div class="stat-value small" id="monthRev">— ج</div></div>
+        <div class="stat-card highlight"><div class="stat-label">الإجمالي</div><div class="stat-value small" id="totalRev">— ج</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">🎫 الأكواد</div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">متاحة</div><div class="stat-value small" id="availableCodes">—</div><div class="stat-meta" id="codesWarning"></div></div>
+        <div class="stat-card"><div class="stat-label">مُستخدمة</div><div class="stat-value small" id="usedCodes">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="section-orders">
+    <div class="page-header"><div><div class="page-title">طلبات بانتظار التفعيل</div><div class="page-subtitle">المستخدمين اللي سجلوا ومستنيين كود التفعيل</div></div><button class="btn btn-secondary" id="refreshOrdersBtn">🔄 تحديث</button></div>
+    <input type="text" class="search-bar" id="ordersSearch" placeholder="بحث بالاسم أو الإيميل أو رقم الطلب...">
+    <div class="card"><div class="table-wrap"><table id="ordersTable">
+      <thead><tr><th>الاسم</th><th>الإيميل</th><th>رقم الطلب</th><th>منذ</th><th>إجراءات</th></tr></thead>
+      <tbody id="ordersBody"><tr><td colspan="5" class="loading">جاري التحميل...</td></tr></tbody>
+    </table></div></div>
+  </div>
+
+  <div class="section" id="section-codes">
+    <div class="page-header"><div><div class="page-title">أكواد التفعيل</div><div class="page-subtitle">إدارة كل الأكواد</div></div><button class="btn btn-primary" id="bulkGenBtn">+ إنشاء 50 كود جديد</button></div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">الكل</button>
+      <button class="filter-tab" data-filter="available">متاح</button>
+      <button class="filter-tab" data-filter="assigned">مخصص</button>
+      <button class="filter-tab" data-filter="used">مستخدم</button>
+      <button class="filter-tab" data-filter="expired">منتهي</button>
+    </div>
+    <input type="text" class="search-bar" id="codesSearch" placeholder="بحث بالكود...">
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>الكود</th><th>الحالة</th><th>مخصص لـ</th><th>تاريخ الإنشاء</th></tr></thead>
+      <tbody id="codesBody"><tr><td colspan="4" class="loading">جاري التحميل...</td></tr></tbody>
+    </table></div></div>
+  </div>
+
+  <div class="section" id="section-users">
+    <div class="page-header"><div><div class="page-title">المستخدمين</div><div class="page-subtitle">البحث وإدارة كل المستخدمين</div></div></div>
+    <input type="text" class="search-bar" id="usersSearch" placeholder="بحث بالاسم أو الإيميل أو رقم الطلب...">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-user-filter="all">الكل</button>
+      <button class="filter-tab" data-user-filter="active">نشط</button>
+      <button class="filter-tab" data-user-filter="pending_activation">بانتظار التفعيل</button>
+      <button class="filter-tab" data-user-filter="suspended">موقوف</button>
+      <button class="filter-tab" data-user-filter="refunded">مسترد</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>الاسم</th><th>الإيميل</th><th>رقم الطلب</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+      <tbody id="usersBody"><tr><td colspan="5" class="loading">جاري التحميل...</td></tr></tbody>
+    </table></div></div>
+  </div>
+
+  <div class="section" id="section-settings">
+    <div class="page-header"><div><div class="page-title">إعدادات الموقع</div><div class="page-subtitle">كل تعديل بيظهر فوراً في الـ Landing Page</div></div></div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">💰 السعر</div></div>
+      <div class="form-row"><label>السعر الحالي</label><input type="number" id="set_price_current" min="1"><button class="btn btn-primary btn-sm" data-save="pricing">حفظ</button></div>
+      <div class="form-row"><label>السعر الأصلي (قبل الخصم)</label><input type="number" id="set_price_original" min="1"><span></span></div>
+      <div class="form-row"><label>إظهار الخصم</label><label class="switch"><input type="checkbox" id="set_show_discount"><span class="switch-track"></span></label><span></span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">💳 أرقام الدفع</div></div>
+      <div class="form-row"><label>رقم InstaPay</label><input type="text" id="set_instapay"><button class="btn btn-primary btn-sm" data-save="payment_instapay">حفظ</button></div>
+      <div class="form-row"><label>رقم WhatsApp</label><input type="text" id="set_whatsapp"><button class="btn btn-primary btn-sm" data-save="payment_whatsapp">حفظ</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">🌐 السوشيال ميديا</div></div>
+      <div class="form-row"><label>Instagram</label><input type="text" id="set_instagram"><button class="btn btn-primary btn-sm" data-save="social_instagram">حفظ</button></div>
+      <div class="form-row"><label>Facebook</label><input type="text" id="set_facebook"><button class="btn btn-primary btn-sm" data-save="social_facebook">حفظ</button></div>
+      <div class="form-row"><label>TikTok</label><input type="text" id="set_tiktok"><button class="btn btn-primary btn-sm" data-save="social_tiktok">حفظ</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">🎉 لافتة العرض</div></div>
+      <div class="form-row"><label>النص بالعربي</label><input type="text" id="set_promo_ar"><button class="btn btn-primary btn-sm" data-save="promo_badge">حفظ</button></div>
+      <div class="form-row"><label>النص بالإنجليزي</label><input type="text" id="set_promo_en"><span></span></div>
+      <div class="form-row"><label>إظهار اللافتة</label><label class="switch"><input type="checkbox" id="set_promo_show"><span class="switch-track"></span></label><span></span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">🏖️ Vacation Mode</div></div>
+      <div class="form-row"><label>تفعيل وضع الإجازة</label><label class="switch"><input type="checkbox" id="set_vacation_mode"><span class="switch-track"></span></label><button class="btn btn-primary btn-sm" data-save="vacation_mode">حفظ</button></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<div class="modal-backdrop" id="userModal">
+  <div class="modal">
+    <h3 id="userModalTitle">تفاصيل المستخدم</h3>
+    <div id="userModalBody"></div>
+    <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" id="modalGenerateCode">إنشاء كود</button>
+      <button class="btn btn-danger btn-sm" id="modalSuspend">إيقاف</button>
+      <button class="btn btn-danger btn-sm" id="modalRefund">استرداد</button>
+      <button class="btn btn-secondary btn-sm" id="modalClose">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div class="copied-toast" id="toast">✅ تم النسخ</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../lib/supabase.js"></script>
+<script src="../lib/auth.js"></script>
+<script>
+let allOrders = [], allCodes = [], allUsers = [], currentCodeFilter = 'all', currentUserFilter = 'all', currentModalUserId = null;
+
+// SILENT GATEKEEPER — redirect to landing if not admin, no error messages
+async function silentAuth() {
+  try {
+    const client = window.supabaseClient || initSupabase();
+    if (!client) { window.location.replace('/'); return false; }
+
+    const { data: { user } } = await client.auth.getUser();
+    if (!user) { window.location.replace('/'); return false; }
+
+    const { data: profile } = await client.from('user_profile')
+      .select('is_admin, full_name')
+      .eq('id', user.id).single();
+
+    if (!profile || !profile.is_admin) { window.location.replace('/'); return false; }
+
+    document.getElementById('adminInfo').innerHTML = `<strong>${profile.full_name || user.email}</strong><br><span style="opacity:0.7;">${user.email}</span>`;
+    return true;
+  } catch (e) {
+    window.location.replace('/');
+    return false;
+  }
+}
+
+async function init() {
+  const ok = await silentAuth();
+  if (!ok) return;
+  document.body.classList.add('authorized');
+  document.getElementById('loading-screen').style.display = 'none';
+  loadOverview();
+  setupNav();
+}
+
+function setupNav() {
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const section = item.getAttribute('data-section');
+      switchSection(section);
+    });
+  });
+}
+
+function switchSection(name) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.getAttribute('data-section') === name));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === `section-${name}`));
+  if (name === 'overview') loadOverview();
+  if (name === 'orders') loadOrders();
+  if (name === 'codes') loadCodes();
+  if (name === 'users') loadUsers();
+  if (name === 'settings') loadSettings();
+}
+
+async function loadOverview() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.rpc('admin_revenue_stats');
+  if (error || !data || !data[0]) { console.error(error); return; }
+  const s = data[0];
+  document.getElementById('totalUsers').textContent = s.total_users;
+  document.getElementById('pendingOrders').textContent = s.pending_orders;
+  document.getElementById('activeSubs').textContent = s.active_subscriptions;
+  document.getElementById('refundedCount').textContent = s.refunded_count;
+  document.getElementById('todayRev').textContent = Number(s.today_revenue).toLocaleString() + ' ج';
+  document.getElementById('weekRev').textContent = Number(s.this_week_revenue).toLocaleString() + ' ج';
+  document.getElementById('monthRev').textContent = Number(s.this_month_revenue).toLocaleString() + ' ج';
+  document.getElementById('totalRev').textContent = Number(s.total_revenue).toLocaleString() + ' ج';
+  document.getElementById('availableCodes').textContent = s.available_codes;
+  document.getElementById('usedCodes').textContent = s.used_codes;
+
+  const codesWarn = document.getElementById('codesWarning');
+  if (s.available_codes < 20) codesWarn.innerHTML = '<span style="color:var(--danger);">⚠️ ولّد أكواد جديدة</span>';
+  else codesWarn.textContent = '';
+
+  const pendingBadge = document.getElementById('pendingBadge');
+  if (s.pending_orders > 0) { pendingBadge.textContent = s.pending_orders; pendingBadge.style.display = 'inline-block'; }
+  else { pendingBadge.style.display = 'none'; }
+}
+
+document.getElementById('refreshBtn').addEventListener('click', loadOverview);
+
+async function loadOrders() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.from('admin_users_view').select('*').eq('subscription_status', 'pending_activation').order('created_at', { ascending: true });
+  if (error) { console.error(error); return; }
+  allOrders = data || [];
+  renderOrders(allOrders);
+}
+
+function renderOrders(orders) {
+  const body = document.getElementById('ordersBody');
+  if (!orders.length) { body.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">✅</div>مفيش طلبات بانتظار التفعيل</div></td></tr>'; return; }
+  body.innerHTML = orders.map(o => {
+    const hours = Math.floor((Date.now() - new Date(o.created_at).getTime()) / 3600000);
+    const timeText = hours < 1 ? 'الآن' : hours < 24 ? `${hours} ساعة` : `${Math.floor(hours/24)} يوم`;
+    return `
+      <tr>
+        <td><strong>${o.full_name || '—'}</strong></td>
+        <td>${o.email}</td>
+        <td class="mono">${o.order_id}</td>
+        <td><span class="badge ${hours > 12 ? 'badge-danger' : hours > 3 ? 'badge-warning' : 'badge-neutral'}">${timeText}</span></td>
+        <td><button class="btn btn-primary btn-sm" onclick="generateCodeForOrder('${o.id}', '${o.email}', '${o.order_id}', '${(o.full_name || '').replace(/'/g, "\\'")}')">+ كود</button></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.generateCodeForOrder = async function(userId, email, orderId, fullName) {
+  if (!confirm(`تأكد إنك استلمت دفعة ${orderId} قبل ما تجنريت الكود.\n\nنعم تكمل؟`)) return;
+  const client = window.supabaseClient;
+  const { data: code, error } = await client.rpc('admin_assign_code', { p_user_id: userId });
+  if (error) { alert('فشل: ' + error.message); return; }
+  await navigator.clipboard.writeText(code);
+  const msg = `أهلاً ${fullName} 👋\n\nاستلمنا دفعتك (${orderId})!\n\nكود التفعيل بتاعك:\n${code}\n\nادخل على الرابط ده وأدخل الكود:\nhttps://getmahfaza.vercel.app/activate.html\n\nMahfaza Team`;
+  const waLink = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  if (confirm(`الكود: ${code}\n(اتنسخ في الـ Clipboard)\n\nنفتح واتساب بالرسالة الجاهزة؟`)) window.open(waLink, '_blank');
+  loadOrders();
+  loadOverview();
+};
+
+document.getElementById('refreshOrdersBtn').addEventListener('click', loadOrders);
+document.getElementById('ordersSearch').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase();
+  renderOrders(allOrders.filter(o => (o.full_name || '').toLowerCase().includes(q) || (o.email || '').toLowerCase().includes(q) || (o.order_id || '').toLowerCase().includes(q)));
+});
+
+async function loadCodes() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.from('activation_codes').select('*').order('created_at', { ascending: false }).limit(500);
+  if (error) { console.error(error); return; }
+  allCodes = data || [];
+  renderCodes();
+}
+
+function renderCodes() {
+  const body = document.getElementById('codesBody');
+  const q = document.getElementById('codesSearch').value.toLowerCase();
+  let filtered = allCodes;
+  if (currentCodeFilter !== 'all') filtered = filtered.filter(c => c.status === currentCodeFilter);
+  if (q) filtered = filtered.filter(c => c.code.toLowerCase().includes(q));
+  if (!filtered.length) { body.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="icon">📭</div>لا توجد نتائج</div></td></tr>'; return; }
+  const statusBadge = { available: '<span class="badge badge-success">متاح</span>', assigned: '<span class="badge badge-warning">مخصص</span>', used: '<span class="badge badge-info">مستخدم</span>', expired: '<span class="badge badge-danger">منتهي</span>' };
+  body.innerHTML = filtered.slice(0, 100).map(c => `<tr><td><span class="mono">${c.code}</span></td><td>${statusBadge[c.status]}</td><td>${c.assigned_to_user_id ? '<span class="mono" style="font-size:11px;">' + c.assigned_to_user_id.substring(0, 8) + '...</span>' : '—'}</td><td>${new Date(c.created_at).toLocaleDateString('ar-EG')}</td></tr>`).join('');
+}
+
+document.querySelectorAll('[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCodeFilter = btn.getAttribute('data-filter');
+    renderCodes();
+  });
+});
+
+document.getElementById('codesSearch').addEventListener('input', renderCodes);
+
+document.getElementById('bulkGenBtn').addEventListener('click', async () => {
+  const count = parseInt(prompt('كم كود تحب تجنريت؟ (افتراضي: 50)', '50')) || 50;
+  if (count < 1 || count > 500) { alert('من 1 إلى 500 بس'); return; }
+  const { data, error } = await window.supabaseClient.rpc('bulk_generate_codes', { p_count: count });
+  if (error) { alert('فشل: ' + error.message); return; }
+  alert(`✅ تم إنشاء ${data} كود جديد`);
+  loadCodes();
+  loadOverview();
+});
+
+async function loadUsers() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.from('admin_users_view').select('*').order('created_at', { ascending: false }).limit(500);
+  if (error) { console.error(error); return; }
+  allUsers = data || [];
+  renderUsers();
+}
+
+function renderUsers() {
+  const body = document.getElementById('usersBody');
+  const q = document.getElementById('usersSearch').value.toLowerCase();
+  let filtered = allUsers;
+  if (currentUserFilter !== 'all') filtered = filtered.filter(u => u.subscription_status === currentUserFilter);
+  if (q) filtered = filtered.filter(u => (u.full_name || '').toLowerCase().includes(q) || (u.email || '').toLowerCase().includes(q) || (u.order_id || '').toLowerCase().includes(q));
+  if (!filtered.length) { body.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="icon">🔍</div>لا توجد نتائج</div></td></tr>'; return; }
+  const statusBadge = { active: '<span class="badge badge-success">نشط</span>', pending_activation: '<span class="badge badge-warning">بانتظار التفعيل</span>', suspended: '<span class="badge badge-danger">موقوف</span>', refunded: '<span class="badge badge-neutral">مسترد</span>' };
+  body.innerHTML = filtered.slice(0, 100).map(u => `<tr><td><strong>${u.full_name || '—'}</strong>${u.is_admin ? ' <span class="badge badge-info">ADMIN</span>' : ''}</td><td>${u.email}</td><td class="mono">${u.order_id}</td><td>${statusBadge[u.subscription_status] || ''}</td><td><button class="btn btn-secondary btn-sm" onclick="openUserModal('${u.id}')">تفاصيل</button></td></tr>`).join('');
+}
+
+document.querySelectorAll('[data-user-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-user-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentUserFilter = btn.getAttribute('data-user-filter');
+    renderUsers();
+  });
+});
+
+document.getElementById('usersSearch').addEventListener('input', renderUsers);
+
+window.openUserModal = function(userId) {
+  const user = allUsers.find(u => u.id === userId);
+  if (!user) return;
+  currentModalUserId = userId;
+  document.getElementById('userModalTitle').textContent = user.full_name || user.email;
+  document.getElementById('userModalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px;">
+      <span style="color:var(--text-2);">الإيميل:</span><span>${user.email}</span>
+      <span style="color:var(--text-2);">رقم الطلب:</span><span class="mono">${user.order_id}</span>
+      <span style="color:var(--text-2);">الحالة:</span><span>${user.subscription_status}</span>
+      <span style="color:var(--text-2);">تاريخ التسجيل:</span><span>${new Date(user.created_at).toLocaleString('ar-EG')}</span>
+      ${user.activated_at ? `<span style="color:var(--text-2);">تاريخ التفعيل:</span><span>${new Date(user.activated_at).toLocaleString('ar-EG')}</span>` : ''}
+      ${user.payment_date ? `<span style="color:var(--text-2);">تاريخ الدفع:</span><span>${new Date(user.payment_date).toLocaleString('ar-EG')}</span>` : ''}
+    </div>`;
+  document.getElementById('userModal').classList.add('active');
+};
+
+document.getElementById('modalClose').addEventListener('click', () => document.getElementById('userModal').classList.remove('active'));
+
+document.getElementById('modalGenerateCode').addEventListener('click', async () => {
+  if (!currentModalUserId) return;
+  const { data: code, error } = await window.supabaseClient.rpc('admin_assign_code', { p_user_id: currentModalUserId });
+  if (error) { alert('فشل: ' + error.message); return; }
+  await navigator.clipboard.writeText(code);
+  alert(`✅ الكود: ${code}\n(اتنسخ في الـ Clipboard)`);
+  document.getElementById('userModal').classList.remove('active');
+});
+
+document.getElementById('modalSuspend').addEventListener('click', async () => {
+  if (!currentModalUserId) return;
+  const reason = prompt('سبب الإيقاف (اختياري):');
+  if (reason === null) return;
+  const { error } = await window.supabaseClient.rpc('admin_suspend_user', { p_user_id: currentModalUserId, p_reason: reason });
+  if (error) { alert('فشل: ' + error.message); return; }
+  alert('✅ تم إيقاف الحساب');
+  document.getElementById('userModal').classList.remove('active');
+  loadUsers();
+});
+
+document.getElementById('modalRefund').addEventListener('click', async () => {
+  if (!currentModalUserId) return;
+  if (!confirm('متأكد من الاسترداد؟ الحساب هيتعطل والـ sessions هتتلغي.')) return;
+  const reason = prompt('سبب الاسترداد (اختياري):');
+  const { error } = await window.supabaseClient.rpc('admin_issue_refund', { p_user_id: currentModalUserId, p_reason: reason });
+  if (error) { alert('فشل: ' + error.message); return; }
+  alert('✅ تم الاسترداد');
+  document.getElementById('userModal').classList.remove('active');
+  loadUsers();
+});
+
+async function loadSettings() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.from('site_settings').select('key, value');
+  if (error) { console.error(error); return; }
+  const map = {};
+  data.forEach(s => { map[s.key] = s.value; });
+  if (map.pricing) {
+    document.getElementById('set_price_current').value = map.pricing.current || 199;
+    document.getElementById('set_price_original').value = map.pricing.original || 199;
+    document.getElementById('set_show_discount').checked = !!map.pricing.show_discount;
+  }
+  document.getElementById('set_instapay').value = map.payment_instapay || '';
+  document.getElementById('set_whatsapp').value = map.payment_whatsapp || '';
+  document.getElementById('set_instagram').value = map.social_instagram || '';
+  document.getElementById('set_facebook').value = map.social_facebook || '';
+  document.getElementById('set_tiktok').value = map.social_tiktok || '';
+  if (map.promo_badge) {
+    document.getElementById('set_promo_ar').value = map.promo_badge.text_ar || '';
+    document.getElementById('set_promo_en').value = map.promo_badge.text_en || '';
+    document.getElementById('set_promo_show').checked = !!map.promo_badge.show;
+  }
+  document.getElementById('set_vacation_mode').checked = map.vacation_mode === true || map.vacation_mode === 'true';
+}
+
+document.querySelectorAll('[data-save]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const key = btn.getAttribute('data-save');
+    let value;
+    if (key === 'pricing') {
+      value = { current: parseFloat(document.getElementById('set_price_current').value) || 199, original: parseFloat(document.getElementById('set_price_original').value) || 199, currency: 'EGP', show_discount: document.getElementById('set_show_discount').checked };
+    } else if (key === 'payment_instapay') value = document.getElementById('set_instapay').value;
+    else if (key === 'payment_whatsapp') {
+      value = document.getElementById('set_whatsapp').value;
+      const link = value.replace(/^0/, '20');
+      await window.supabaseClient.rpc('admin_update_setting', { p_key: 'payment_whatsapp_link', p_value: 'https://wa.me/' + link });
+    }
+    else if (key === 'social_instagram') value = document.getElementById('set_instagram').value;
+    else if (key === 'social_facebook') value = document.getElementById('set_facebook').value;
+    else if (key === 'social_tiktok') value = document.getElementById('set_tiktok').value;
+    else if (key === 'promo_badge') value = { text_ar: document.getElementById('set_promo_ar').value, text_en: document.getElementById('set_promo_en').value, show: document.getElementById('set_promo_show').checked };
+    else if (key === 'vacation_mode') value = document.getElementById('set_vacation_mode').checked;
+
+    const { error } = await window.supabaseClient.rpc('admin_update_setting', { p_key: key, p_value: value });
+    if (error) { alert('فشل: ' + error.message); return; }
+    showToast('✅ تم الحفظ');
+  });
+});
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => MahfazaAuth.logout());
+
+init();
+</script>
+
+</body>
+</html>
