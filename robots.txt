@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /sm-portal-mhmd-7k9x2/
+Disallow: /dashboard.html
+Disallow: /pending.html
+Disallow: /activate.html
+
+Sitemap: https://getmahfaza.vercel.app/sitemap.xml
