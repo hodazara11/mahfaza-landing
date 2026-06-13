@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الإعداد — Mahfaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/shared-styles.css">
+<style>
+  body { background: var(--bg); min-height: 100vh; }
+  .wiz-container { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
+
+  /* Progress Bar */
+  .progress-wrap { margin-bottom: 32px; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
+  .progress-bar { height: 6px; background: var(--surface-2); border-radius: 9999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--brand); border-radius: 9999px; transition: width 0.4s ease; box-shadow: 0 0 12px var(--brand-glow); }
+
+  /* Steps */
+  .step { display: none; }
+  .step.active { display: block; }
+  .step-header { text-align: center; margin-bottom: 32px; }
+  .step-icon { font-size: 56px; margin-bottom: 16px; }
+  .step-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+  [lang="ar"] .step-title { font-size: 24px; font-weight: 700; letter-spacing: 0; line-height: 1.5; }
+  .step-sub { color: var(--text-2); font-size: 15px; }
+
+  /* Cards Grid */
+  .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .options-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+  .options-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+
+  .opt-card {
+    background: var(--surface); border: 2px solid var(--border); border-radius: var(--r-md);
+    padding: 20px 16px; cursor: pointer; transition: all 0.2s; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: inherit;
+    color: var(--text); position: relative;
+  }
+  .opt-card:hover { border-color: var(--border-2); transform: translateY(-2px); }
+  .opt-card.selected { border-color: var(--brand); background: var(--brand-muted); }
+  .opt-card.selected::after { content: '✓'; position: absolute; top: 8px; inset-inline-end: 8px; background: var(--brand); color: #0A0A0F; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; }
+  .opt-icon { font-size: 32px; }
+  .opt-title { font-weight: 700; font-size: 14px; line-height: 1.3; }
+  .opt-desc { font-size: 12px; color: var(--text-3); line-height: 1.4; }
+
+  /* Section Title */
+  .section-block { margin-bottom: 24px; }
+  .section-label { font-size: 13px; color: var(--text-2); font-weight: 600; margin-bottom: 12px; }
+
+  /* Inputs */
+  .field-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+  .currency-pill { display: inline-flex; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); font-family: var(--font-mono); font-size: 13px; cursor: pointer; }
+  .currency-pill select { background: transparent; border: none; color: var(--text); font-family: inherit; cursor: pointer; outline: none; }
+
+  /* Template Card (special wider format) */
+  .template-card {
+    background: var(--surface); border: 2px solid var(--border); border-radius: var(--r-md);
+    padding: 20px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; position: relative;
+  }
+  .template-card:hover { border-color: var(--border-2); }
+  .template-card.selected { border-color: var(--brand); background: linear-gradient(135deg, rgba(0,217,126,0.05), transparent); }
+  .template-card.selected::after { content: '✓'; position: absolute; top: 12px; inset-inline-end: 12px; background: var(--brand); color: #0A0A0F; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+  .tmpl-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .tmpl-icon { font-size: 32px; }
+  .tmpl-name { font-weight: 700; font-size: 16px; }
+  .tmpl-desc { color: var(--text-3); font-size: 13px; }
+  .tmpl-categories { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+  .tmpl-cat-pill { background: var(--surface-2); color: var(--text-2); font-size: 11px; padding: 3px 8px; border-radius: 9999px; }
+
+  /* Nav buttons */
+  .wiz-nav { display: flex; gap: 12px; margin-top: 32px; }
+  .wiz-nav button { flex: 1; }
+  .btn-back { background: transparent; color: var(--text-2); border: 1px solid var(--border); padding: 14px 24px; border-radius: var(--r-sm); font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; }
+  .btn-back:hover { color: var(--text); border-color: var(--border-2); }
+  .btn-next { background: var(--brand); color: #0A0A0F; border: none; padding: 14px 24px; border-radius: var(--r-sm); font-family: inherit; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 14px; }
+  .btn-next:hover:not(:disabled) { background: var(--brand-hover); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Switch */
+  .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-switch { width: 44px; height: 24px; background: var(--surface-3); border-radius: 9999px; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .toggle-switch::after { content: ''; position: absolute; top: 2px; inset-inline-start: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+  .toggle-switch.on { background: var(--brand); }
+  .toggle-switch.on::after { transform: translateX(20px); }
+  [dir="rtl"] .toggle-switch.on::after { transform: translateX(-20px); }
+
+  /* Success */
+  .success-overlay { position: fixed; inset: 0; background: var(--bg); display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 1000; text-align: center; padding: 24px; }
+  .success-overlay.show { display: flex; }
+  .success-icon { font-size: 80px; animation: pop 0.6s; }
+  @keyframes pop { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr 1fr; }
+    .step-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Mahfaza<span class="logo-dot"></span></a>
+    <div class="nav-actions">
+      <button class="icon-btn" id="langToggle">EN</button>
+      <button class="icon-btn" id="themeToggle">☾</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wiz-container">
+
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span><span data-i18n="stepLabel">الخطوة</span> <span id="currentStep">1</span>/4</span>
+      <span id="stepName" data-i18n="step1Name">الترحيب</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 25%;"></div></div>
+  </div>
+
+  <!-- ============= STEP 1: Welcome + Language ============= -->
+  <div class="step active" id="step1">
+    <div class="step-header">
+      <div class="step-icon">👋</div>
+      <h1 class="step-title" data-i18n="s1.title">أهلاً بك في محفظة</h1>
+      <p class="step-sub" data-i18n="s1.sub">هنخلصلك الإعداد في 90 ثانية</p>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label" data-i18n="s1.langLabel">اختار لغتك المفضلة</div>
+      <div class="options-grid two-col">
+        <div class="opt-card" data-lang-pick="ar">
+          <div class="opt-icon">🇪🇬</div>
+          <div class="opt-title">العربية</div>
+        </div>
+        <div class="opt-card" data-lang-pick="en">
+          <div class="opt-icon">🇬🇧</div>
+          <div class="opt-title">English</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============= STEP 2: About You ============= -->
+  <div class="step" id="step2">
+    <div class="step-header">
+      <div class="step-icon">👤</div>
+      <h1 class="step-title" data-i18n="s2.title">عرّفنا عليك</h1>
+      <p class="step-sub" data-i18n="s2.sub">عشان نقدملك نصايح مناسبة</p>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label" data-i18n="s2.ageLabel">فئتك العمرية</div>
+      <div class="options-grid">
+        <div class="opt-card" data-age="18-25"><div class="opt-title">18-25</div></div>
+        <div class="opt-card" data-age="26-35"><div class="opt-title">26-35</div></div>
+        <div class="opt-card" data-age="36-45"><div class="opt-title">36-45</div></div>
+        <div class="opt-card" data-age="46-55"><div class="opt-title">46-55</div></div>
+        <div class="opt-card" data-age="55+"><div class="opt-title">+55</div></div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label" data-i18n="s2.incomeLabel">دخلك الشهري (جنيه)</div>
+      <div class="options-grid three-col">
+        <div class="opt-card" data-income="<5000"><div class="opt-title">&lt; 5,000</div></div>
+        <div class="opt-card" data-income="5000-10000"><div class="opt-title">5K - 10K</div></div>
+        <div class="opt-card" data-income="10000-20000"><div class="opt-title">10K - 20K</div></div>
+        <div class="opt-card" data-income="20000-40000"><div class="opt-title">20K - 40K</div></div>
+        <div class="opt-card" data-income="40000-80000"><div class="opt-title">40K - 80K</div></div>
+        <div class="opt-card" data-income="80000+"><div class="opt-title">+80K</div></div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label" data-i18n="s2.stabLabel">نوع الدخل</div>
+      <div class="options-grid three-col">
+        <div class="opt-card" data-stab="salary"><div class="opt-icon">💼</div><div class="opt-title" data-i18n="s2.salary">راتب ثابت</div></div>
+        <div class="opt-card" data-stab="freelance"><div class="opt-icon">💻</div><div class="opt-title" data-i18n="s2.freelance">فريلانس</div></div>
+        <div class="opt-card" data-stab="business"><div class="opt-icon">🏢</div><div class="opt-title" data-i18n="s2.business">مشروع/بزنس</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============= STEP 3: Primary Goal ============= -->
+  <div class="step" id="step3">
+    <div class="step-header">
+      <div class="step-icon">🎯</div>
+      <h1 class="step-title" data-i18n="s3.title">إيه هدفك المالي الأهم؟</h1>
+      <p class="step-sub" data-i18n="s3.sub">اختار اللي بيناسبك دلوقتي. تقدر تغيره بعدين</p>
+    </div>
+
+    <div class="options-grid two-col">
+      <button class="opt-card" data-goal="emergency_fund">
+        <div class="opt-icon">🛡️</div>
+        <div class="opt-title" data-i18n="s3.g1">بناء صندوق طوارئ</div>
+        <div class="opt-desc" data-i18n="s3.g1d">حماية مالية لظروف غير متوقعة</div>
+      </button>
+      <button class="opt-card" data-goal="debt_payoff">
+        <div class="opt-icon">💳</div>
+        <div class="opt-title" data-i18n="s3.g2">سداد ديون</div>
+        <div class="opt-desc" data-i18n="s3.g2d">أتخلص من الديون بأسرع وقت</div>
+      </button>
+      <button class="opt-card" data-goal="big_save">
+        <div class="opt-icon">🏠</div>
+        <div class="opt-title" data-i18n="s3.g3">ادخار لهدف كبير</div>
+        <div class="opt-desc" data-i18n="s3.g3d">شقة، عربية، فرح، رحلة</div>
+      </button>
+      <button class="opt-card" data-goal="start_investing">
+        <div class="opt-icon">📈</div>
+        <div class="opt-title" data-i18n="s3.g4">أبدأ استثمار</div>
+        <div class="opt-desc" data-i18n="s3.g4d">أخلي فلوسي تزيد</div>
+      </button>
+      <button class="opt-card" data-goal="daily_management" style="grid-column: span 2;">
+        <div class="opt-icon">📊</div>
+        <div class="opt-title" data-i18n="s3.g5">إدارة مصاريفي اليومية أحسن</div>
+        <div class="opt-desc" data-i18n="s3.g5d">أعرف فلوسي بتروح فين وأتحكم فيها</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============= STEP 4: Template + Current State ============= -->
+  <div class="step" id="step4">
+    <div class="step-header">
+      <div class="step-icon">📋</div>
+      <h1 class="step-title" data-i18n="s4.title">اختار قالب يناسب وضعك</h1>
+      <p class="step-sub" data-i18n="s4.sub">القالب بيجهزلك فئات مصاريف مناسبة. تقدر تعدلها بعدين</p>
+    </div>
+
+    <div id="templatesList">
+      <div class="loading" style="text-align:center;padding:40px;color:var(--text-3);" data-i18n="loading">جاري التحميل...</div>
+    </div>
+
+    <div class="section-block" style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+      <div class="section-label" data-i18n="s4.balLabel">رصيدك الحالي (اختياري)</div>
+      <div class="field-row">
+        <input type="number" id="openingBalance" placeholder="0" min="0" step="any" style="padding:14px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:inherit;font-size:14px;width:100%;">
+        <div class="currency-pill">
+          <select id="currencyPick">
+            <option value="EGP">EGP (ج)</option>
+            <option value="USD">USD ($)</option>
+            <option value="SAR">SAR (﷼)</option>
+            <option value="AED">AED (د.إ)</option>
+          </select>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-3);margin-top:8px;" data-i18n="s4.balHint">سيتم إضافته كرصيد افتتاحي. يمكنك تركه فارغًا.</p>
+    </div>
+  </div>
+
+  <!-- ============= NAV BUTTONS ============= -->
+  <div class="wiz-nav">
+    <button class="btn-back" id="btnBack" data-i18n="back" style="display:none;">السابق</button>
+    <button class="btn-next" id="btnNext" disabled data-i18n="next">التالي ←</button>
+  </div>
+
+</div>
+
+<!-- Success Screen -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">🎉</div>
+  <h2 style="font-size:24px;font-weight:800;" data-i18n="success">تم! بنوديك للوحة التحكم...</h2>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lib/supabase.js"></script>
+<script src="lib/auth.js"></script>
+<script src="lib/theme-lang.js"></script>
+<script>
+const STRINGS = {
+  ar: {
+    stepLabel: 'الخطوة', step1Name: 'الترحيب', step2Name: 'عرّفنا عليك', step3Name: 'هدفك', step4Name: 'القالب والرصيد',
+    back: '← السابق', next: 'التالي →', loading: 'جاري التحميل...',
+    success: 'تم! بنوديك للوحة التحكم...',
+    's1.title': 'أهلاً بك في محفظة', 's1.sub': 'هنخلصلك الإعداد في 90 ثانية', 's1.langLabel': 'اختار لغتك المفضلة',
+    's2.title': 'عرّفنا عليك', 's2.sub': 'عشان نقدملك نصايح مناسبة',
+    's2.ageLabel': 'فئتك العمرية', 's2.incomeLabel': 'دخلك الشهري (جنيه)', 's2.stabLabel': 'نوع الدخل',
+    's2.salary': 'راتب ثابت', 's2.freelance': 'فريلانس', 's2.business': 'مشروع/بزنس',
+    's3.title': 'إيه هدفك المالي الأهم؟', 's3.sub': 'اختار اللي بيناسبك دلوقتي. تقدر تغيره بعدين',
+    's3.g1': 'بناء صندوق طوارئ', 's3.g1d': 'حماية مالية لظروف غير متوقعة',
+    's3.g2': 'سداد ديون', 's3.g2d': 'أتخلص من الديون بأسرع وقت',
+    's3.g3': 'ادخار لهدف كبير', 's3.g3d': 'شقة، عربية، فرح، رحلة',
+    's3.g4': 'أبدأ استثمار', 's3.g4d': 'أخلي فلوسي تزيد',
+    's3.g5': 'إدارة مصاريفي اليومية أحسن', 's3.g5d': 'أعرف فلوسي بتروح فين وأتحكم فيها',
+    's4.title': 'اختار قالب يناسب وضعك', 's4.sub': 'القالب بيجهزلك فئات مصاريف مناسبة. تقدر تعدلها بعدين',
+    's4.balLabel': 'رصيدك الحالي (اختياري)',
+    's4.balHint': 'سيتم إضافته كرصيد افتتاحي. يمكنك تركه فارغًا.',
+    'finish': 'إنهاء الإعداد ✓'
+  },
+  en: {
+    stepLabel: 'Step', step1Name: 'Welcome', step2Name: 'About You', step3Name: 'Your Goal', step4Name: 'Template & Balance',
+    back: '← Back', next: 'Next →', loading: 'Loading...',
+    success: 'Done! Taking you to the dashboard...',
+    's1.title': 'Welcome to Mahfaza', 's1.sub': 'We\'ll get you set up in 90 seconds', 's1.langLabel': 'Choose your preferred language',
+    's2.title': 'Tell us about you', 's2.sub': 'So we can give you the right advice',
+    's2.ageLabel': 'Your age range', 's2.incomeLabel': 'Monthly income (EGP)', 's2.stabLabel': 'Income type',
+    's2.salary': 'Fixed salary', 's2.freelance': 'Freelance', 's2.business': 'Business/Project',
+    's3.title': 'What\'s your top financial goal?', 's3.sub': 'Pick what fits you now. You can change it later',
+    's3.g1': 'Build emergency fund', 's3.g1d': 'Financial protection for the unexpected',
+    's3.g2': 'Pay off debt', 's3.g2d': 'Get out of debt faster',
+    's3.g3': 'Save for a big goal', 's3.g3d': 'Apartment, car, wedding, trip',
+    's3.g4': 'Start investing', 's3.g4d': 'Make my money grow',
+    's3.g5': 'Better daily money management', 's3.g5d': 'Know where money goes and control it',
+    's4.title': 'Pick a template that fits you', 's4.sub': 'The template sets up smart categories for you. You can edit them later',
+    's4.balLabel': 'Current balance (optional)',
+    's4.balHint': 'Will be added as opening balance. You can leave it empty.',
+    'finish': 'Complete Setup ✓'
+  }
+};
+
+const STATE = {
+  step: 1,
+  language: 'ar',
+  age_bracket: null,
+  income_range: null,
+  income_stability: null,
+  primary_goal: null,
+  template_slug: null,
+  opening_balance: 0,
+  currency: 'EGP'
+};
+
+let templates = [];
+
+MahfazaUI.init(STRINGS);
+
+// =========================================================
+// AUTH CHECK
+// =========================================================
+async function checkAuth() {
+  const user = await MahfazaAuth.requireAuth();
+  if (!user) return null;
+
+  const profile = await MahfazaAuth.getProfile(user.id);
+  if (!profile) return null;
+
+  if (profile.subscription_status === 'pending_activation') { window.location.href = '/pending.html'; return null; }
+  if (profile.subscription_status !== 'active') { window.location.href = '/login.html'; return null; }
+  if (profile.onboarding_completed) { window.location.href = '/dashboard.html'; return null; }
+
+  return user;
+}
+
+// =========================================================
+// LOAD TEMPLATES
+// =========================================================
+async function loadTemplates() {
+  const client = window.supabaseClient;
+  const { data, error } = await client.from('category_templates')
+    .select('*').eq('is_active', true).order('sort_order');
+  if (error) { console.error(error); return; }
+  templates = data || [];
+  renderTemplates();
+}
+
+function renderTemplates() {
+  const lang = STATE.language;
+  const container = document.getElementById('templatesList');
+  if (!templates.length) { container.innerHTML = '<div style="text-align:center;color:var(--text-3);">No templates available</div>'; return; }
+
+  container.innerHTML = templates.map(t => {
+    const name = lang === 'ar' ? t.name_ar : t.name;
+    const desc = lang === 'ar' ? (t.description_ar || '') : (t.description || '');
+    const catPreview = (t.categories || []).slice(0, 6).map(c => {
+      const cn = lang === 'ar' ? (c.name_ar || c.name) : (c.name || c.name_ar);
+      return `<span class="tmpl-cat-pill">${cn}</span>`;
+    }).join('');
+    const more = (t.categories || []).length > 6 ? ` <span class="tmpl-cat-pill">+${t.categories.length - 6}</span>` : '';
+    return `
+      <div class="template-card" data-tmpl="${t.slug}">
+        <div class="tmpl-head">
+          <div class="tmpl-icon">${t.icon === 'briefcase' ? '💼' : t.icon === 'users' ? '👨‍👩‍👧' : t.icon === 'laptop' ? '💻' : t.icon === 'graduation-cap' ? '🎓' : t.icon === 'edit' ? '✏️' : '📁'}</div>
+          <div>
+            <div class="tmpl-name">${name}</div>
+            <div class="tmpl-desc">${desc}</div>
+          </div>
+        </div>
+        ${catPreview ? `<div class="tmpl-categories">${catPreview}${more}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  // attach click handlers
+  container.querySelectorAll('[data-tmpl]').forEach(el => {
+    el.addEventListener('click', () => {
+      container.querySelectorAll('[data-tmpl]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.template_slug = el.getAttribute('data-tmpl');
+      validateStep();
+    });
+  });
+
+  // restore selection
+  if (STATE.template_slug) {
+    const sel = container.querySelector(`[data-tmpl="${STATE.template_slug}"]`);
+    if (sel) sel.classList.add('selected');
+  }
+}
+
+// =========================================================
+// STEP NAVIGATION
+// =========================================================
+function showStep(n) {
+  STATE.step = n;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  document.getElementById('currentStep').textContent = n;
+  document.getElementById('progressFill').style.width = (n * 25) + '%';
+
+  const lang = STATE.language;
+  const stepNames = ['', 'step1Name', 'step2Name', 'step3Name', 'step4Name'];
+  document.getElementById('stepName').textContent = STRINGS[lang][stepNames[n]];
+
+  document.getElementById('btnBack').style.display = n === 1 ? 'none' : 'block';
+  const nextBtn = document.getElementById('btnNext');
+  nextBtn.textContent = n === 4 ? STRINGS[lang].finish : STRINGS[lang].next;
+
+  if (n === 4 && !templates.length) loadTemplates();
+  validateStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateStep() {
+  const btn = document.getElementById('btnNext');
+  let ok = false;
+  if (STATE.step === 1) ok = !!STATE.language;
+  if (STATE.step === 2) ok = STATE.age_bracket && STATE.income_range && STATE.income_stability;
+  if (STATE.step === 3) ok = !!STATE.primary_goal;
+  if (STATE.step === 4) ok = !!STATE.template_slug;
+  btn.disabled = !ok;
+}
+
+// =========================================================
+// SELECTION HANDLERS
+// =========================================================
+function setupOptHandlers() {
+  // Language
+  document.querySelectorAll('[data-lang-pick]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-lang-pick]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.language = el.getAttribute('data-lang-pick');
+      MahfazaUI.applyLanguage(STATE.language, STRINGS);
+      // update step name
+      showStep(STATE.step);
+      validateStep();
+    });
+  });
+
+  // Age
+  document.querySelectorAll('[data-age]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-age]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.age_bracket = el.getAttribute('data-age');
+      validateStep();
+    });
+  });
+
+  // Income
+  document.querySelectorAll('[data-income]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-income]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.income_range = el.getAttribute('data-income');
+      validateStep();
+    });
+  });
+
+  // Stability
+  document.querySelectorAll('[data-stab]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-stab]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.income_stability = el.getAttribute('data-stab');
+      validateStep();
+    });
+  });
+
+  // Goal
+  document.querySelectorAll('[data-goal]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('[data-goal]').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      STATE.primary_goal = el.getAttribute('data-goal');
+      validateStep();
+    });
+  });
+
+  // Nav
+  document.getElementById('btnBack').addEventListener('click', () => {
+    if (STATE.step > 1) showStep(STATE.step - 1);
+  });
+
+  document.getElementById('btnNext').addEventListener('click', async () => {
+    if (STATE.step < 4) { showStep(STATE.step + 1); return; }
+    // Final step — save everything
+    await completeOnboarding();
+  });
+
+  // Opening balance
+  document.getElementById('openingBalance').addEventListener('input', (e) => {
+    STATE.opening_balance = parseFloat(e.target.value) || 0;
+  });
+  document.getElementById('currencyPick').addEventListener('change', (e) => {
+    STATE.currency = e.target.value;
+  });
+
+  // Pre-select default language
+  document.querySelector(`[data-lang-pick="${STATE.language}"]`).classList.add('selected');
+  validateStep();
+}
+
+// =========================================================
+// COMPLETE
+// =========================================================
+async function completeOnboarding() {
+  const btn = document.getElementById('btnNext');
+  btn.disabled = true;
+  btn.textContent = STATE.language === 'ar' ? 'جاري الحفظ...' : 'Saving...';
+
+  try {
+    const client = window.supabaseClient;
+    const { error } = await client.rpc('complete_onboarding', {
+      p_age_bracket: STATE.age_bracket,
+      p_income_range: STATE.income_range,
+      p_income_stability: STATE.income_stability,
+      p_primary_goal: STATE.primary_goal,
+      p_template_slug: STATE.template_slug,
+      p_preferred_language: STATE.language,
+      p_opening_balance: STATE.opening_balance,
+      p_currency: STATE.currency
+    });
+
+    if (error) throw error;
+
+    // Set flag for dashboard to show welcome tooltips
+    localStorage.setItem('mahfaza_show_welcome_tooltips', '1');
+
+    document.getElementById('successOverlay').classList.add('show');
+    setTimeout(() => { window.location.href = '/dashboard.html'; }, 1800);
+  } catch (e) {
+    console.error(e);
+    alert((STATE.language === 'ar' ? 'حدث خطأ: ' : 'Error: ') + e.message);
+    btn.disabled = false;
+    btn.textContent = STRINGS[STATE.language].finish;
+  }
+}
+
+// =========================================================
+// INIT
+// =========================================================
+(async () => {
+  const user = await checkAuth();
+  if (!user) return;
+  STATE.language = localStorage.getItem('mahfaza_lang') || 'ar';
+  setupOptHandlers();
+  showStep(1);
+})();
+</script>
+
+</body>
+</html>
