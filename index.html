@@ -1134,6 +1134,50 @@ setTimeout(async () => {
     }
   } catch (e) { /* silent */ }
 }, 500);
+
+// ============================================================
+// LOAD SITE SETTINGS FROM SUPABASE — overrides hardcoded SITE_CONFIG
+// This makes Admin Panel changes appear instantly on Landing Page
+// ============================================================
+async function loadSiteSettingsFromSupabase() {
+  try {
+    const client = window.supabaseClient || (window.initSupabase && window.initSupabase());
+    if (!client) return;
+
+    const { data, error } = await client.from('site_settings').select('key, value');
+    if (error || !data) { console.warn('Could not load site settings:', error); return; }
+
+    const map = {};
+    data.forEach(s => { map[s.key] = s.value; });
+
+    if (map.pricing && typeof map.pricing === 'object') {
+      if (map.pricing.current != null) SITE_CONFIG.price.current = map.pricing.current;
+      if (map.pricing.original != null) SITE_CONFIG.price.original = map.pricing.original;
+      SITE_CONFIG.price.showDiscount = !!map.pricing.show_discount;
+    }
+    if (map.payment_instapay) SITE_CONFIG.payment.instaPay = map.payment_instapay;
+    if (map.payment_whatsapp) {
+      SITE_CONFIG.payment.whatsapp = map.payment_whatsapp;
+      SITE_CONFIG.payment.whatsappLink = 'https://wa.me/' + map.payment_whatsapp.replace(/^0/, '20');
+    }
+    if (map.payment_whatsapp_link) SITE_CONFIG.payment.whatsappLink = map.payment_whatsapp_link;
+    if (map.social_instagram) SITE_CONFIG.social.instagram = map.social_instagram;
+    if (map.social_facebook) SITE_CONFIG.social.facebook = map.social_facebook;
+    if (map.social_tiktok) SITE_CONFIG.social.tiktok = map.social_tiktok;
+    if (map.promo_badge && typeof map.promo_badge === 'object') {
+      if (map.promo_badge.text_ar) SITE_CONFIG.promoBadge.ar = map.promo_badge.text_ar;
+      if (map.promo_badge.text_en) SITE_CONFIG.promoBadge.en = map.promo_badge.text_en;
+      SITE_CONFIG.promoBadge.show = !!map.promo_badge.show;
+    }
+
+    applyConfig();
+  } catch (e) {
+    console.error('loadSiteSettingsFromSupabase error:', e);
+  }
+}
+
+// Trigger Supabase load (after the SDK has had time to init)
+setTimeout(loadSiteSettingsFromSupabase, 600);
 </script>
 </body>
 </html>
