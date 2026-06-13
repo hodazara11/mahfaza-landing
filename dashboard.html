@@ -48,9 +48,21 @@ setTimeout(async () => {
     window.location.href = '/pending.html';
     return;
   }
+  if (profile.subscription_status === 'active' && !profile.onboarding_completed) {
+    window.location.href = '/onboarding.html';
+    return;
+  }
 
   document.getElementById('userInfo').textContent =
     `${profile.full_name || user.email} • ${profile.order_id}`;
+
+  // Show welcome message if just completed onboarding
+  if (localStorage.getItem('mahfaza_show_welcome_tooltips') === '1') {
+    localStorage.removeItem('mahfaza_show_welcome_tooltips');
+    setTimeout(() => {
+      alert((profile.preferred_language === 'en' ? 'Welcome to Mahfaza! 🎉\n\nYour categories are set up. Next: start adding transactions when the full dashboard launches in Phase 6.' : 'أهلاً بك في محفظة! 🎉\n\nالفئات بتاعتك جاهزة. الخطوة الجاية: تبدأ تضيف معاملاتك لما الـ Dashboard الكامل يجهز في Phase 6.'));
+    }, 500);
+  }
 
   // Enforce single-session on this protected page
   MahfazaAuth.enforceSingleSession();
